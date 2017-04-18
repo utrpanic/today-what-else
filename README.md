@@ -1,6 +1,7 @@
 # today-what-else
-
-## hit the [BITRISE](https://www.bitrise.io/)
+고고!
+## Requirements for hit-the-bitrise.rb
+* [BITRISE](https://www.bitrise.io/)
 ```
 [sudo] gem install xcodeproj
 ```
