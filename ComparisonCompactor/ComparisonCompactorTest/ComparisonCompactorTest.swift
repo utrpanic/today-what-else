@@ -22,12 +22,17 @@ class ComparisonCompactorTest: XCTestCase {
     
     func testMessage() {
         let failure = ComparisonCompactor(length: 0, expected: "b", actual: "c").compact(message: "a")
-        assert("a expected:<[b]> but was:<[c]>" == failure)
+        XCTAssert("a expected:<[b]> but was:<[c]>" == failure)
     }
     
     func testStartSame() {
         let failure = ComparisonCompactor(length: 1, expected: "ba", actual: "bc").compact(message: nil)
-        assert("a expected:<b[a]> but was:<b[c]>" == failure)
+        XCTAssert("a expected:<b[a]> but was:<b[c]>" == failure)
+    }
+    
+    func testEndSame() {
+        let failure = ComparisonCompactor(length: 1, expected: "ab", actual: "cb").compact(message: nil)
+        XCTAssert("a expected:<[a]b> but was:<[c]b>" == failure)
     }
     
 }
