@@ -20,8 +20,8 @@ class ComparisonCompactor {
     private var compactExpected: String?
     private var compactActual: String?
     
-    private var prefix: Int = 0
-    private var suffix: Int = 0
+    private var prefixLength: Int = 0
+    private var suffixLength: Int = 0
     
     init(contextLength: Int, expected: String?, actual: String?) {
         self.contextLength = contextLength
@@ -43,44 +43,50 @@ class ComparisonCompactor {
     }
     
     private func compactExpectedAndActual() {
-        self.prefix = self.findCommonPrefix()
-        self.suffix = self.findCommonSuffix()
+        self.findCommonPrefixAndSuffix()
         self.compactExpected = self.compactString(self.expected)
         self.compactActual = self.compactString(self.actual)
     }
     
-    private func findCommonPrefix() -> Int {
-        guard let expected = self.expected, let actual = self.actual else { return 0 }
-        let end = min(expected.length, actual.length)
-        for index in 0 ..< end {
-            if expected[index] != actual[index] {
-                return index
-            }
-        }
-        return end
-    }
-    
-    private func findCommonSuffix() -> Int {
-        guard let expected = self.expected, let actual = self.actual else { return 0 }
-        var expectedSuffix = expected.length - 1
-        var actualSuffix = actual.length - 1
-        while expectedSuffix >= self.prefix, actualSuffix >= self.prefix {
-            if expected[expectedSuffix] != actual[actualSuffix] {
+    private func findCommonPrefixAndSuffix() {
+        self.findCommonPrefix()
+        self.suffixLength = 0
+        while !self.suffixOverlapsPrefix(suffixLength: self.suffixLength) {
+            if self.charFromEnd(self.expected, self.suffixLength) != self.charFromEnd(self.actual, self.suffixLength) {
                 break
             }
-            expectedSuffix -= 1
-            actualSuffix -= 1
+            self.suffixLength += 1
         }
-        return expected.length - expectedSuffix
+    }
+    
+    private func findCommonPrefix() {
+        guard let expected = self.expected, let actual = self.actual else { return }
+        let end = min(expected.length, actual.length)
+        self.prefixLength = 0
+        while self.prefixLength < end {
+            if expected[self.prefixLength] != actual[self.prefixLength] {
+                break
+            }
+            self.prefixLength += 1
+        }
+    }
+    
+    private func charFromEnd(_ string: String?, _ distanceFromEnd: Int) -> Character? {
+        guard let string = string else { return nil }
+        return string[string.length - distanceFromEnd - 1]
+    }
+    
+    private func suffixOverlapsPrefix(suffixLength: Int) -> Bool {
+        return (self.actual?.length ?? 0) - self.suffixLength <= self.prefixLength || (self.expected?.length ?? 0) - self.suffixLength <= self.prefixLength
     }
     
     private func compactString(_ optionalSource: String?) -> String? {
         guard let source = optionalSource else { return optionalSource }
-        var result = ComparisonCompactor.DELTA_START + source.substring(from: self.prefix, to: source.length - self.suffix + 1) + ComparisonCompactor.DELTA_END
-        if self.prefix > 0 {
+        var result = ComparisonCompactor.DELTA_START + source.substring(from: self.prefixLength, to: source.length - self.suffixLength) + ComparisonCompactor.DELTA_END
+        if self.prefixLength > 0 {
             result = self.computeCommonPrefix() + result
         }
-        if self.suffix > 0 {
+        if self.suffixLength > 0 {
             result = result + self.computeCommonSuffix()
         }
         return result
@@ -88,13 +94,13 @@ class ComparisonCompactor {
     
     private func computeCommonPrefix() -> String {
         guard let expected = self.expected else { return "" }
-        return (self.prefix > self.contextLength ? ComparisonCompactor.ELLIPSIS : "") + expected.substring(from: max(0, self.prefix - self.contextLength), to: self.prefix)
+        return (self.prefixLength > self.contextLength ? ComparisonCompactor.ELLIPSIS : "") + expected.substring(from: max(0, self.prefixLength - self.contextLength), to: self.prefixLength)
     }
     
     private func computeCommonSuffix() -> String {
         guard let expected = self.expected else { return "" }
-        let end = min(expected.length - self.suffix + 1 + self.contextLength, expected.length)
-        return expected.substring(from: expected.length - self.suffix + 1, to: end) + (expected.length - self.suffix + 1 < expected.length - self.contextLength ? ComparisonCompactor.ELLIPSIS : "")
+        let end = min(expected.length - self.suffixLength + self.contextLength, expected.length)
+        return expected.substring(from: expected.length - self.suffixLength, to: end) + (expected.length - self.suffixLength < expected.length - self.contextLength ? ComparisonCompactor.ELLIPSIS : "")
     }
     
 }
