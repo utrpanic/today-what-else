@@ -82,14 +82,11 @@ class ComparisonCompactor {
     
     private func compactString(_ optionalSource: String?) -> String? {
         guard let source = optionalSource else { return optionalSource }
-        var result = ComparisonCompactor.DELTA_START + source.substring(from: self.prefixLength, to: source.length - self.suffixLength) + ComparisonCompactor.DELTA_END
-        if self.prefixLength > 0 {
-            result = self.computeCommonPrefix() + result
-        }
-        if self.suffixLength > 0 {
-            result = result + self.computeCommonSuffix()
-        }
-        return result
+        return self.computeCommonPrefix() +
+            ComparisonCompactor.DELTA_START +
+            source.substring(from: self.prefixLength, to: source.length - self.suffixLength) +
+            ComparisonCompactor.DELTA_END +
+            self.computeCommonSuffix()
     }
     
     private func computeCommonPrefix() -> String {
