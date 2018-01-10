@@ -10,9 +10,9 @@ import Foundation
 
 class ComparisonCompactor {
     
-    private static let ellipsis = "..."
-    private static let deltaEnd = "]"
-    private static let deltaStart = "["
+    private static let ELLIPSIS = "..."
+    private static let DELTA_END = "]"
+    private static let DELTA_START = "["
     
     private var contextLength = 0
     private var expected: String?
@@ -77,13 +77,13 @@ class ComparisonCompactor {
     
     private func computeCommonPrefix() -> String {
         guard let expected = self.expected else { return "" }
-        return (self.prefix > self.contextLength ? ComparisonCompactor.ellipsis : "") + expected.substring(from: max(0, self.prefix - self.contextLength), to: self.prefix)
+        return (self.prefix > self.contextLength ? ComparisonCompactor.ELLIPSIS : "") + expected.substring(from: max(0, self.prefix - self.contextLength), to: self.prefix)
     }
     
     private func computeCommonSuffix() -> String {
         guard let expected = self.expected else { return "" }
         let end = min(expected.length - self.suffix + 1 + self.contextLength, expected.length)
-        return expected.substring(from: expected.length - self.suffix + 1, to: end) + (expected.length - self.suffix + 1 < expected.length - self.contextLength ? ComparisonCompactor.ellipsis : "")
+        return expected.substring(from: expected.length - self.suffix + 1, to: end) + (expected.length - self.suffix + 1 < expected.length - self.contextLength ? ComparisonCompactor.ELLIPSIS : "")
     }
     
 }
