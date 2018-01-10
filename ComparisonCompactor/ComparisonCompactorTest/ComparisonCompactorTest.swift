@@ -39,4 +39,84 @@ class ComparisonCompactorTest: XCTestCase {
         let failure = ComparisonCompactor(contextLength: 1, expected: "ab", actual: "ab").compact(message: nil)
         XCTAssert("expected:<ab> but was:<ab>" == failure)
     }
+    
+    func testNoContextStartAndEndSame() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: "abc", actual: "adc").compact(message: nil)
+        XCTAssert("expected:<...[b]...> but was:<...[d]...>" == failure)
+    }
+    
+    func testStartAndEndContext() {
+        let failure = ComparisonCompactor(contextLength: 1, expected: "abc", actual: "adc").compact(message: nil)
+        XCTAssert("expected:<a[b]c> but was:<a[d]c>" == failure)
+    }
+    
+    func testStartAndEndContextWithEllipses() {
+        let failure = ComparisonCompactor(contextLength: 1, expected: "abcde", actual: "abfde").compact(message: nil)
+        XCTAssert("expected:<...b[c]d...> but was:<...b[f]d...>" == failure)
+    }
+    
+    func testComparisonErrorStartSameComplete() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "ab", actual: "abc").compact(message: nil)
+        XCTAssert("expected:<ab[]> but was:<ab[c]>" == failure)
+    }
+    
+    func testComparisonErrorEndSameComplete() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: "bc", actual: "abc").compact(message: nil)
+        XCTAssert("expected:<[]...> but was:<[a]...>" == failure)
+    }
+    
+    func testComparisonErrorEndSameCompleteContext() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "bc", actual: "abc").compact(message: nil)
+        XCTAssert("expected:<[]bc> but was:<[a]bc>" == failure)
+    }
+    
+    func testComparionsError() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "bc", actual: "abc").compact(message: nil)
+        XCTAssert("expected:<[]bc> but was:<[a]bc>" == failure)
+    }
+    
+    func testComparionsErrorOverlapingMatches() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: "abc", actual: "abbc").compact(message: nil)
+        XCTAssert("expected:<...[]...> but was:<...[b]...>" == failure)
+    }
+    
+    func testComparionsErrorOverlapingMatchesContext() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "abc", actual: "abbc").compact(message: nil)
+        XCTAssert("expected:<ab[]c> but was:<ab[b]c>" == failure)
+    }
+    
+    func testComparionsErrorOverlapingMatches2() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: "abcdde", actual: "abcde").compact(message: nil)
+        XCTAssert("expected:<...[d]...> but was:<...[]...>" == failure)
+    }
+    
+    func testComparionsErrorOverlapingMatches2Context() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "abcdde", actual: "abcde").compact(message: nil)
+        XCTAssert("expected:<...cd[d]e> but was:<...cd[]e>" == failure)
+    }
+    
+    func testComparionsErrorWithActualNil() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: "a", actual: nil).compact(message: nil)
+        XCTAssert("expected:<a> but was:<nil>" == failure)
+    }
+    
+    func testComparionsErrorWithActualNilContext() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: "a", actual: nil).compact(message: nil)
+        XCTAssert("expected:<a> but was:<nil>" == failure)
+    }
+    
+    func testComparionsErrorWithExpectedNil() {
+        let failure = ComparisonCompactor(contextLength: 0, expected: nil, actual: "a").compact(message: nil)
+        XCTAssert("expected:<nil> but was:<a>" == failure)
+    }
+    
+    func testComparionsErrorWithExpectedNilContext() {
+        let failure = ComparisonCompactor(contextLength: 2, expected: nil, actual: "a").compact(message: nil)
+        XCTAssert("expected:<nil> but was:<a>" == failure)
+    }
+    
+    func testBug609972() {
+        let failure = ComparisonCompactor(contextLength: 10, expected: "S&P500", actual: "0").compact(message: nil)
+        XCTAssert("expected:<[S&P50]0> but was:<[]0>" == failure)
+    }
 }

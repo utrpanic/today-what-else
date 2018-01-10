@@ -21,7 +21,7 @@ class ComparisonCompactor {
     private var prefix: Int = 0
     private var suffix: Int = 0
     
-    init(contextLength: Int, expected: String, actual: String) {
+    init(contextLength: Int, expected: String?, actual: String?) {
         self.contextLength = contextLength
         self.expected = expected
         self.actual = actual
@@ -41,11 +41,12 @@ class ComparisonCompactor {
     private func findCommonPrefix() {
         guard let expected = self.expected, let actual = self.actual else { return }
         let end = min(expected.length, actual.length)
+        self.prefix = 0
         for index in 0 ..< end {
             if expected[index] != actual[index] {
-                self.prefix = index
                 break
             }
+            self.prefix += 1
         }
     }
     
@@ -64,7 +65,7 @@ class ComparisonCompactor {
     }
     
     private func compactString(_ source: String) -> String {
-        var result = ComparisonCompactor.deltaStart + source.substring(from: self.prefix, length: source.length - self.suffix + 1) + ComparisonCompactor.deltaEnd
+        var result = ComparisonCompactor.deltaStart + source.substring(from: self.prefix, to: source.length - self.suffix + 1) + ComparisonCompactor.deltaEnd
         if self.prefix > 0 {
             result = self.computeCommonPrefix() + result
         }
@@ -76,13 +77,13 @@ class ComparisonCompactor {
     
     private func computeCommonPrefix() -> String {
         guard let expected = self.expected else { return "" }
-        return (self.prefix > self.contextLength ? ComparisonCompactor.ellipsis : "") + expected.substring(from: max(0, self.prefix - self.contextLength), length: self.prefix)
+        return (self.prefix > self.contextLength ? ComparisonCompactor.ellipsis : "") + expected.substring(from: max(0, self.prefix - self.contextLength), to: self.prefix)
     }
     
     private func computeCommonSuffix() -> String {
         guard let expected = self.expected else { return "" }
         let end = min(expected.length - self.suffix + 1 + self.contextLength, expected.length)
-        return expected.substring(from: expected.length - self.suffix + 1, length: end) + (expected.length - self.suffix + 1 < expected.length - self.contextLength ? ComparisonCompactor.ellipsis : "")
+        return expected.substring(from: expected.length - self.suffix + 1, to: end) + (expected.length - self.suffix + 1 < expected.length - self.contextLength ? ComparisonCompactor.ellipsis : "")
     }
     
 }
@@ -93,12 +94,8 @@ class Assert {
         if let message = message, message.length > 0 {
             formattedMessage += "\(message) "
         }
-        if let expected = expected {
-            formattedMessage += "expected:<\(expected)> "
-        }
-        if let actual = actual {
-            formattedMessage += "but was:<\(actual)>"
-        }
+        formattedMessage += "expected:<\(expected ?? "nil")> "
+        formattedMessage += "but was:<\(actual ?? "nil")>"
         return formattedMessage
     }
 }
@@ -131,6 +128,10 @@ extension String {
     
     public func substring(from: Int, length: Int) -> String {
         return self.suffix(from: from).prefix(length: length)
+    }
+    
+    public func substring(from: Int, to: Int) -> String {
+        return self.prefix(length: to).suffix(from: from)
     }
     
 }
