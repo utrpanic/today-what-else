@@ -13,9 +13,7 @@ class Args {
     private var schema: String
     private var args: Array<String>
     private var valid: Bool = true
-    private var booleanArgs = Dictionary<Character, BooleanArgumentMarshaler>()
-    private var integerArgs = Dictionary<Character, IntegerArgumentMarshaler>()
-    private var stringArgs = Dictionary<Character, StringArgumentMarshaler>()
+    private var marshalers = Dictionary<Character, ArgumentMarshaler>()
     private var argsFound = Set<Character>()
     
     private var currentArgument: Int = 0
@@ -78,15 +76,15 @@ class Args {
     }
     
     private func parseBooleanSchemaElement(_ elementId: Character) {
-        self.booleanArgs[elementId] = BooleanArgumentMarshaler()
+        self.marshalers[elementId] = BooleanArgumentMarshaler()
     }
     
     private func parseIntegerSchemaElement(_ elementId: Character) {
-        self.integerArgs[elementId] = IntegerArgumentMarshaler()
+        self.marshalers[elementId] = IntegerArgumentMarshaler()
     }
     
     private func parseStringSchemaElement(_ elementId: Character) {
-        self.stringArgs[elementId] = StringArgumentMarshaler()
+        self.marshalers[elementId] = StringArgumentMarshaler()
     }
     
     private func parseArguments() throws -> Bool {
@@ -132,25 +130,25 @@ class Args {
     }
     
     private func isBooleanArgument(_ argument: Character) -> Bool {
-        return self.booleanArgs[argument] != nil
+        return self.marshalers[argument] is BooleanArgumentMarshaler
     }
     
     private func isIntegerArgument(_ argument: Character) -> Bool {
-        return self.integerArgs[argument] != nil
+        return self.marshalers[argument] is IntegerArgumentMarshaler
     }
     
     private func isStringArgument(_ argument: Character) -> Bool {
-        return self.stringArgs[argument] != nil
+        return self.marshalers[argument] is StringArgumentMarshaler
     }
     
     private func setBooleanArg(_ argument: Character) throws {
-        try self.booleanArgs[argument]?.set(nil)
+        try self.marshalers[argument]?.set(nil)
     }
     
     private func setIntegerArg(_ argument: Character) throws {
         self.currentArgument += 1
         if self.currentArgument < self.args.count {
-            try self.integerArgs[argument]?.set(self.args[self.currentArgument])
+            try self.marshalers[argument]?.set(self.args[self.currentArgument])
         } else {
             self.valid = false
             throw ArgsError.missingInteger
@@ -160,7 +158,7 @@ class Args {
     private func setStringArg(_ argument: Character) throws {
         self.currentArgument += 1
         if self.currentArgument < self.args.count {
-            try self.stringArgs[argument]?.set(self.args[self.currentArgument])
+            try self.marshalers[argument]?.set(self.args[self.currentArgument])
         } else {
             self.valid = false
             throw ArgsError.missingString
@@ -168,11 +166,11 @@ class Args {
     }
     
     func getBoolean(_ character: Character) -> Bool {
-        return self.booleanArgs[character]?.value ?? false
+        return (self.marshalers[character] as? BooleanArgumentMarshaler)?.value ?? false
     }
     
     func getInt(_ character: Character) -> Int {
-        return self.integerArgs[character]?.value ?? 0
+        return (self.marshalers[character] as? IntegerArgumentMarshaler)?.value ?? 0
     }
     
     func getDouble(_ character: Character) -> Double {
@@ -180,25 +178,26 @@ class Args {
     }
     
     func getString(_ character: Character) -> String {
-        return self.stringArgs[character]?.value ?? ""
+        return (self.marshalers[character] as? StringArgumentMarshaler)?.value ?? ""
     }
 }
 
 
-class ArgumentMarshaler<T> {
-    var value: T?
+class ArgumentMarshaler {
     func set(_ argument: String?) throws {
         assertionFailure("must implement")
     }
 }
 
-class BooleanArgumentMarshaler: ArgumentMarshaler<Bool> {
+class BooleanArgumentMarshaler: ArgumentMarshaler {
+    var value: Bool = false
     override func set(_ argument: String?) throws {
         self.value = true
     }
 }
 
-class IntegerArgumentMarshaler: ArgumentMarshaler<Int> {
+class IntegerArgumentMarshaler: ArgumentMarshaler {
+    var value: Int = 0
     override func set(_ argument: String?) throws {
         if let argument = argument {
             if let value = Int(argument) {
@@ -212,7 +211,8 @@ class IntegerArgumentMarshaler: ArgumentMarshaler<Int> {
     }
 }
 
-class StringArgumentMarshaler: ArgumentMarshaler<String> {
+class StringArgumentMarshaler: ArgumentMarshaler {
+    var value: String = ""
     override func set(_ argument: String?) throws {
         if let value = argument {
             self.value = value
