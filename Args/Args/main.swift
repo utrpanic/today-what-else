@@ -16,11 +16,12 @@ class Args {
     private var marshalers = Dictionary<Character, ArgumentMarshaler>()
     private var argsFound = Set<Character>()
     
-    private var currentArgument: Int = 0
+    private var currentArgument: Iterator
     
     init(schema: String, args: Array<String>) throws {
         self.schema = schema
         self.args = args
+        self.currentArgument = args.makeIterator()
         self.valid = try self.parse()
     }
     
@@ -87,13 +88,10 @@ class Args {
         self.marshalers[elementId] = StringArgumentMarshaler()
     }
     
-    private func parseArguments() throws -> Bool {
-        self.currentArgument = 0
-        while self.currentArgument < self.args.count {
-            try self.parseArgument(self.args[self.currentArgument])
-            self.currentArgument += 1
+    private func parseArguments() throws {
+        while let argument = self.currentArgument.next() {
+            try self.parseArgument(argument)
         }
-        return true
     }
     
     private func parseArgument(_ argument: String) throws {
@@ -117,51 +115,11 @@ class Args {
     }
     
     private func setArgument(_ argument: Character) throws -> Bool {
-        if self.isBooleanArgument(argument) {
-            try self.setBooleanArg(argument)
-        } else if self.isIntegerArgument(argument) {
-            try self.setIntegerArg(argument)
-        } else if self.isStringArgument(argument) {
-            try self.setStringArg(argument)
+        if let marshaler = self.marshalers[argument] {
+            self.currentArgument = try marshaler.set(self.currentArgument)
+            return true
         } else {
             return false
-        }
-        return true
-    }
-    
-    private func isBooleanArgument(_ argument: Character) -> Bool {
-        return self.marshalers[argument] is BooleanArgumentMarshaler
-    }
-    
-    private func isIntegerArgument(_ argument: Character) -> Bool {
-        return self.marshalers[argument] is IntegerArgumentMarshaler
-    }
-    
-    private func isStringArgument(_ argument: Character) -> Bool {
-        return self.marshalers[argument] is StringArgumentMarshaler
-    }
-    
-    private func setBooleanArg(_ argument: Character) throws {
-        try self.marshalers[argument]?.set(nil)
-    }
-    
-    private func setIntegerArg(_ argument: Character) throws {
-        self.currentArgument += 1
-        if self.currentArgument < self.args.count {
-            try self.marshalers[argument]?.set(self.args[self.currentArgument])
-        } else {
-            self.valid = false
-            throw ArgsError.missingInteger
-        }
-    }
-    
-    private func setStringArg(_ argument: Character) throws {
-        self.currentArgument += 1
-        if self.currentArgument < self.args.count {
-            try self.marshalers[argument]?.set(self.args[self.currentArgument])
-        } else {
-            self.valid = false
-            throw ArgsError.missingString
         }
     }
     
@@ -183,25 +141,26 @@ class Args {
 }
 
 
-class ArgumentMarshaler {
-    func set(_ argument: String?) throws {
-        assertionFailure("must implement")
-    }
+protocol ArgumentMarshaler {
+    func set(_ iterator: Iterator) throws -> Iterator
 }
 
 class BooleanArgumentMarshaler: ArgumentMarshaler {
     var value: Bool = false
-    override func set(_ argument: String?) throws {
+    func set(_ iterator: Iterator) throws -> Iterator {
         self.value = true
+        return iterator
     }
 }
 
 class IntegerArgumentMarshaler: ArgumentMarshaler {
     var value: Int = 0
-    override func set(_ argument: String?) throws {
-        if let argument = argument {
+    func set(_ iterator: Iterator) throws -> Iterator {
+        var iterator = iterator
+        if let argument = iterator.next() {
             if let value = Int(argument) {
                 self.value = value
+                return iterator
             } else {
                 throw ArgsError.invalidInteger
             }
@@ -213,9 +172,11 @@ class IntegerArgumentMarshaler: ArgumentMarshaler {
 
 class StringArgumentMarshaler: ArgumentMarshaler {
     var value: String = ""
-    override func set(_ argument: String?) throws {
-        if let value = argument {
+    func set(_ iterator: Iterator) throws -> Iterator {
+        var iterator = iterator
+        if let value = iterator.next() {
             self.value = value
+            return iterator
         } else {
             throw ArgsError.missingString
         }
@@ -234,6 +195,7 @@ enum ArgsError: Error {
     case invalidDouble
 }
 
+typealias Iterator = IndexingIterator<Array<String>>
 
 extension String {
     
