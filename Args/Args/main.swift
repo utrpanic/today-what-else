@@ -13,9 +13,9 @@ class Args {
     private var schema: String
     private var args: Array<String>
     private var valid: Bool = true
-    private var booleanArgs = Dictionary<Character, Bool>()
-    private var integerArgs = Dictionary<Character, Int>()
-    private var stringArgs = Dictionary<Character, String>()
+    private var booleanArgs = Dictionary<Character, BooleanArgumentMarshaler>()
+    private var integerArgs = Dictionary<Character, IntegerArgumentMarshaler>()
+    private var stringArgs = Dictionary<Character, StringArgumentMarshaler>()
     private var argsFound = Set<Character>()
     
     private var currentArgument: Int = 0
@@ -78,15 +78,15 @@ class Args {
     }
     
     private func parseBooleanSchemaElement(_ elementId: Character) {
-        self.booleanArgs[elementId] = false
+        self.booleanArgs[elementId] = BooleanArgumentMarshaler()
     }
     
     private func parseIntegerSchemaElement(_ elementId: Character) {
-        self.integerArgs[elementId] = 0
+        self.integerArgs[elementId] = IntegerArgumentMarshaler()
     }
     
     private func parseStringSchemaElement(_ elementId: Character) {
-        self.stringArgs[elementId] = ""
+        self.stringArgs[elementId] = StringArgumentMarshaler()
     }
     
     private func parseArguments() throws -> Bool {
@@ -144,7 +144,7 @@ class Args {
     }
     
     private func setBooleanArg(_ argument: Character, _ value: Bool) {
-        self.booleanArgs[argument] = value
+        self.booleanArgs[argument]?.value = value
     }
     
     private func setIntegerArg(_ argument: Character) throws {
@@ -152,7 +152,7 @@ class Args {
         if self.currentArgument < self.args.count {
             let parameter = self.args[self.currentArgument]
             if let integer = Int(parameter) {
-                self.integerArgs[argument] = integer
+                self.integerArgs[argument]?.value = integer
             } else {
                 self.valid = false
                 throw ArgsError.invalidInteger
@@ -166,7 +166,7 @@ class Args {
     private func setStringArg(_ argument: Character) throws {
         self.currentArgument += 1
         if self.currentArgument < self.args.count {
-            self.stringArgs[argument] = self.args[self.currentArgument]
+            self.stringArgs[argument]?.value = self.args[self.currentArgument]
         } else {
             self.valid = false
             throw ArgsError.missingString
@@ -174,11 +174,11 @@ class Args {
     }
     
     func getBoolean(_ character: Character) -> Bool {
-        return self.booleanArgs[character] ?? false
+        return self.booleanArgs[character]?.value ?? false
     }
     
     func getInt(_ character: Character) -> Int {
-        return self.integerArgs[character] ?? 0
+        return self.integerArgs[character]?.value ?? 0
     }
     
     func getDouble(_ character: Character) -> Double {
@@ -186,35 +186,26 @@ class Args {
     }
     
     func getString(_ character: Character) -> String {
-        return self.stringArgs[character] ?? ""
+        return self.stringArgs[character]?.value ?? ""
     }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-protocol ArgumentMarshaler {
-    func set() throws
+class ArgumentMarshaler<T> {
+    var value: T?
 }
 
+class BooleanArgumentMarshaler: ArgumentMarshaler<Bool> {
+    
+}
 
+class IntegerArgumentMarshaler: ArgumentMarshaler<Int> {
+    
+}
+
+class StringArgumentMarshaler: ArgumentMarshaler<String> {
+    
+}
 
 enum ArgsError: Error {
     case ok
