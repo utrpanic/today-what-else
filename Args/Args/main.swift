@@ -120,7 +120,7 @@ class Args {
     
     private func setArgument(_ argument: Character) throws -> Bool {
         if self.isBooleanArgument(argument) {
-            self.setBooleanArg(argument, true)
+            try self.setBooleanArg(argument)
         } else if self.isIntegerArgument(argument) {
             try self.setIntegerArg(argument)
         } else if self.isStringArgument(argument) {
@@ -143,20 +143,14 @@ class Args {
         return self.stringArgs[argument] != nil
     }
     
-    private func setBooleanArg(_ argument: Character, _ value: Bool) {
-        self.booleanArgs[argument]?.value = value
+    private func setBooleanArg(_ argument: Character) throws {
+        try self.booleanArgs[argument]?.set(nil)
     }
     
     private func setIntegerArg(_ argument: Character) throws {
         self.currentArgument += 1
         if self.currentArgument < self.args.count {
-            let parameter = self.args[self.currentArgument]
-            if let integer = Int(parameter) {
-                self.integerArgs[argument]?.value = integer
-            } else {
-                self.valid = false
-                throw ArgsError.invalidInteger
-            }
+            try self.integerArgs[argument]?.set(self.args[self.currentArgument])
         } else {
             self.valid = false
             throw ArgsError.missingInteger
@@ -166,7 +160,7 @@ class Args {
     private func setStringArg(_ argument: Character) throws {
         self.currentArgument += 1
         if self.currentArgument < self.args.count {
-            self.stringArgs[argument]?.value = self.args[self.currentArgument]
+            try self.stringArgs[argument]?.set(self.args[self.currentArgument])
         } else {
             self.valid = false
             throw ArgsError.missingString
@@ -193,18 +187,39 @@ class Args {
 
 class ArgumentMarshaler<T> {
     var value: T?
+    func set(_ argument: String?) throws {
+        assertionFailure("must implement")
+    }
 }
 
 class BooleanArgumentMarshaler: ArgumentMarshaler<Bool> {
-    
+    override func set(_ argument: String?) throws {
+        self.value = true
+    }
 }
 
 class IntegerArgumentMarshaler: ArgumentMarshaler<Int> {
-    
+    override func set(_ argument: String?) throws {
+        if let argument = argument {
+            if let value = Int(argument) {
+                self.value = value
+            } else {
+                throw ArgsError.invalidInteger
+            }
+        } else {
+            throw ArgsError.missingInteger
+        }
+    }
 }
 
 class StringArgumentMarshaler: ArgumentMarshaler<String> {
-    
+    override func set(_ argument: String?) throws {
+        if let value = argument {
+            self.value = value
+        } else {
+            throw ArgsError.missingString
+        }
+    }
 }
 
 enum ArgsError: Error {
