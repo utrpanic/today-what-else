@@ -21,35 +21,48 @@ class ArgsTest: XCTestCase {
     }
     
     func testBoolean() {
-        let arg = Args(schema: "l", args: ["-l"])
+        let arg = try! Args(schema: "l", args: ["-l"])
         XCTAssert(arg.getBoolean("l") == true)
     }
     
     func testInt() {
-        let arg = Args(schema: "p#", args: ["-p10"])
-        XCTAssert(arg.getInt("p") == 10)
-    }
-    
-    func testDouble() {
-        let arg = Args(schema: "k##", args: ["-k20.2"])
-        XCTAssert(arg.getDouble("p") == 20.2)
+        let arg = try! Args(schema: "p#", args: ["-p", "5"])
+        XCTAssert(arg.getInt("p") == 5)
     }
     
     func testString() {
-        let arg = Args(schema: "d*", args: ["-detc/"])
+        let arg = try! Args(schema: "d*", args: ["-d", "etc/"])
         XCTAssert(arg.getString("d") == "etc/")
     }
     
-//    func testStringArray() {
-//        let arg = Args(schema: "w[*]", args: ["-detc/"])
-//        XCTAssert(arg.getString("d") == "etc/")
-//    }
+    func testWrongInvalidInteger() {
+        do {
+            let _ = try Args(schema: "p#", args: ["-p", "1a0"])
+        } catch {
+            XCTAssert((error as? ArgsError) == .invalidInteger )
+        }
+    }
+    
+    func testWrongMissingInteger() {
+        do {
+            let _ = try Args(schema: "p#", args: ["-p"])
+        } catch {
+            XCTAssert((error as? ArgsError) == .missingInteger )
+        }
+    }
+    
+    func testWrongMissingString() {
+        do {
+            let _ = try Args(schema: "d*", args: ["-d"])
+        } catch {
+            XCTAssert((error as? ArgsError) == .missingString )
+        }
+    }
     
     func testAll() {
-        let arg = Args(schema: "l,p#,k##,d*", args: ["-l", "-p10", "-k20.2", "-detc/"])
+        let arg = try! Args(schema: "l,p#,d*", args: ["-l", "-p", "10", "-d", "etc/"])
         XCTAssert(arg.getBoolean("l") == true)
         XCTAssert(arg.getInt("p") == 10)
-        XCTAssert(arg.getDouble("k") == 20.2)
         XCTAssert(arg.getString("d") == "etc/")
     }
     
