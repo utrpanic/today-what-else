@@ -44,17 +44,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-0J-cWG">
-                                <rect key="frame" x="195.5" y="256" width="163.5" height="30"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="5PF-eK-UtY"/>
-                                </constraints>
-                                <state key="normal" title="Underline"/>
-                                <connections>
-                                    <action selector="didUnderlineTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="aeS-VY-Apx"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRP-Rb-NNM">
                                 <rect key="frame" x="16" y="256" width="163.5" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,18 +55,84 @@
                                     <action selector="didForegroundColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="Zxo-mN-MPf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-0J-cWG">
+                                <rect key="frame" x="195.5" y="256" width="163.5" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="5PF-eK-UtY"/>
+                                </constraints>
+                                <state key="normal" title="Underline"/>
+                                <connections>
+                                    <action selector="didUnderlineTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="aeS-VY-Apx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQq-SI-Q9Z">
+                                <rect key="frame" x="20" y="306" width="159.5" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="v2e-AI-jQ1"/>
+                                </constraints>
+                                <state key="normal" title="BackgroundColor"/>
+                                <connections>
+                                    <action selector="didBackgroundgroundColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="YkW-du-YVI"/>
+                                    <action selector="didForegroundColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="fSp-Gb-0En"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eK7-3R-8E7">
+                                <rect key="frame" x="195.5" y="306" width="159.5" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hdg-Lb-HBx"/>
+                                </constraints>
+                                <state key="normal" title="FontSize"/>
+                                <connections>
+                                    <action selector="didFontSizeTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="7Js-Cj-rMC"/>
+                                    <action selector="didUnderlineTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="970-6o-SP4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SH7-oi-yNu">
+                                <rect key="frame" x="20" y="356" width="157.5" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GvQ-3Y-vuy"/>
+                                </constraints>
+                                <state key="normal" title="FontColor"/>
+                                <connections>
+                                    <action selector="didBackgroundgroundColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="uR9-yn-2Zd"/>
+                                    <action selector="didFontColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="KMt-WY-3UQ"/>
+                                    <action selector="didForegroundColorTap:" destination="JEX-9P-axG" eventType="touchUpInside" id="pfT-FL-zdB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w7P-F6-JSE">
+                                <rect key="frame" x="197.5" y="356" width="157.5" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="uHr-7e-HbX"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="XRP-Rb-NNM" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="16" id="6W9-EY-Ldf"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="w7P-F6-JSE" secondAttribute="trailing" constant="20" id="6X6-RG-H1d"/>
                             <constraint firstItem="A5M-0J-cWG" firstAttribute="top" secondItem="zaI-8q-mfz" secondAttribute="bottom" constant="16" id="E2m-tj-bN0"/>
                             <constraint firstItem="zaI-8q-mfz" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" constant="16" id="EMr-63-8TU"/>
                             <constraint firstItem="zaI-8q-mfz" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="16" id="Fjv-IJ-o67"/>
+                            <constraint firstItem="eK7-3R-8E7" firstAttribute="top" secondItem="XRP-Rb-NNM" secondAttribute="bottom" constant="20" id="NrT-kQ-sz7"/>
+                            <constraint firstItem="w7P-F6-JSE" firstAttribute="leading" secondItem="SH7-oi-yNu" secondAttribute="trailing" constant="20" id="Pyi-1C-s2H"/>
+                            <constraint firstItem="SH7-oi-yNu" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="20" id="ULi-8m-7iZ"/>
+                            <constraint firstItem="w7P-F6-JSE" firstAttribute="top" secondItem="eK7-3R-8E7" secondAttribute="bottom" constant="20" id="UgM-LT-R3y"/>
+                            <constraint firstItem="SH7-oi-yNu" firstAttribute="top" secondItem="eQq-SI-Q9Z" secondAttribute="bottom" constant="20" id="UmD-0p-JVr"/>
+                            <constraint firstItem="eK7-3R-8E7" firstAttribute="width" secondItem="eQq-SI-Q9Z" secondAttribute="width" id="WEL-C4-aqq"/>
                             <constraint firstItem="A5M-0J-cWG" firstAttribute="leading" secondItem="XRP-Rb-NNM" secondAttribute="trailing" constant="16" id="WdB-8H-7Io"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="eK7-3R-8E7" secondAttribute="trailing" constant="20" id="Xfn-bR-vJs"/>
+                            <constraint firstItem="eK7-3R-8E7" firstAttribute="leading" secondItem="eQq-SI-Q9Z" secondAttribute="trailing" constant="16" id="Z0T-Sz-S0z"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="A5M-0J-cWG" secondAttribute="trailing" constant="16" id="bnq-hl-mO3"/>
+                            <constraint firstItem="eQq-SI-Q9Z" firstAttribute="top" secondItem="XRP-Rb-NNM" secondAttribute="bottom" constant="20" id="k3I-Wc-1gx"/>
+                            <constraint firstItem="w7P-F6-JSE" firstAttribute="width" secondItem="SH7-oi-yNu" secondAttribute="width" id="lNF-US-cGd"/>
                             <constraint firstItem="XRP-Rb-NNM" firstAttribute="top" secondItem="zaI-8q-mfz" secondAttribute="bottom" constant="16" id="qje-Io-CbA"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="zaI-8q-mfz" secondAttribute="trailing" constant="16" id="r40-FU-Pu2"/>
                             <constraint firstItem="A5M-0J-cWG" firstAttribute="width" secondItem="XRP-Rb-NNM" secondAttribute="width" id="rNq-3A-VcK"/>
+                            <constraint firstItem="eQq-SI-Q9Z" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="20" id="xLy-Ky-mmx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
