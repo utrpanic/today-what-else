@@ -15,7 +15,7 @@ import * as globalStyles from '../styles/global';
 export default class NewsFeed extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1.title !== row2.title
     });
@@ -24,8 +24,8 @@ export default class NewsFeed extends Component {
       modalVisible: false
     };
     this.renderRow = this.renderRow.bind(this);
-    this.onModalClose = this.onModalClose();
     this.onModalOpen = this.onModalOpen.bind(this);
+    this.onModalClose = this.onModalClose.bind(this);
   }
 
   renderModal(rowData, ...rest) {
