@@ -1,9 +1,15 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   ListView,
+  WebView,
   StyleSheet,
-  View
+  View,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
+import NewsItem from './NewsFeed';
+import SmallText from './SmallText';
 import * as globalStyles from '../styles/global';
 
 export default class NewsFeed extends Component {
@@ -11,17 +17,46 @@ export default class NewsFeed extends Component {
   constructor(props) {
     super(props)
     this.ds = new ListView.DataSource({
-      rowChanged: (row1, row2) => row1.title !== row2.title
+      rowHasChanged: (row1, row2) => row1.title !== row2.title
     });
     this.state = {
-      dataSource: this.ds.cloneWithRows(props.news)
+      dataSource: this.ds.cloneWithRows(props.news),
+      modalVisible: false
     };
+    this.renderRow = this.renderRow.bind(this);
+    this.onModalClose = this.onModalClose();
+    this.onModalOpen = this.onModalOpen.bind(this);
+  }
+
+  renderModal(rowData, ...rest) {
+    const index = parseInt(rest[1], 10)
+    return (
+      <Modal
+        animationType="slide"
+        visible={this.modalVisible}
+        onRequestClose={this.onModalClose}
+      >
+        <View style={styles.modalContent}>
+          <TouchableOpacity
+            onPress={this.onModalClose}
+            style={styles.closeButton}
+          >
+            <SmallText>Close</SmallText>
+          </TouchableOpacity>
+          <WebView
+            scalesPageToFit
+            source={{ uri: this.state.modalUrl }}
+          />
+        </View>
+      </Modal>
+    );
   }
 
   renderRow(rowData, ...rest) {
     const index = parseInt(rest[1], 10);
     return (
       <NewsItem
+        onPress={() => this.onModalOpen(rowData.url)}
         style={styles.newsItem}
         index={index}
         {...rowData}
@@ -38,15 +73,29 @@ export default class NewsFeed extends Component {
           renderRow={this.renderRow}
           style={this.props.listStyle}
         />
+        {this.renderModal()}
       </View>
     );
   }
+
+  onModalOpen(url) {
+    this.setState({
+      modalVisible: true,
+      modalUrl: url
+    });
+  }
+
+  onModalClose() {
+    this.setState({
+      modalVisible: false
+    });
+  }
 }
 
-NewsFeed.propType = {
+NewsFeed.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
   listStyle: View.propTypes.style
-}
+};
 
 NewsFeed.defaultProps = {
   news: [
@@ -74,5 +123,16 @@ NewsFeed.defaultProps = {
 const styles = StyleSheet.create({
   newsItem: {
     marginBottom: 20
+  },
+  modalContent: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: globalStyles.BG_COLOR
+  },
+  closeButton: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    flexDirection: 'row'
   }
 });
