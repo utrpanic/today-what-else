@@ -1,2 +1,2 @@
-react-native run-ios --simulator "iPhone X"
+react-native run-ios --simulator "iPhone 8"
 

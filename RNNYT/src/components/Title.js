@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue-CondensedBold',
     fontSize: 18,
     color: globalStyles.HEADER_TEXT_COLOR,
-    backgroundColor: '${globalStyles.BG_COLOR}99'
+    backgroundColor: `${globalStyles.BG_COLOR}99`
   }
 });
 

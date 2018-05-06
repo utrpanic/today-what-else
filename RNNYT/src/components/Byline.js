@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View
@@ -8,7 +9,7 @@ import * as globalStyles from '../styles/global';
 
 const Byline = ({ date, author, location }) => (
   <View>
-    <View style={style.row}>
+    <View style={styles.row}>
       <SmallText>
         {date.toLocaleDateString()}
       </SmallText>
@@ -19,7 +20,7 @@ const Byline = ({ date, author, location }) => (
 
     {location ? (
       <View style={styles.row}>
-        <SmallText styles={styles.location}>
+        <SmallText style={styles.location}>
           {location}
         </SmallText>
       </View>
@@ -43,3 +44,5 @@ const styles = StyleSheet.create({
     color: globalStyles.MUTED_COLOR
   }
 });
+
+export default Byline;

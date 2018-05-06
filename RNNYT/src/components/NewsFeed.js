@@ -8,7 +8,7 @@ import {
   Modal,
   TouchableOpacity
 } from 'react-native';
-import NewsItem from './NewsFeed';
+import NewsItem from './NewsItem';
 import SmallText from './SmallText';
 import * as globalStyles from '../styles/global';
 
@@ -16,11 +16,11 @@ export default class NewsFeed extends Component {
 
   constructor(props) {
     super(props);
-    this.ds = new ListView.DataSource({
+    const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1.title !== row2.title
     });
     this.state = {
-      dataSource: this.ds.cloneWithRows(props.news),
+      dataSource: ds.cloneWithRows(props.news),
       modalVisible: false
     };
     this.renderRow = this.renderRow.bind(this);
@@ -33,7 +33,7 @@ export default class NewsFeed extends Component {
     return (
       <Modal
         animationType="slide"
-        visible={this.modalVisible}
+        visible={this.state.modalVisible}
         onRequestClose={this.onModalClose}
       >
         <View style={styles.modalContent}>
@@ -52,8 +52,8 @@ export default class NewsFeed extends Component {
     );
   }
 
-  renderRow(rowData, ...rest) {
-    const index = parseInt(rest[1], 10);
+  renderRow(rowData, sectionID, rowID, highlightRow) {
+    const index = parseInt(rowID, 10);
     return (
       <NewsItem
         onPress={() => this.onModalOpen(rowData.url)}
@@ -71,7 +71,7 @@ export default class NewsFeed extends Component {
           enableEmptySections
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
-          style={this.props.listStyle}
+          style={this.props.listStyles}
         />
         {this.renderModal()}
       </View>
@@ -94,14 +94,14 @@ export default class NewsFeed extends Component {
 
 NewsFeed.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
-  listStyle: View.propTypes.style
+  listStyles: View.propTypes.style
 };
 
 NewsFeed.defaultProps = {
   news: [
     {
       title: 'React Native',
-      imageUrl: 'https://facebook.github.io/react/image/logo_og.png',
+      imageUrl: 'https://facebook.github.io/react/img/logo_og.png',
       description: 'Build Native Mobile Apps using JavaScript and React',
       date: new Date(),
       author: 'Facebook',
