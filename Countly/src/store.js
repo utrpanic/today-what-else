@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import promise from 'redux-promise';
 
 const initialState = {
     count: 0
@@ -23,4 +24,6 @@ const countReducer = (state = initialState, action) => {
     }
 };
 
-export default createStore(countReducer);
+const middleware = applyMiddleware(promise);
+
+export default createStore(countReducer, middleware);
