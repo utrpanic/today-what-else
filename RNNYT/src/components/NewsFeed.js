@@ -23,9 +23,26 @@ export default class NewsFeed extends Component {
       dataSource: ds.cloneWithRows(props.news),
       modalVisible: false
     };
+    this.refresh = this.refresh.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.onModalOpen = this.onModalOpen.bind(this);
     this.onModalClose = this.onModalClose.bind(this);
+  }
+
+  componentWillMount() {
+    this.refresh();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.news)
+    });
+  }
+
+  refresh() {
+    if (this.props.loadNews) {
+      this.props.loadNews();
+    }
   }
 
   renderModal(rowData, ...rest) {
@@ -94,7 +111,8 @@ export default class NewsFeed extends Component {
 
 NewsFeed.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
-  listStyles: View.propTypes.style
+  listStyles: View.propTypes.style,
+  loadNews: PropTypes.func
 };
 
 NewsFeed.defaultProps = {

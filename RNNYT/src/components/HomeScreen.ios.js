@@ -7,7 +7,7 @@ import {
   StatusBar,
   Text
 } from 'react-native';
-import NewsFeed from './NewsFeed';
+import NewsFeedContainer from '../containers/NewsFeedContainer';
 import Search from './Search';
 import SmallText from './SmallText';
 import * as globalStyles from '../styles/global';
@@ -47,7 +47,7 @@ export default class HomeScreen extends Component {
           selected={this.state.tab === 'newsFeed'}
           onPress={() => this.setState({ tab: 'newsFeed' })}
         >
-          <NewsFeed />
+          <NewsFeedContainer />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           systemIcon={'search'}
