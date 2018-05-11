@@ -5,7 +5,7 @@ import { allNewsSelector } from '../selectors/newsSelectors';
 import NewsFeed from '../components/NewsFeed';
 
 const mapStateToProps = state => ({
-    news: allNewSelector(state)
+    news: allNewsSelector(state)
 });
 
 const mapDispatchToProps = dispatch => (
