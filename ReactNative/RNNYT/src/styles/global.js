@@ -11,5 +11,8 @@ export const COMMON_STYLES = StyleSheet.create({
   text: {
     color: TEXT_COLOR,
     fontFamily: 'Helvetica Neue'
+  },
+  pageContainer: {
+    flex: 1
   }
 });

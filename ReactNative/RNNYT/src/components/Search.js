@@ -35,7 +35,11 @@ export default class Search extends Component {
             placehoderTextColor={globalStyles.MUTED_COLOR}
           />
         </View>
-        <NewsFeed news={this.props.filteredNews} listStyles={{}} />
+        <NewsFeed 
+          news={this.props.filteredNews} 
+          listStyles={{}} 
+          showLoadingSpinner={false}
+        />
       </View>
     );
   }
