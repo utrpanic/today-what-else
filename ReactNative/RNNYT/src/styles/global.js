@@ -13,6 +13,11 @@ export const COMMON_STYLES = StyleSheet.create({
     fontFamily: 'Helvetica Neue'
   },
   pageContainer: {
-    flex: 1
+    flex: 1,
+    marginTop: 50,
+    paddingTop: 20,
+    marginBottom: 48,
+    marginHorizontal: 0,
+    paddingHorizontal: 10
   }
 });
