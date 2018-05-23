@@ -14,10 +14,10 @@ export const COMMON_STYLES = StyleSheet.create({
   },
   pageContainer: {
     flex: 1,
-    marginTop: 50,
     paddingTop: 20,
     marginBottom: 48,
     marginHorizontal: 0,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    backgroundColor: BG_COLOR,
   }
 });
