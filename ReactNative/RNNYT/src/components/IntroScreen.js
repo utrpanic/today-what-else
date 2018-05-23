@@ -6,20 +6,15 @@ import {
     StatusBar,
     StyleSheet
 } from 'react-native';
-import { StackActions } from 'react-navigation';
 import Title from './Title';
 import AppText from './AppText';
 import * as globalStyles from '../styles/global';
 
 StatusBar.setBarStyle('light-content');
 
-const pushToHomeAction = StackActions.push({
-    routeName: 'Home',
-});
-
-const IntroScreen = ({ navigation }) => (
+const IntroScreen = ({ push }) => (
     <View style={[globalStyles.COMMON_STYLES.pageContainer, styles.container]}>
-        <TouchableOpacity onPress={() => navigation.dispatch(pushToHomeAction)}>
+        <TouchableOpacity onPress={() => push('home')}>
             <Title>React Native News Reader</Title>
             <AppText>
                 Start Reading
@@ -27,6 +22,10 @@ const IntroScreen = ({ navigation }) => (
         </TouchableOpacity>
     </View>
 );
+
+IntroScreen.propTypes = {
+    push: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
     container: {

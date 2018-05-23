@@ -1,2 +1,5 @@
 export const LOAD_NEWS = 'LOAD_NEWS';
 export const SEARCH_NEWS = 'SEARCH_NEWS';
+
+export const NAVIGATION_PUSH = 'NAVIGATION_PUSH';
+export const NAVIGATION_POP = 'NAVIGATION_POP';

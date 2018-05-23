@@ -14,7 +14,8 @@ export const COMMON_STYLES = StyleSheet.create({
   },
   pageContainer: {
     flex: 1,
-    paddingTop: 20,
+    marginTop: 0,
+    paddingTop: 5,
     marginBottom: 48,
     marginHorizontal: 0,
     paddingHorizontal: 10,
