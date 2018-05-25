@@ -39,6 +39,9 @@ export default class Search extends Component {
           news={this.props.filteredNews} 
           listStyles={{}} 
           showLoadingSpinner={false}
+          modal={this.props.modal}
+          onModalClose={this.props.onModalClose}
+          onModalOpen={this.props.onModalOpen}
         />
       </View>
     );
@@ -47,7 +50,9 @@ export default class Search extends Component {
 
 Search.propTypes = {
   filteredNews: PropTypes.arrayOf(PropTypes.object),
-  searchNews: PropTypes.func.isRequired
+  searchNews: PropTypes.func.isRequired,
+  onModalOpen: PropTypes.func.isRequired,
+  onModalClose: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

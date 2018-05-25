@@ -24,12 +24,9 @@ export default class NewsFeed extends Component {
     this.state = {
       dataSource: ds.cloneWithRows(props.news),
       initialLoading: true,
-      modalVisible: false,
       refreshing: false
     };
     this.renderRow = this.renderRow.bind(this);
-    this.onModalOpen = this.onModalOpen.bind(this);
-    this.onModalClose = this.onModalClose.bind(this);
     this.refresh = this.refresh.bind(this);
   }
 
@@ -55,19 +52,19 @@ export default class NewsFeed extends Component {
     return (
       <Modal
         animationType="slide"
-        visible={this.state.modalVisible}
-        onRequestClose={this.onModalClose}
+        visible={this.props.modal !== undefined}
+        onRequestClose={this.props.onModalClose}
       >
         <View style={styles.modalContent}>
           <TouchableOpacity
-            onPress={this.onModalClose}
+            onPress={this.props.onModalClose}
             style={styles.closeButton}
           >
             <SmallText>Close</SmallText>
           </TouchableOpacity>
           <WebView
             scalesPageToFit
-            source={{ uri: this.state.modalUrl }}
+            source={{ uri: this.props.modal }}
           />
         </View>
       </Modal>
@@ -78,7 +75,7 @@ export default class NewsFeed extends Component {
     const index = parseInt(rowID, 10);
     return (
       <NewsItem
-        onPress={() => this.onModalOpen(rowData.url)}
+        onPress={() => this.props.onModalOpen(rowData.url)}
         style={styles.newsItem}
         index={index}
         {...rowData}
@@ -122,26 +119,16 @@ export default class NewsFeed extends Component {
       )
     );
   }
-
-  onModalOpen(url) {
-    this.setState({
-      modalVisible: true,
-      modalUrl: url
-    });
-  }
-
-  onModalClose() {
-    this.setState({
-      modalVisible: false
-    });
-  }
 }
 
 NewsFeed.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
   listStyles: View.propTypes.style,
   loadNews: PropTypes.func,
-  showLoadingSpinner: PropTypes.bool
+  showLoadingSpinner: PropTypes.bool,
+  modal: PropTypes.string,
+  onModalOpen: PropTypes.func.isRequired,
+  onModalClose: PropTypes.func.isRequired
 };
 
 NewsFeed.defaultProps = {

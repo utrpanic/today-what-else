@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   TabBarIOS,
@@ -16,13 +17,6 @@ StatusBar.setBarStyle('light-content');
 
 export default class HomeScreen extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      tab: 'newsFeed'
-    };
-  }
-
   showBookmarkAlert() {
     Vibration.vibrate();
     Alert.alert(
@@ -35,6 +29,7 @@ export default class HomeScreen extends Component {
   }
 
   render() {
+    const { selectedTab, tab } = this.props;
     return (
       <TabBarIOS
         barTintColor={globalStyles.BAR_COLOR}
@@ -44,21 +39,21 @@ export default class HomeScreen extends Component {
         <TabBarIOS.Item
           badge={4}
           systemIcon={'featured'}
-          selected={this.state.tab === 'newsFeed'}
-          onPress={() => this.setState({ tab: 'newsFeed' })}
+          selected={selectedTab === 'newsFeed'}
+          onPress={() => tab('newsFeed')}
         >
           <NewsFeedContainer />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           systemIcon={'search'}
-          selected={this.state.tab === 'search'}
-          onPress={() => this.setState({ tab: 'search' })}
+          selected={selectedTab === 'search'}
+          onPress={() => tab('search')}
         >
           <SearchContainer />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           systemIcon={'bookmarks'}
-          selected={this.state.tab === 'bookmarks'}
+          selected={selectedTab === 'bookmarks'}
           onPress={() => this.showBookmarkAlert()}
         >
           <Text>Bookmarks</Text>
@@ -67,3 +62,8 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+HomeScreen.propTypes = {
+  selectedTab: PropTypes.string,
+  tab: PropTypes.func.isRequired
+};

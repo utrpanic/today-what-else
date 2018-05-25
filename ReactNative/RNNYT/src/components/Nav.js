@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
+import { 
     StyleSheet,
-    NavigationExperimental
 } from 'react-native';
+import PropTypes from 'prop-types';
+import NavigationExperimental from 'react-native-navigation-experimental-compat';
 
 import * as globalStyles from '../styles/global';
 
-const { Header, CardStack } = NavigationExperimental;
+const { 
+    Header,
+    CardStack
+} = NavigationExperimental;
 
 export default class Nav extends Component {
 
