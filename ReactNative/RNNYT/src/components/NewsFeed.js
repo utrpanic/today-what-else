@@ -8,10 +8,13 @@ import {
   Modal,
   TouchableOpacity,
   RefreshControl,
-  ActivityIndicator
+  ActivityIndicator,
+  NetInfo,
+  Linking
 } from 'react-native';
 import NewsItem from './NewsItem';
 import SmallText from './SmallText';
+import AppText from './AppText';
 import * as globalStyles from '../styles/global';
 
 export default class NewsFeed extends Component {
@@ -24,14 +27,21 @@ export default class NewsFeed extends Component {
     this.state = {
       dataSource: ds.cloneWithRows(props.news),
       initialLoading: true,
-      refreshing: false
+      refreshing: false,
+      connected: true
     };
     this.renderRow = this.renderRow.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.handleConnectivityChange = this.handleConnectivityChange.bind(this);
   }
 
   componentWillMount() {
+    NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
     this.refresh();
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,12 +66,18 @@ export default class NewsFeed extends Component {
         onRequestClose={this.props.onModalClose}
       >
         <View style={styles.modalContent}>
-          <TouchableOpacity
-            onPress={this.props.onModalClose}
-            style={styles.closeButton}
-          >
-            <SmallText>Close</SmallText>
-          </TouchableOpacity>
+          <View style={styles.modalButtons}>
+            <TouchableOpacity
+              onPress={this.props.onModalClose}
+            >
+              <SmallText>Close</SmallText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Linking.openURL(this.props.modal)}
+            >
+              <SmallText>Open in Browser</SmallText>
+            </TouchableOpacity>
+          </View>
           <WebView
             scalesPageToFit
             source={{ uri: this.props.modal }}
@@ -89,6 +105,15 @@ export default class NewsFeed extends Component {
       showLoadingSpinner
     } = this.props;
     const { initialLoading, refreshing, dataSource } = this.state;
+    if (!this.state.connected) {
+      return (
+        <View style={[globalStyles.COMMON_STYLES.pageContainer, styles.loadingContainer]}>
+          <AppText>
+            No Connection
+          </AppText>
+        </View>
+      );
+    }
     return (
       (initialLoading && showLoadingSpinner
         ? (
@@ -118,6 +143,15 @@ export default class NewsFeed extends Component {
         )
       )
     );
+  }
+
+  handleConnectivityChange(isConnected) {
+    this.setState({
+      connected: isConnected
+    });
+    if (isConnected) {
+      this.refresh();
+    }
   }
 }
 
@@ -156,5 +190,11 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     flexDirection: 'row'
+  },
+  modalButtons: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
