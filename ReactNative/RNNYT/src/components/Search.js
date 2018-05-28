@@ -42,6 +42,7 @@ export default class Search extends Component {
           modal={this.props.modal}
           onModalClose={this.props.onModalClose}
           onModalOpen={this.props.onModalOpen}
+          addBookmark={this.props.addBookmark}
         />
       </View>
     );
@@ -52,7 +53,8 @@ Search.propTypes = {
   filteredNews: PropTypes.arrayOf(PropTypes.object),
   searchNews: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
-  onModalClose: PropTypes.func.isRequired
+  onModalClose: PropTypes.func.isRequired,
+  addBookmark: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

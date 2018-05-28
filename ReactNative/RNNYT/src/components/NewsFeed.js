@@ -36,12 +36,12 @@ export default class NewsFeed extends Component {
   }
 
   componentWillMount() {
-    NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
+    NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
     this.refresh();
   }
 
   componentWillUnmount() {
-    NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
+    NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,8 +52,8 @@ export default class NewsFeed extends Component {
   }
 
   refresh() {
-    if (this.props.loadNews) {
-      this.props.loadNews();
+    if (this.props.load) {
+      this.props.load();
     }
   }
 
@@ -92,6 +92,7 @@ export default class NewsFeed extends Component {
     return (
       <NewsItem
         onPress={() => this.props.onModalOpen(rowData.url)}
+        onBookmark={() => this.props.addBookmark(rowData.url)}
         style={styles.newsItem}
         index={index}
         {...rowData}
@@ -158,11 +159,12 @@ export default class NewsFeed extends Component {
 NewsFeed.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
   listStyles: View.propTypes.style,
-  loadNews: PropTypes.func,
+  load: PropTypes.func,
   showLoadingSpinner: PropTypes.bool,
   modal: PropTypes.string,
   onModalOpen: PropTypes.func.isRequired,
-  onModalClose: PropTypes.func.isRequired
+  onModalClose: PropTypes.func.isRequired,
+  addBookmark: PropTypes.func.isRequired
 };
 
 NewsFeed.defaultProps = {

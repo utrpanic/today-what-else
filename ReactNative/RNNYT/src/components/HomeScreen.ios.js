@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import NewsFeedContainer from '../containers/NewsFeedContainer';
 import SearchContainer from '../containers/SearchContainer';
+import BookmarkContainer from '../containers/BookmarkContainer';
 import SmallText from './SmallText';
 import * as globalStyles from '../styles/global';
 
@@ -54,9 +55,9 @@ export default class HomeScreen extends Component {
         <TabBarIOS.Item
           systemIcon={'bookmarks'}
           selected={selectedTab === 'bookmarks'}
-          onPress={() => this.showBookmarkAlert()}
+          onPress={() => tab('bookmarks')}
         >
-          <Text>Bookmarks</Text>
+          <BookmarkContainer />
         </TabBarIOS.Item>
       </TabBarIOS>
     );

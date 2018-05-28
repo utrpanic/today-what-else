@@ -2,7 +2,8 @@ import NavigationExperimental from 'react-native-navigation-experimental-compat'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { searchNews } from '../actions/newsActions';
-import { openModal, closeModel } from '../actions/navigationActions';
+import { openModal, closeModal } from '../actions/navigationActions';
+import { addBookmark } from '../actions/bookmarkActions';
 import Search from '../components/Search';
 import { searchNewsSelector } from '../selectors/newsSelectors';
 
@@ -22,7 +23,8 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({
         searchNews,
         onModalOpen: openModal,
-        onModalClose: closeModal
+        onModalClose: closeModal,
+        addBookmark
     }, dispatch)
 );
 

@@ -1,27 +1,26 @@
 import NavigationExperimental from 'react-native-navigation-experimental-compat';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadNews } from '../actions/newsActions';
 import { openModal, closeModal } from '../actions/navigationActions';
-import { allNewsSelector } from '../selectors/newsSelectors';
+import { loadBookmarks, addBookmark } from '../actions/bookmarkActions';
 import NewsFeed from '../components/NewsFeed';
-import { addBookmark } from '../actions/bookmarkActions';
+import { bookmarkedNewsSelector } from '../selectors/newsSelectors';
 
 const { StateUtils } = NavigationExperimental;
 
 const mapStateToProps = (state) => {
     const homeState = StateUtils.get(state.navigation, 'home');
-    const newsFeedState = homeState && StateUtils.get(homeState, 'newsFeed');
-    const modal = newsFeedState && newsFeedState.modal;
+    const bookmarksState = homeState && StateUtils.get(homeState, 'bookmarks');
+    const modal = bookmarksState && bookmarksState.modal;
     return {
-        news: allNewsSelector(state),
+        news: bookmarkedNewsSelector(state),
         modal: modal || undefined
     };
 };
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        load: loadNews,
+        load: loadBookmarks,
         onModalOpen: openModal,
         onModalClose: closeModal,
         addBookmark
