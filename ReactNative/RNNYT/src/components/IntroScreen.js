@@ -14,7 +14,7 @@ StatusBar.setBarStyle('light-content');
 
 const IntroScreen = ({ push }) => (
     <View style={[globalStyles.COMMON_STYLES.pageContainer, styles.container]}>
-        <TouchableOpacity onPress={() => push('home')}>
+        <TouchableOpacity onPress={() => push('onboarding')}>
             <Title>React Native News Reader</Title>
             <AppText>
                 Start Reading

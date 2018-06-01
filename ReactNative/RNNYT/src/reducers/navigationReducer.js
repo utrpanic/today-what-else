@@ -8,13 +8,13 @@ import {
 } from '../actions/actionTypes';
 import IntroScreen from '../components/IntroScreen';
 import HomeScreenContainer from '../containers/HomeScreenContainer';
+import Onboarding from '../components/Onboarding';
 
 const { StateUtils } = NavigationExperimental;
 
 const routes = {
     home: {
         key: 'home',
-        title: 'RNNYT',
         component: HomeScreenContainer,
         index: 0,
         routes: [
@@ -25,15 +25,18 @@ const routes = {
     },
     intro: {
         key: 'intro',
-        title: 'Welcome',
         component: IntroScreen
+    },
+    onboarding: {
+        key: 'onboarding',
+        component: Onboarding
     }
 };
 
 const initialState = {
     index: 0,
     routes: [
-        routes.intro
+        routes.onboarding
     ]
 };
 
