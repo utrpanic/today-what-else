@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   TabBarIOS,
@@ -7,21 +8,15 @@ import {
   StatusBar,
   Text
 } from 'react-native';
-import NewsFeed from './NewsFeed';
-import Search from './Search';
+import NewsFeedContainer from '../containers/NewsFeedContainer';
+import SearchContainer from '../containers/SearchContainer';
+import BookmarkContainer from '../containers/BookmarkContainer';
 import SmallText from './SmallText';
 import * as globalStyles from '../styles/global';
 
 StatusBar.setBarStyle('light-content');
 
 export default class HomeScreen extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      tab: 'newsFeed'
-    };
-  }
 
   showBookmarkAlert() {
     Vibration.vibrate();
@@ -35,6 +30,7 @@ export default class HomeScreen extends Component {
   }
 
   render() {
+    const { selectedTab, tab } = this.props;
     return (
       <TabBarIOS
         barTintColor={globalStyles.BAR_COLOR}
@@ -44,26 +40,31 @@ export default class HomeScreen extends Component {
         <TabBarIOS.Item
           badge={4}
           systemIcon={'featured'}
-          selected={this.state.tab === 'newsFeed'}
-          onPress={() => this.setState({ tab: 'newsFeed' })}
+          selected={selectedTab === 'newsFeed'}
+          onPress={() => tab('newsFeed')}
         >
-          <NewsFeed />
+          <NewsFeedContainer />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           systemIcon={'search'}
-          selected={this.state.tab === 'search'}
-          onPress={() => this.setState({ tab: 'search' })}
+          selected={selectedTab === 'search'}
+          onPress={() => tab('search')}
         >
-          <Search />
+          <SearchContainer />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           systemIcon={'bookmarks'}
-          selected={this.state.tab === 'bookmarks'}
-          onPress={() => this.showBookmarkAlert()}
+          selected={selectedTab === 'bookmarks'}
+          onPress={() => tab('bookmarks')}
         >
-          <Text>Bookmarks</Text>
+          <BookmarkContainer />
         </TabBarIOS.Item>
       </TabBarIOS>
     );
   }
 }
+
+HomeScreen.propTypes = {
+  selectedTab: PropTypes.string,
+  tab: PropTypes.func.isRequired
+};
