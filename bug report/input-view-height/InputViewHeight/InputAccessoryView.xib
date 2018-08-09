@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputAccessoryView" customModule="InputViewHeight" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOr-Fg-nxD">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLF-iC-Cgi">
+                            <rect key="frame" x="20" y="5" width="67" height="38"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <state key="normal" title="Switch">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="switchButtonDidTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="ak7-S6-s8e"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9b-TT-APc">
+                            <rect key="frame" x="281" y="5" width="74" height="38"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <state key="normal" title="Dismiss">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="dismissButtonDidTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="mak-Cq-qeU"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="QLF-iC-Cgi" firstAttribute="centerY" secondItem="YOr-Fg-nxD" secondAttribute="centerY" id="2rv-wh-uX8"/>
+                        <constraint firstItem="W9b-TT-APc" firstAttribute="centerY" secondItem="YOr-Fg-nxD" secondAttribute="centerY" id="Bvp-6D-0v6"/>
+                        <constraint firstItem="QLF-iC-Cgi" firstAttribute="leading" secondItem="YOr-Fg-nxD" secondAttribute="leading" constant="20" id="Ga8-j0-9d1"/>
+                        <constraint firstAttribute="height" constant="48" id="f1U-W8-QyR"/>
+                        <constraint firstAttribute="trailing" secondItem="W9b-TT-APc" secondAttribute="trailing" constant="20" id="nU9-O1-CBI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.79076591640436755" green="0.98051885117626925" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="YOr-Fg-nxD" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="06i-cW-YuV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YOr-Fg-nxD" secondAttribute="trailing" id="2KG-d1-rCC"/>
+                <constraint firstItem="YOr-Fg-nxD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="IGg-zb-zy3"/>
+                <constraint firstItem="YOr-Fg-nxD" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="waj-1O-saL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+</document>
