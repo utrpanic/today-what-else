@@ -1,6 +1,8 @@
 
 import UIKit
 
+// https://openradar.appspot.com/43081635
+
 class ViewController: UIViewController, InputAccessoryViewDelegate, InputViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
@@ -12,21 +14,36 @@ class ViewController: UIViewController, InputAccessoryViewDelegate, InputViewDel
     }
     
     func setupTextView() {
-        let inputAccessoryView = Bundle.main.loadNibNamed("InputAccessoryView", owner: self, options: nil)?.first as! InputAccessoryView
-        inputAccessoryView.delegate = self
-        self.textView.inputAccessoryView = inputAccessoryView
+        self.updateTextInputViewAsKeyboard()
         self.textView.becomeFirstResponder()
     }
     
-    func updateTextViewInputView() {
-        if self.textView.inputView == nil {
-            let inputView = Bundle.main.loadNibNamed("InputView", owner: self, options: nil)?.first as! InputView
-            inputView.delegate = self
-            self.textView.inputView = inputView
-        } else {
-            self.textView.inputView = nil
-        }
+    func updateTextInputViewAsKeyboard() {
+        self.updateTextInputAccessoryView()
+        self.textView.inputView = nil
         self.textView.reloadInputViews()
+    }
+    
+    func updateTextInputViewAsButtons() {
+        self.updateTextInputAccessoryView()
+        let inputView = Bundle.main.loadNibNamed("InputView", owner: self, options: nil)?.first as! InputView
+        inputView.delegate = self
+        self.textView.inputView = inputView
+        self.textView.reloadInputViews()
+    }
+    
+    func toggleTextInputView() {
+        if self.textView.inputView == nil {
+            self.updateTextInputViewAsButtons()
+        } else {
+            self.updateTextInputViewAsKeyboard()
+        }
+    }
+    
+    func updateTextInputAccessoryView() {
+        let inputAccessoryView = Bundle.main.loadNibNamed("InputAccessoryView", owner: self, options: nil)?.first as! InputAccessoryView
+        inputAccessoryView.delegate = self
+        self.textView.inputAccessoryView = inputAccessoryView
     }
     
     @IBAction func dismissKeyboardButtonDidTap(_ sender: UIButton) {
@@ -35,7 +52,7 @@ class ViewController: UIViewController, InputAccessoryViewDelegate, InputViewDel
     
     // MARK: - InputAccessoryViewDelegate
     func switchKeyboardButtonDidTap() {
-        self.updateTextViewInputView()
+        self.toggleTextInputView()
     }
     
     func dismissKeyboardButtonDidTap() {
