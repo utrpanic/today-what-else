@@ -35,10 +35,14 @@ class SingleValueContainer: SingleValueEncodingContainer, MessagePackEncodingCon
     }
     
     func encodeNil() throws {
+        try checkCanEncode(value: nil)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xc0)
     }
     
     func encode(_ value: Bool) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         switch value {
         case false:
             storage.append(0xc2)
@@ -48,56 +52,78 @@ class SingleValueContainer: SingleValueEncodingContainer, MessagePackEncodingCon
     }
     
     func encode(_ value: Float) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xca)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Double) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xcb)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: UInt8) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xcc)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: UInt16) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xcd)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: UInt32) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xce)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: UInt64) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xcf)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Int8) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xd0)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Int16) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xd1)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Int32) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xd2)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Int64) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         storage.append(0xd3)
         storage.append(contentsOf: value.bytes)
     }
     
     func encode(_ value: Int) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         if let int8 = Int8(exactly: value) {
             if (int8 >= 0 && int8 <= 127) {
                 self.storage.append(UInt8(int8))
@@ -123,30 +149,37 @@ class SingleValueContainer: SingleValueEncodingContainer, MessagePackEncodingCon
         }
     }
     
-//    func encode(_ value: UInt) throws {
-//        if let uint8 = UInt8(exactly: value) {
-//            try encode(uint8)
-//        } else if let uint16 = UInt16(exactly: value) {
-//            try encode(uint16)
-//        } else if let uint32 = UInt32(exactly: value) {
-//            try encode(uint32)
-//        } else if let uint64 = UInt64(exactly: value) {
-//            try encode(uint64)
-//        } else {
-//            let context = EncodingError.Context(
-//                codingPath: self.codingPath,
-//                debugDescription: "Cannot encode unsigned integer \(value)."
-//            )
-//            throw EncodingError.invalidValue(value, context)
-//        }
-//    }
+    // TODO: 확인 필요.
+    func encode(_ value: UInt) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
+        if let uint8 = UInt8(exactly: value) {
+            try encode(uint8)
+        } else if let uint16 = UInt16(exactly: value) {
+            try encode(uint16)
+        } else if let uint32 = UInt32(exactly: value) {
+            try encode(uint32)
+        } else if let uint64 = UInt64(exactly: value) {
+            try encode(uint64)
+        } else {
+            let context = EncodingError.Context(
+                codingPath: self.codingPath,
+                debugDescription: "Cannot encode unsigned integer \(value)."
+            )
+            throw EncodingError.invalidValue(value, context)
+        }
+    }
     
-//    mutating func encode<T>(_ value: T) throws where T : Encodable {
-//        <#code#>
-//    }
+    // TODO: 확인 필요.
+    func encode<T>(_ value: T) throws where T : Encodable {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
+        
+    }
 
-    
     func encode(_ value: String) throws {
+        try checkCanEncode(value: value)
+        defer { self.canEncodeNewValue = false }
         guard let data = value.data(using: .utf8) else {
             let context = EncodingError.Context(
                 codingPath: self.codingPath,

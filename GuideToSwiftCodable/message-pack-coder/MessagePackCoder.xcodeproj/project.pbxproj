@@ -12,6 +12,8 @@
 		0738BAAE21221FA3005B4B90 /* MessagePackCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0738BAA021221FA2005B4B90 /* MessagePackCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0738BAB821221FD1005B4B90 /* MessagePackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0738BAB721221FD1005B4B90 /* MessagePackEncoder.swift */; };
 		0738BABA212224D3005B4B90 /* SingleValueContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0738BAB9212224D3005B4B90 /* SingleValueContainer.swift */; };
+		8D26238E2124347A0035D514 /* UnkeyedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26238D2124347A0035D514 /* UnkeyedContainer.swift */; };
+		8D262390212436C20035D514 /* KeyedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26238F212436C20035D514 /* KeyedContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,8 @@
 		0738BAAD21221FA3005B4B90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0738BAB721221FD1005B4B90 /* MessagePackEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePackEncoder.swift; sourceTree = "<group>"; };
 		0738BAB9212224D3005B4B90 /* SingleValueContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleValueContainer.swift; sourceTree = "<group>"; };
+		8D26238D2124347A0035D514 /* UnkeyedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnkeyedContainer.swift; sourceTree = "<group>"; };
+		8D26238F212436C20035D514 /* KeyedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyedContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				0738BAA121221FA2005B4B90 /* Info.plist */,
 				0738BAB721221FD1005B4B90 /* MessagePackEncoder.swift */,
 				0738BAB9212224D3005B4B90 /* SingleValueContainer.swift */,
+				8D26238D2124347A0035D514 /* UnkeyedContainer.swift */,
+				8D26238F212436C20035D514 /* KeyedContainer.swift */,
 			);
 			path = MessagePackCoder;
 			sourceTree = "<group>";
@@ -201,7 +207,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D262390212436C20035D514 /* KeyedContainer.swift in Sources */,
 				0738BAB821221FD1005B4B90 /* MessagePackEncoder.swift in Sources */,
+				8D26238E2124347A0035D514 /* UnkeyedContainer.swift in Sources */,
 				0738BABA212224D3005B4B90 /* SingleValueContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
