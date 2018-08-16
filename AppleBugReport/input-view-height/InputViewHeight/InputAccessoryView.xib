@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +45,6 @@
                         <constraint firstItem="QLF-iC-Cgi" firstAttribute="centerY" secondItem="YOr-Fg-nxD" secondAttribute="centerY" id="2rv-wh-uX8"/>
                         <constraint firstItem="W9b-TT-APc" firstAttribute="centerY" secondItem="YOr-Fg-nxD" secondAttribute="centerY" id="Bvp-6D-0v6"/>
                         <constraint firstItem="QLF-iC-Cgi" firstAttribute="leading" secondItem="YOr-Fg-nxD" secondAttribute="leading" constant="20" id="Ga8-j0-9d1"/>
-                        <constraint firstAttribute="height" constant="48" id="f1U-W8-QyR"/>
                         <constraint firstAttribute="trailing" secondItem="W9b-TT-APc" secondAttribute="trailing" constant="20" id="nU9-O1-CBI"/>
                     </constraints>
                 </view>
