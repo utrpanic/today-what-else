@@ -11,9 +11,11 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
-    @State private var correctAnswer = Int.random(in: 0...2)
-    @State private var showingScore = false
-    @State private var scoreTitle = ""
+    @State private var correctAnswer: Int = Int.random(in: 0...2)
+    @State private var score: Int = 0
+    @State private var showingScore: Bool = false
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
     
     var body: some View {
         ZStack {
@@ -41,10 +43,12 @@ struct ContentView: View {
                             .shadow(color: .black, radius: 2)
                     }
                 }
+                Text("Current Score: \(score)")
+                    .foregroundColor(.white)
                 Spacer()
             }
         }.alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Continue")) {
                 self.askQuestion()
             })
         }
@@ -52,9 +56,12 @@ struct ContentView: View {
     
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            scoreTitle = "Correct"
+            alertTitle = "Correct"
+            score += 1
+            alertMessage = "Your score is \(score)"
         } else {
-            scoreTitle = "Wrong"
+            alertTitle = "Wrong"
+            alertMessage = "That's the flag of \(self.countries[number])"
         }
         showingScore = true
     }
