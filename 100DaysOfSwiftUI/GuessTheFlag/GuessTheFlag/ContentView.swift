@@ -28,19 +28,14 @@ struct ContentView: View {
                     Text("Tap the flag of")
                         .foregroundColor(.white)
                     Text(countries[correctAnswer])
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
                         .fontWeight(.black)
+                        .modifier(Title())
                 }
                 ForEach(0 ..< 3) { number in
                     Button(action: {
                         self.flagTapped(number)
                     }) {
-                        Image(self.countries[number].lowercased())
-                            .renderingMode(.original)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-                            .shadow(color: .black, radius: 2)
+                        FlagImage(imageName: self.countries[number].lowercased())
                     }
                 }
                 Text("Current Score: \(score)")
@@ -75,5 +70,27 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct Title: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.white)
+    }
+}
+
+struct FlagImage: View {
+    
+    @State var imageName: String
+    
+    var body: some View {
+        return Image(imageName)
+            .renderingMode(.original)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+            .shadow(color: .black, radius: 2)
     }
 }
