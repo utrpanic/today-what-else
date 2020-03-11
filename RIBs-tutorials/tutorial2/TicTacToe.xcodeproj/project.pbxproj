@@ -7,10 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6048A84F241918A9009CE41B /* LoggedInRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A84C241918A9009CE41B /* LoggedInRouter.swift */; };
+		6048A850241918A9009CE41B /* LoggedInBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A84D241918A9009CE41B /* LoggedInBuilder.swift */; };
+		6048A851241918A9009CE41B /* LoggedInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A84E241918A9009CE41B /* LoggedInInteractor.swift */; };
+		6048A85724191DA0009CE41B /* OffGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A85324191DA0009CE41B /* OffGameRouter.swift */; };
+		6048A85824191DA0009CE41B /* OffGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A85424191DA0009CE41B /* OffGameViewController.swift */; };
+		6048A85924191DA0009CE41B /* OffGameBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A85524191DA0009CE41B /* OffGameBuilder.swift */; };
+		6048A85A24191DA0009CE41B /* OffGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A85624191DA0009CE41B /* OffGameInteractor.swift */; };
+		6048A85D2419277F009CE41B /* RootRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048A85C2419277F009CE41B /* RootRouterTests.swift */; };
 		7EDD59501FA13579005EC8B2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDD594F1FA13579005EC8B2 /* Default-568h@2x.png */; };
 		902781EB24A674D0368A3917 /* Pods_TicTacToeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D008FD5813F6BDE9C4955F5C /* Pods_TicTacToeTests.framework */; };
 		AEFA38604D7D1E4A08E9A7FA /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B99EABB5C8D25341027C05C5 /* Pods_TicTacToe.framework */; };
-		E9C3E1EE1FA1C07F00781364 /* DELETE_ME.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C3E1EB1FA1BF9700781364 /* DELETE_ME.swift */; };
 		E9C86D8A1FA3586500B61DF6 /* TicTacToeMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C86D891FA3586500B61DF6 /* TicTacToeMocks.swift */; };
 		E9C86D921FA35F8F00B61DF6 /* LoggedOutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB1D441F972FE400D84847 /* LoggedOutInteractor.swift */; };
 		E9CB1D521F97303800D84847 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB1D351F972FD500D84847 /* AppDelegate.swift */; };
@@ -43,6 +50,14 @@
 /* Begin PBXFileReference section */
 		125BC081886F3825A4B7C3E3 /* Pods-TicTacToeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1CC7657EC6690F406564B055 /* Pods-TicTacToeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.release.xcconfig"; sourceTree = "<group>"; };
+		6048A84C241918A9009CE41B /* LoggedInRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInRouter.swift; sourceTree = "<group>"; };
+		6048A84D241918A9009CE41B /* LoggedInBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInBuilder.swift; sourceTree = "<group>"; };
+		6048A84E241918A9009CE41B /* LoggedInInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInInteractor.swift; sourceTree = "<group>"; };
+		6048A85324191DA0009CE41B /* OffGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffGameRouter.swift; sourceTree = "<group>"; };
+		6048A85424191DA0009CE41B /* OffGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffGameViewController.swift; sourceTree = "<group>"; };
+		6048A85524191DA0009CE41B /* OffGameBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffGameBuilder.swift; sourceTree = "<group>"; };
+		6048A85624191DA0009CE41B /* OffGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffGameInteractor.swift; sourceTree = "<group>"; };
+		6048A85C2419277F009CE41B /* RootRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouterTests.swift; sourceTree = "<group>"; };
 		7EDD594F1FA13579005EC8B2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		833B15CABE3CBE09720A0409 /* Pods-TicTacToe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.debug.xcconfig"; sourceTree = "<group>"; };
 		A791EBDAD202886E66137B9C /* Pods-TicTacToe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.release.xcconfig"; sourceTree = "<group>"; };
@@ -50,7 +65,6 @@
 		D008FD5813F6BDE9C4955F5C /* Pods_TicTacToeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicTacToeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9894B4A1F972CC500688FCB /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9894B591F972CC500688FCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9C3E1EB1FA1BF9700781364 /* DELETE_ME.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DELETE_ME.swift; sourceTree = "<group>"; };
 		E9C3E1EC1FA1BF9700781364 /* LoggedInComponent+TicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggedInComponent+TicTacToe.swift"; sourceTree = "<group>"; };
 		E9C3E1ED1FA1BF9700781364 /* LoggedInComponent+OffGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggedInComponent+OffGame.swift"; sourceTree = "<group>"; };
 		E9C86D871FA3586500B61DF6 /* TicTacToeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +119,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6048A85224191D84009CE41B /* OffGame */ = {
+			isa = PBXGroup;
+			children = (
+				6048A85324191DA0009CE41B /* OffGameRouter.swift */,
+				6048A85424191DA0009CE41B /* OffGameViewController.swift */,
+				6048A85524191DA0009CE41B /* OffGameBuilder.swift */,
+				6048A85624191DA0009CE41B /* OffGameInteractor.swift */,
+			);
+			path = OffGame;
+			sourceTree = "<group>";
+		};
+		6048A85B24192766009CE41B /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				6048A85C2419277F009CE41B /* RootRouterTests.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
 		7EDD59511FA135E9005EC8B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +173,7 @@
 				E9CB1D331F972FD500D84847 /* AppStart */,
 				E9CB1D471F972FE500D84847 /* LoggedIn */,
 				E9CB1D421F972FE400D84847 /* LoggedOut */,
+				6048A85224191D84009CE41B /* OffGame */,
 				E9CB1D361F972FE400D84847 /* Root */,
 				E9CB1D3D1F972FE400D84847 /* TicTacToe */,
 				E9894B591F972CC500688FCB /* Info.plist */,
@@ -150,6 +184,7 @@
 		E9C86D881FA3586500B61DF6 /* TicTacToeTests */ = {
 			isa = PBXGroup;
 			children = (
+				6048A85B24192766009CE41B /* Root */,
 				E9C86D891FA3586500B61DF6 /* TicTacToeMocks.swift */,
 				E9C86D8B1FA3586500B61DF6 /* Info.plist */,
 			);
@@ -203,9 +238,11 @@
 		E9CB1D471F972FE500D84847 /* LoggedIn */ = {
 			isa = PBXGroup;
 			children = (
-				E9C3E1EB1FA1BF9700781364 /* DELETE_ME.swift */,
 				E9C3E1ED1FA1BF9700781364 /* LoggedInComponent+OffGame.swift */,
 				E9C3E1EC1FA1BF9700781364 /* LoggedInComponent+TicTacToe.swift */,
+				6048A84C241918A9009CE41B /* LoggedInRouter.swift */,
+				6048A84D241918A9009CE41B /* LoggedInBuilder.swift */,
+				6048A84E241918A9009CE41B /* LoggedInInteractor.swift */,
 			);
 			path = LoggedIn;
 			sourceTree = "<group>";
@@ -231,7 +268,6 @@
 				E9894B471F972CC500688FCB /* Frameworks */,
 				E9894B481F972CC500688FCB /* Resources */,
 				01C0219C62DB08840E36B78D /* [CP] Embed Pods Frameworks */,
-				D0E4ECFC9A8F9EAE85892FE7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -251,7 +287,6 @@
 				E9C86D841FA3586500B61DF6 /* Frameworks */,
 				E9C86D851FA3586500B61DF6 /* Resources */,
 				5FD5ECF53320E2E0DAFD17C5 /* [CP] Embed Pods Frameworks */,
-				F080D36DAB36458C01EE92DE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -328,7 +363,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TicTacToe/Pods-TicTacToe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RIBs/RIBs.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -343,7 +378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TicTacToe/Pods-TicTacToe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5FD5ECF53320E2E0DAFD17C5 /* [CP] Embed Pods Frameworks */ = {
@@ -352,7 +387,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RIBs/RIBs.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
@@ -363,7 +398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		64CF0EF6C16C782FD4AF3F3C /* [CP] Check Pods Manifest.lock */ = {
@@ -384,21 +419,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D0E4ECFC9A8F9EAE85892FE7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		EFEB812EF3BA56E9928EF4E3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -417,21 +437,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F080D36DAB36458C01EE92DE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -442,6 +447,8 @@
 				E9CB1D521F97303800D84847 /* AppDelegate.swift in Sources */,
 				E9CB1D681F9730F300D84847 /* TicTacToeInteractor.swift in Sources */,
 				E9C86D921FA35F8F00B61DF6 /* LoggedOutInteractor.swift in Sources */,
+				6048A84F241918A9009CE41B /* LoggedInRouter.swift in Sources */,
+				6048A850241918A9009CE41B /* LoggedInBuilder.swift in Sources */,
 				E9CB1D5B1F9730E700D84847 /* LoggedOutRouter.swift in Sources */,
 				E9CB1D641F9730EF00D84847 /* RootInteractor.swift in Sources */,
 				E9CB1D631F9730EF00D84847 /* RootComponent+LoggedOut.swift in Sources */,
@@ -450,12 +457,16 @@
 				E9CB1D671F9730F300D84847 /* TicTacToeBuilder.swift in Sources */,
 				E9CB1D6A1F9730F300D84847 /* TicTacToeViewController.swift in Sources */,
 				E9CB1D531F97305A00D84847 /* AppComponent.swift in Sources */,
+				6048A85924191DA0009CE41B /* OffGameBuilder.swift in Sources */,
+				6048A851241918A9009CE41B /* LoggedInInteractor.swift in Sources */,
+				6048A85824191DA0009CE41B /* OffGameViewController.swift in Sources */,
 				E9CB1D621F9730EF00D84847 /* RootComponent+LoggedIn.swift in Sources */,
 				E9CB1D5C1F9730E700D84847 /* LoggedOutViewController.swift in Sources */,
+				6048A85724191DA0009CE41B /* OffGameRouter.swift in Sources */,
 				E9CB1D691F9730F300D84847 /* TicTacToeRouter.swift in Sources */,
+				6048A85A24191DA0009CE41B /* OffGameInteractor.swift in Sources */,
 				E9CB1D651F9730EF00D84847 /* RootRouter.swift in Sources */,
 				E9CB1D661F9730EF00D84847 /* RootViewController.swift in Sources */,
-				E9C3E1EE1FA1C07F00781364 /* DELETE_ME.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6048A85D2419277F009CE41B /* RootRouterTests.swift in Sources */,
 				E9C86D8A1FA3586500B61DF6 /* TicTacToeMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
