@@ -16,6 +16,9 @@ struct ContentView: View {
     @State private var showingScore: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
+    @State private var degrees: [Double] = [0, 0, 0]
+    @State private var opacities: [Double] = [1, 1, 1]
+    @State private var scales: [CGFloat] = [1, 1, 1]
     
     var body: some View {
         ZStack {
@@ -36,6 +39,9 @@ struct ContentView: View {
                         self.flagTapped(number)
                     }) {
                         FlagImage(imageName: self.countries[number].lowercased())
+                            .rotation3DEffect(.degrees(self.degrees[number]), axis: (x: 0, y: 1, z: 0))
+                            .opacity(self.opacities[number])
+                            .scaleEffect(self.scales[number])
                     }
                 }
                 Text("Current Score: \(score)")
@@ -50,6 +56,22 @@ struct ContentView: View {
     }
     
     func flagTapped(_ number: Int) {
+        if number == self.correctAnswer {
+            withAnimation {
+                for index in 0 ..< self.degrees.count {
+                    self.degrees[index] = index == number ? 360 : 0
+                }
+                for index in 0 ..< self.opacities.count {
+                    self.opacities[index] = index == number ? 1 : 0.25
+                }
+            }
+        } else {
+            withAnimation(Animation.easeInOut(duration: 0.1).repeatCount(3, autoreverses: true)) {
+                for index in 0 ..< self.scales.count {
+                    self.scales[index] = index == number ? 0.8 : 1
+                }
+            }
+        }
         if number == correctAnswer {
             alertTitle = "Correct"
             score += 1
@@ -63,6 +85,9 @@ struct ContentView: View {
     
     func askQuestion() {
         countries.shuffle()
+        degrees = [0, 0, 0]
+        opacities = [1, 1, 1]
+        scales = [1, 1, 1]
         correctAnswer = Int.random(in: 0...2)
     }
 }
@@ -84,7 +109,7 @@ struct Title: ViewModifier {
 
 struct FlagImage: View {
     
-    @State var imageName: String
+    var imageName: String
     
     var body: some View {
         return Image(imageName)
