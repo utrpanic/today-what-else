@@ -1,4 +1,5 @@
-import SwiftUI
+import Combine
+import Foundation
 
 struct ExpenseItem: Identifiable, Codable {
     

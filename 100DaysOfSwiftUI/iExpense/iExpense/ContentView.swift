@@ -4,7 +4,7 @@ struct ContentView: View {
     
     @ObservedObject var expenses = Expenses()
     @State private var showingAddExpense = false
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -17,17 +17,21 @@ struct ContentView: View {
                         }
                         Spacer()
                         Text("$\(item.amount)")
+                            .font(self.getFont(with: item.amount))
                     }
                 }
                 .onDelete(perform: removeItems)
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.showingAddExpense = true
-                }) {
-                    Image(systemName: "plus")
-                }
+            .navigationBarItems(
+                leading:
+                    EditButton(),
+                trailing:
+                    Button(action: {
+                        self.showingAddExpense = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
             )
             .sheet(isPresented: $showingAddExpense) {
                 AddView(expenses: self.expenses)
@@ -37,6 +41,16 @@ struct ContentView: View {
     
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
+    }
+    
+    private func getFont(with amount: Int) -> Font {
+        if amount < 10 {
+            return .body
+        } else if amount < 100 {
+            return .title
+        } else {
+            return .largeTitle
+        }
     }
 }
 
