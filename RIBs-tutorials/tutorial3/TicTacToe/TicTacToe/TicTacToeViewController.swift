@@ -24,10 +24,15 @@ protocol TicTacToePresentableListener: class {
 }
 
 final class TicTacToeViewController: UIViewController, TicTacToePresentable, TicTacToeViewControllable {
+    
+    private let player1Name: String
+    private let player2Name: String
 
     weak var listener: TicTacToePresentableListener?
 
-    init() {
+    init(player1Name: String, player2Name: String) {
+        self.player1Name = player1Name
+        self.player2Name = player2Name
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -50,16 +55,22 @@ final class TicTacToeViewController: UIViewController, TicTacToePresentable, Tic
         cell?.backgroundColor = playerType.color
     }
 
-    func announce(winner: PlayerType, withCompletionHandler handler: @escaping () -> Void) {
-        let winnerString: String = {
-            switch winner {
-            case .player1:
-                return "Red"
-            case .player2:
-                return "Blue"
-            }
-        }()
-        let alert = UIAlertController(title: "\(winnerString) Won!", message: nil, preferredStyle: .alert)
+    func announce(winner: PlayerType?, withCompletionHandler handler: @escaping () -> Void) {
+        let title: String
+        if let winner = winner {
+            let winnerString: String = {
+                switch winner {
+                case .player1:
+                    return self.player1Name
+                case .player2:
+                    return self.player2Name
+                }
+            }()
+            title = "\(winnerString) Won!"
+        } else {
+            title = "DRAW"
+        }
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "Close Game", style: UIAlertActionStyle.default) { _ in
             handler()
         }

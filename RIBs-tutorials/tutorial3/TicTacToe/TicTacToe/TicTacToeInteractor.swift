@@ -24,7 +24,7 @@ protocol TicTacToeRouting: ViewableRouting {
 protocol TicTacToePresentable: Presentable {
     var listener: TicTacToePresentableListener? { get set }
     func setCell(atRow row: Int, col: Int, withPlayerType playerType: PlayerType)
-    func announce(winner: PlayerType, withCompletionHandler handler: @escaping () -> Void)
+    func announce(winner: PlayerType?, withCompletionHandler handler: @escaping () -> Void)
 }
 
 protocol TicTacToeListener: class {
@@ -69,6 +69,10 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
         if let winner = checkWinner() {
             presenter.announce(winner: winner) {
                 self.listener?.gameDidEnd(withWinner: winner)
+            }
+        } else if board.reduce(true, { return $0 && !$1.contains(nil) }) {
+            presenter.announce(winner: nil) {
+                self.listener?.gameDidEnd(withWinner: nil)
             }
         }
     }
