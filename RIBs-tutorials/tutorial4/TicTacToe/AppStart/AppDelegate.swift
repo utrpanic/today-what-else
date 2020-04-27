@@ -18,12 +18,18 @@ import RIBs
 import RxSwift
 import UIKit
 
+protocol UrlHandler: class {
+    func handle(_ url: URL)
+}
+
 /// Game app delegate.
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// The window.
     public var window: UIWindow?
+    
+    private var urlHandler: UrlHandler?
 
     /// Tells the delegate that the launch process is almost done and the app is almost ready to run.
     ///
@@ -31,15 +37,22 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     /// - parameter launchOptions: A dictionary indicating the reason the app was launched (if any). The contents of
     ///   this dictionary may be empty in situations where the user launched the app directly. For information about
     ///   the possible keys in this dictionary and how to handle them, see Launch Options Keys.
-    /// - returns: false if the app cannot handle the URL resource or continue a user activity, otherwise return true.
+    /// - returns: false if the app c
+    /// annot handle the URL resource or continue a user activity, otherwise return true.
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
-        let launchRouter = RootBuilder(dependency: AppComponent()).build()
-        self.launchRouter = launchRouter
-        launchRouter.launchFromWindow(window)
+        let result = RootBuilder(dependency: AppComponent()).build()
+        self.launchRouter = result.launchRouter
+        self.urlHandler = result.urlHandler
+        launchRouter?.launchFromWindow(window)
 
+        return true
+    }
+    
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        urlHandler?.handle(url)
         return true
     }
 
