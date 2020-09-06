@@ -4,24 +4,47 @@ struct ContentView: View {
     
     let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
     let missions: [Mission] = Bundle.main.decode("missions.json")
+    @State var showLaunchDate: Bool = true
     
     var body: some View {
         NavigationView {
             List(missions) { mission in
                 NavigationLink(destination: MissionView(mission: mission, astronauts: self.astronauts)) {
-                    Image(mission.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44, height: 44)
-
-                    VStack(alignment: .leading) {
-                        Text(mission.displayName)
-                            .font(.headline)
-                        Text(mission.formattedLaunchDate)
-                    }
+                    MissionListView(mission: mission, showLaunchDate: self.showLaunchDate)
                 }
             }
             .navigationBarTitle("Moonshot")
+            .navigationBarItems(trailing:
+                Button("Toggle") {
+                    self.showLaunchDate = !self.showLaunchDate
+                }
+            )
+        }
+    }
+}
+
+
+struct MissionListView: View {
+    
+    let mission: Mission
+    let showLaunchDate: Bool
+    
+    var astronautNames: String {
+        return self.mission.crew.map { $0.name }.joined(separator: ", ")
+    }
+    
+    var body: some View {
+        HStack {
+            Image(mission.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 44, height: 44)
+            
+            VStack(alignment: .leading) {
+                Text(mission.displayName)
+                    .font(.headline)
+                Text(self.showLaunchDate ? mission.formattedLaunchDate : self.astronautNames)
+            }
         }
     }
 }
@@ -29,18 +52,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-    }
-}
-
-struct CustomText: View {
-    var text: String
-    
-    var body: some View {
-        Text(text)
-    }
-    
-    init(_ text: String) {
-        print("Creating a new CustomText")
-        self.text = text
     }
 }

@@ -74,6 +74,7 @@
 				60D22226242B98CF0094DA1F /* SceneDelegate.swift */,
 				60D22228242B98CF0094DA1F /* ContentView.swift */,
 				8D144C9224F294820063C81D /* MissionView.swift */,
+				8D144C9424F29DC30063C81D /* AstronautView.swift */,
 				6059663C24339A6200D921EB /* Astronaut.swift */,
 				6059664024339BCE00D921EB /* Mission.swift */,
 				6059663E24339ABF00D921EB /* Bundle-Decodable.swift */,
@@ -83,7 +84,6 @@
 				60596638243399E800D921EB /* astronauts.json */,
 				60596639243399E800D921EB /* missions.json */,
 				60D2222C242B98D20094DA1F /* Preview Content */,
-				8D144C9424F29DC30063C81D /* AstronautView.swift */,
 			);
 			path = Moonshot;
 			sourceTree = "<group>";
