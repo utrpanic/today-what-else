@@ -2,14 +2,32 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State private var petalOffset = -20.0
+    @State private var petalWidth = 100.0
+    
+    @State private var colorCycle = 0.0
+    
     var body: some View {
-//        Triangle()
-//            .stroke(Color.red, style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
-//            .frame(width: 300, height: 300)
-//        Arc(startAngle: .degrees(0), endAngle: .degrees(110), clockwise: true)
-//            .strokeBorder(Color.blue, lineWidth: 10)
-        Circle()
-            .strokeBorder(Color.blue, lineWidth: 40)
+//        VStack {
+//            Flower(petalOffset: petalOffset, petalWidth: petalWidth)
+//                .stroke(Color.red, lineWidth: 1)
+//            Text("Offset")
+//            Slider(value: $petalOffset, in: -40...40)
+//                .padding([.horizontal, .bottom])
+//            Text("Width")
+//            Slider(value: $petalWidth, in: 0...100)
+//                .padding(.horizontal)
+//        }
+//        VStack {
+//            Text("Hello World")
+//                .frame(width: 300, height: 300)
+//                .border(ImagePaint(image: Image("Example"), scale: 0.2), width: 30)
+//        }
+        VStack {
+            ColorCyclingCircle(amount: self.colorCycle)
+                .frame(width: 300, height: 300)
+            Slider(value: $colorCycle)
+        }
     }
 }
 
