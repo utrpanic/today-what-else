@@ -1,6 +1,6 @@
 import UIKit
 
-class PullRequestsViewController: UIViewController {
+class IssuesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -9,6 +9,6 @@ class PullRequestsViewController: UIViewController {
     }
     
     private func setupNavigationItems() {
-        self.navigationItem.title = "PullRequests"
+        self.navigationItem.title = "Issues"
     }
 }
