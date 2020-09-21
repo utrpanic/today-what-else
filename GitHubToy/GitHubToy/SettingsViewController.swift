@@ -7,8 +7,8 @@ enum TargetRepo: Int, CaseIterable {
     
     var url: String {
         switch self {
-        case .alamofire: return "https://github.com/Alamofire/Alamofire"
-        case .apollo: return "https://github.com/apollographql/apollo-ios"
+        case .alamofire: return "Alamofire/Alamofire"
+        case .apollo: return "apollographql/apollo-ios"
         }
     }
     
