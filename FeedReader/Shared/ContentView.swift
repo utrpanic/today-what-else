@@ -7,8 +7,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(model.feed?.items ?? [], id: \.url) { row in
-                NavigationLink(destination: DetailView(row)) {
-                    Text(row.title)
+                NavigationLink(destination: DetailView(model: model, article: row)) {
+                    HStack {
+                        let isRead = model.readingStatuses[row.url] ?? false
+                        Image(systemName: isRead ? "checkmark.circle" : "circle")
+                        Text(row.title)
+                    }
                 }
             }
             .navigationTitle(Text("Articles"))
@@ -17,18 +21,5 @@ struct ContentView: View {
             Color.clear
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
-    }
-    
-    func DetailView(_ row: Article) -> some View {
-        return SharedWebView(content: row.content)
-            .navigationTitle(Text(row.title))
-            .navigationBarTitleDisplayModeInline()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        ContentView(model: Model())
     }
 }
