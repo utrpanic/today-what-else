@@ -15,6 +15,10 @@
 		8D79862426183F990009C8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D79860E26183F990009C8DF /* Assets.xcassets */; };
 		8D79863D2618435E0009C8DF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D79863C2618435E0009C8DF /* Model.swift */; };
 		8D798642261843610009C8DF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D79863C2618435E0009C8DF /* Model.swift */; };
+		8D798652261855EF0009C8DF /* SharedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D798650261855EF0009C8DF /* SharedWebView.swift */; };
+		8D7986562618562D0009C8DF /* SharedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986552618562D0009C8DF /* SharedWebView.swift */; };
+		8D798666261859900009C8DF /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D798665261859900009C8DF /* SwiftUI+Extension.swift */; };
+		8D798667261859900009C8DF /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D798665261859900009C8DF /* SwiftUI+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,9 @@
 		8D79861D26183F990009C8DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D79861E26183F990009C8DF /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		8D79863C2618435E0009C8DF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		8D798650261855EF0009C8DF /* SharedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebView.swift; sourceTree = "<group>"; };
+		8D7986552618562D0009C8DF /* SharedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebView.swift; sourceTree = "<group>"; };
+		8D798665261859900009C8DF /* SwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +67,7 @@
 		8D79860B26183F990009C8DF /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				8D7986642618597A0009C8DF /* Common */,
 				8D79863B261843560009C8DF /* Model */,
 				8D79860C26183F990009C8DF /* FeedReaderApp.swift */,
 				8D79860D26183F990009C8DF /* ContentView.swift */,
@@ -80,6 +88,7 @@
 		8D79861526183F990009C8DF /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				8D7986552618562D0009C8DF /* SharedWebView.swift */,
 				8D79861626183F990009C8DF /* Info.plist */,
 			);
 			path = iOS;
@@ -88,6 +97,7 @@
 		8D79861C26183F990009C8DF /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				8D798650261855EF0009C8DF /* SharedWebView.swift */,
 				8D79861D26183F990009C8DF /* Info.plist */,
 				8D79861E26183F990009C8DF /* macOS.entitlements */,
 			);
@@ -100,6 +110,14 @@
 				8D79863C2618435E0009C8DF /* Model.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8D7986642618597A0009C8DF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8D798665261859900009C8DF /* SwiftUI+Extension.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,8 +217,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D798666261859900009C8DF /* SwiftUI+Extension.swift in Sources */,
 				8D79863D2618435E0009C8DF /* Model.swift in Sources */,
 				8D79862126183F990009C8DF /* ContentView.swift in Sources */,
+				8D7986562618562D0009C8DF /* SharedWebView.swift in Sources */,
 				8D79861F26183F990009C8DF /* FeedReaderApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +229,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D798667261859900009C8DF /* SwiftUI+Extension.swift in Sources */,
 				8D798642261843610009C8DF /* Model.swift in Sources */,
 				8D79862226183F990009C8DF /* ContentView.swift in Sources */,
+				8D798652261855EF0009C8DF /* SharedWebView.swift in Sources */,
 				8D79862026183F990009C8DF /* FeedReaderApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

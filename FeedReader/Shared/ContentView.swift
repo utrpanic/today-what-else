@@ -7,13 +7,22 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(model.feed?.items ?? [], id: \.url) { row in
-                NavigationLink(destination: Text(row.content)) {
+                NavigationLink(destination: DetailView(row)) {
                     Text(row.title)
                 }
             }
+            .navigationTitle(Text("Articles"))
+            .navigationBarTitleDisplayModeInline()
+            
             Color.clear
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
+    }
+    
+    func DetailView(_ row: Article) -> some View {
+        return SharedWebView(content: row.content)
+            .navigationTitle(Text(row.title))
+            .navigationBarTitleDisplayModeInline()
     }
 }
 
