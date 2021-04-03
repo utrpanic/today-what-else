@@ -5,7 +5,7 @@ struct FeedReaderApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(model: Model())
         }
     }
 }
