@@ -1,5 +1,8 @@
 import SwiftUI
 
+import Model
+import View
+
 struct DetailView: View {
     
     @ObservedObject var model: Model

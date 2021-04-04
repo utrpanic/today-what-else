@@ -1,5 +1,7 @@
 import SwiftUI
 
+import Model
+
 struct ContentView: View {
     
     @ObservedObject var model: Model
