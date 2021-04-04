@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 
+import Toolbox
+
 public struct Feed: Codable {
     public let items: [Article]
 }
@@ -20,30 +22,42 @@ public struct Article: Codable {
 
 public class Model: ObservableObject {
     
-    @Published public var feed: Feed?
-    @Published public var readingStatuses: [URL: Bool]
+    @Published public private(set) var feed: Feed?
+    @Published public var error: IdentifiableError?
+    @Published public private(set) var readingStatuses: [URL: Bool]
     
-    private var task: URLSessionDataTask?
+    private enum Key: String {
+        case readingStatuses
+    }
     
-    public init() {
-        self.readingStatuses = UserDefaults.standard.data(forKey: "readingStatuses")
-            .flatMap { try? JSONDecoder().decode([URL: Bool].self, from: $0) } ?? [:]
+    var task: AnyCancellable?
+    
+    let services: Services
+    
+    public init(services: Services) {
+        self.services = services
+        self.readingStatuses = services.keyValueService[key: "readingStatuses", type: [URL: Bool].self] ?? [:]
+        self.reload()
+    }
+    
+    public func reload() {
         let request = URLRequest(url: URL(string: "https://www.cocoawithlove.com/feed.json")!)
-        self.task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let service = self.services.networkService
+        self.task = service.fetchData(with: request) { data, response, error in
             do {
                 if let error = error { throw error }
                 let feed = try JSONDecoder().decode(Feed.self, from: data ?? Data())
                 DispatchQueue.main.async { self.feed = feed }
             } catch {
-                // do nothing.
+                DispatchQueue.main.async { self.error = IdentifiableError(underlying: error) }
             }
         }
-        self.task?.resume()
     }
     
     public func setReading(_ value: Bool, url: URL) {
-        self.readingStatuses[url] = value
-        let newData = try? JSONEncoder().encode(self.readingStatuses)
-        UserDefaults.standard.set(newData, forKey: "readingStatuses")
+        var statuses = self.readingStatuses
+        statuses[url] = value
+        self.readingStatuses = statuses
+        self.services.keyValueService[key: "readingStatuses", type: [URL: Bool].self] = self.readingStatuses
     }
 }
