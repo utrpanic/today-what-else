@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D064C1526197B0600D9DE0E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D064C1426197B0500D9DE0E /* ListView.swift */; };
 		8D7986C0261963D90009C8DF /* FeedReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986BF261963D90009C8DF /* FeedReaderApp.swift */; };
 		8D7986C2261963D90009C8DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986C1261963D90009C8DF /* ContentView.swift */; };
 		8D7986C4261963DA0009C8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7986C3261963DA0009C8DF /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D064C1426197B0500D9DE0E /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		8D7986BC261963D90009C8DF /* FeedReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7986BF261963D90009C8DF /* FeedReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedReaderApp.swift; sourceTree = "<group>"; };
 		8D7986C1261963D90009C8DF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			children = (
 				8D7986BF261963D90009C8DF /* FeedReaderApp.swift */,
 				8D7986C1261963D90009C8DF /* ContentView.swift */,
+				8D064C1426197B0500D9DE0E /* ListView.swift */,
 				8D7986D22619646E0009C8DF /* DetailView.swift */,
 				8D7986C3261963DA0009C8DF /* Assets.xcassets */,
 				8D7986C8261963DA0009C8DF /* Info.plist */,
@@ -159,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7986D62619646E0009C8DF /* DetailView.swift in Sources */,
+				8D064C1526197B0600D9DE0E /* ListView.swift in Sources */,
 				8D7986C2261963D90009C8DF /* ContentView.swift in Sources */,
 				8D7986C0261963D90009C8DF /* FeedReaderApp.swift in Sources */,
 			);

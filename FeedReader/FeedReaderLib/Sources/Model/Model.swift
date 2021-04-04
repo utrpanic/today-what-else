@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 
+import Toolbox
+
 public struct Feed: Codable {
     public let items: [Article]
 }
@@ -20,14 +22,23 @@ public struct Article: Codable {
 
 public class Model: ObservableObject {
     
-    @Published public var feed: Feed?
-    @Published public var readingStatuses: [URL: Bool]
+    @Published public private(set) var feed: Feed?
+    @Published public var error: IdentifiableError?
+    @Published public private(set) var readingStatuses: [URL: Bool]
+    
+    private enum Key: String {
+        case readingStatuses
+    }
     
     private var task: URLSessionDataTask?
     
     public init() {
-        self.readingStatuses = UserDefaults.standard.data(forKey: "readingStatuses")
+        self.readingStatuses = UserDefaults.standard.data(forKey: Key.readingStatuses.rawValue )
             .flatMap { try? JSONDecoder().decode([URL: Bool].self, from: $0) } ?? [:]
+        self.reload()
+    }
+    
+    public func reload() {
         let request = URLRequest(url: URL(string: "https://www.cocoawithlove.com/feed.json")!)
         self.task = URLSession.shared.dataTask(with: request) { data, response, error in
             do {
@@ -35,7 +46,7 @@ public class Model: ObservableObject {
                 let feed = try JSONDecoder().decode(Feed.self, from: data ?? Data())
                 DispatchQueue.main.async { self.feed = feed }
             } catch {
-                // do nothing.
+                DispatchQueue.main.async { self.error = IdentifiableError(underlying: error) }
             }
         }
         self.task?.resume()
@@ -44,6 +55,6 @@ public class Model: ObservableObject {
     public func setReading(_ value: Bool, url: URL) {
         self.readingStatuses[url] = value
         let newData = try? JSONEncoder().encode(self.readingStatuses)
-        UserDefaults.standard.set(newData, forKey: "readingStatuses")
+        UserDefaults.standard.set(newData, forKey: Key.readingStatuses.rawValue)
     }
 }

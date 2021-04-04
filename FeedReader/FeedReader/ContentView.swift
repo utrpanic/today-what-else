@@ -7,21 +7,13 @@ struct ContentView: View {
     @ObservedObject var model: Model
     
     var body: some View {
-        NavigationView {
-            List(model.feed?.items ?? [], id: \.url) { row in
-                NavigationLink(destination: DetailView(model: model, article: row)) {
-                    HStack {
-                        let isRead = model.readingStatuses[row.url] ?? false
-                        Image(systemName: isRead ? "checkmark.circle" : "circle")
-                        Text(row.title)
-                    }
-                }
-            }
-            .navigationTitle(Text("Articles"))
-            .navigationBarTitleDisplayMode(.inline)
-            
+        return NavigationView {
+            ListView(model: model)
             Color.clear
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        .alert(item: $model.error) { error in
+            Alert(title: Text(verbatim: error.localizedDescription))
+        }
     }
 }
