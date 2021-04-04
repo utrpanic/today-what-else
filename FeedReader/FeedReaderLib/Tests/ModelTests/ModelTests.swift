@@ -8,7 +8,7 @@ class ModelTests: XCTestCase {
     
     func test_Reload() {
         // Given a newly initialized model and an expectation that stops on the second feed value
-        let model = Model()
+        let model = Model(services: Services())
         let secondValue = expectation(description: "feed should emit 2 values.")
         let cancellable = model.$feed
             .dropFirst()

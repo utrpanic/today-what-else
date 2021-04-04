@@ -30,17 +30,20 @@ public class Model: ObservableObject {
         case readingStatuses
     }
     
-    private var task: URLSessionDataTask?
+    var task: AnyCancellable?
     
-    public init() {
-        self.readingStatuses = UserDefaults.standard.data(forKey: Key.readingStatuses.rawValue )
-            .flatMap { try? JSONDecoder().decode([URL: Bool].self, from: $0) } ?? [:]
+    let services: Services
+    
+    public init(services: Services) {
+        self.services = services
+        self.readingStatuses = services.keyValueService[key: "readingStatuses", type: [URL: Bool].self] ?? [:]
         self.reload()
     }
     
     public func reload() {
         let request = URLRequest(url: URL(string: "https://www.cocoawithlove.com/feed.json")!)
-        self.task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let service = self.services.networkService
+        self.task = service.fetchData(with: request) { data, response, error in
             do {
                 if let error = error { throw error }
                 let feed = try JSONDecoder().decode(Feed.self, from: data ?? Data())
@@ -49,12 +52,12 @@ public class Model: ObservableObject {
                 DispatchQueue.main.async { self.error = IdentifiableError(underlying: error) }
             }
         }
-        self.task?.resume()
     }
     
     public func setReading(_ value: Bool, url: URL) {
-        self.readingStatuses[url] = value
-        let newData = try? JSONEncoder().encode(self.readingStatuses)
-        UserDefaults.standard.set(newData, forKey: Key.readingStatuses.rawValue)
+        var statuses = self.readingStatuses
+        statuses[url] = value
+        self.readingStatuses = statuses
+        self.services.keyValueService[key: "readingStatuses", type: [URL: Bool].self] = self.readingStatuses
     }
 }
