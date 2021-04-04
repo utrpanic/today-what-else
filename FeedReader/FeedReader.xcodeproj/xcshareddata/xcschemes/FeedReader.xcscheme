@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FeedReaderLib"
-               BuildableName = "FeedReaderLib"
-               BlueprintName = "FeedReaderLib"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ModelTests"
-               BuildableName = "ModelTests"
-               BlueprintName = "ModelTests"
-               ReferencedContainer = "container:">
+               BlueprintIdentifier = "8D7986BB261963D90009C8DF"
+               BuildableName = "FeedReader.app"
+               BlueprintName = "FeedReader"
+               ReferencedContainer = "container:FeedReader.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,16 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ModelTests"
-               BuildableName = "ModelTests"
-               BlueprintName = "ModelTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -64,6 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8D7986BB261963D90009C8DF"
+            BuildableName = "FeedReader.app"
+            BlueprintName = "FeedReader"
+            ReferencedContainer = "container:FeedReader.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
@@ -78,15 +64,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FeedReaderLib"
-            BuildableName = "FeedReaderLib"
-            BlueprintName = "FeedReaderLib"
-            ReferencedContainer = "container:">
+            BlueprintIdentifier = "8D7986BB261963D90009C8DF"
+            BuildableName = "FeedReader.app"
+            BlueprintName = "FeedReader"
+            ReferencedContainer = "container:FeedReader.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
