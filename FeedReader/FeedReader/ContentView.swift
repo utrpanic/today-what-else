@@ -16,7 +16,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle(Text("Articles"))
-            .navigationBarTitleDisplayModeInline()
+            .navigationBarTitleDisplayMode(.inline)
             
             Color.clear
         }
