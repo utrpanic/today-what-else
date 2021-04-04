@@ -1,15 +1,15 @@
 import Foundation
 import Combine
 
-struct Feed: Codable {
-    let items: [Article]
+public struct Feed: Codable {
+    public let items: [Article]
 }
 
-struct Article: Codable {
+public struct Article: Codable {
     
-    let url: URL
-    let title: String
-    let content: String
+    public let url: URL
+    public let title: String
+    public let content: String
     
     enum CodingKeys: String, CodingKey {
         case url
@@ -18,14 +18,14 @@ struct Article: Codable {
     }
 }
 
-class Model: ObservableObject {
+public class Model: ObservableObject {
     
-    @Published var feed: Feed?
-    @Published var readingStatuses: [URL: Bool]
+    @Published public var feed: Feed?
+    @Published public var readingStatuses: [URL: Bool]
     
     private var task: URLSessionDataTask?
     
-    init() {
+    public init() {
         self.readingStatuses = UserDefaults.standard.data(forKey: "readingStatuses")
             .flatMap { try? JSONDecoder().decode([URL: Bool].self, from: $0) } ?? [:]
         let request = URLRequest(url: URL(string: "https://www.cocoawithlove.com/feed.json")!)
@@ -41,7 +41,7 @@ class Model: ObservableObject {
         self.task?.resume()
     }
     
-    func setReading(_ value: Bool, url: URL) {
+    public func setReading(_ value: Bool, url: URL) {
         self.readingStatuses[url] = value
         let newData = try? JSONEncoder().encode(self.readingStatuses)
         UserDefaults.standard.set(newData, forKey: "readingStatuses")

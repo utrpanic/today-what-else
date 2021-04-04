@@ -1,5 +1,7 @@
 import SwiftUI
 
+import Model
+
 @main
 struct FeedReaderApp: App {
     
