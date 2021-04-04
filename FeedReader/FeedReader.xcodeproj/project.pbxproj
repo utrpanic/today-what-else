@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D064C1526197B0600D9DE0E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D064C1426197B0500D9DE0E /* ListView.swift */; };
+		8D064C222619E7BE00D9DE0E /* MockFeedReaderLib in Frameworks */ = {isa = PBXBuildFile; productRef = 8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */; };
 		8D7986C0261963D90009C8DF /* FeedReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986BF261963D90009C8DF /* FeedReaderApp.swift */; };
 		8D7986C2261963D90009C8DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986C1261963D90009C8DF /* ContentView.swift */; };
 		8D7986C4261963DA0009C8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7986C3261963DA0009C8DF /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		8D064C1426197B0500D9DE0E /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		8D064C1F2619E69B00D9DE0E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8D7986BC261963D90009C8DF /* FeedReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7986BF261963D90009C8DF /* FeedReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedReaderApp.swift; sourceTree = "<group>"; };
 		8D7986C1261963D90009C8DF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,6 +37,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7986EA26196A0D0009C8DF /* FeedReaderLib in Frameworks */,
+				8D064C222619E7BE00D9DE0E /* MockFeedReaderLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,7 @@
 		8D7986B3261963D90009C8DF = {
 			isa = PBXGroup;
 			children = (
+				8D064C1F2619E69B00D9DE0E /* README.md */,
 				8D7986E4261968390009C8DF /* FeedReaderLib */,
 				8D7986BE261963D90009C8DF /* FeedReader */,
 				8D7986BD261963D90009C8DF /* Products */,
@@ -107,6 +111,7 @@
 			name = FeedReader;
 			packageProductDependencies = (
 				8D7986E926196A0D0009C8DF /* FeedReaderLib */,
+				8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */,
 			);
 			productName = FeedReader;
 			productReference = 8D7986BC261963D90009C8DF /* FeedReader.app */;
@@ -359,6 +364,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MockFeedReaderLib;
+		};
 		8D7986E926196A0D0009C8DF /* FeedReaderLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FeedReaderLib;

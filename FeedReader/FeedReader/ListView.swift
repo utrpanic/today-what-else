@@ -27,3 +27,15 @@ struct ListView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+#if DEBUG
+import MockService
+
+struct ListView_Previews: PreviewProvider {
+    
+   static var previews: some View {
+      let model = Model(services: Services.mock)
+      return ListView(model: model)
+   }
+}
+#endif

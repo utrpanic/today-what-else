@@ -1,14 +1,15 @@
+@testable import Model
 import XCTest
 
-@testable import Model
+import MockService
 
 class ModelTests: XCTestCase {
     
-    let feedFirstURL = URL(string: "https://www.cocoawithlove.com/blog/swiftui-natural-pattern.html")!
+    let feedFirstURL = URL(string: "https://www.cocoawithlove.com/blog/twenty-two-short-tests-of-combine-part-3.html")!
     
     func test_Reload() {
         // Given a newly initialized model and an expectation that stops on the second feed value
-        let model = Model(services: Services())
+        let model = Model(services: Services.mock)
         let secondValue = expectation(description: "feed should emit 2 values.")
         let cancellable = model.$feed
             .dropFirst()
