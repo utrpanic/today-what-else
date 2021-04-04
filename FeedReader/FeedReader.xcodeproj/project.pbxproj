@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8D064C1526197B0600D9DE0E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D064C1426197B0500D9DE0E /* ListView.swift */; };
-		8D064C222619E7BE00D9DE0E /* MockFeedReaderLib in Frameworks */ = {isa = PBXBuildFile; productRef = 8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */; };
 		8D7986C0261963D90009C8DF /* FeedReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986BF261963D90009C8DF /* FeedReaderApp.swift */; };
 		8D7986C2261963D90009C8DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7986C1261963D90009C8DF /* ContentView.swift */; };
 		8D7986C4261963DA0009C8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7986C3261963DA0009C8DF /* Assets.xcassets */; };
@@ -37,7 +36,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7986EA26196A0D0009C8DF /* FeedReaderLib in Frameworks */,
-				8D064C222619E7BE00D9DE0E /* MockFeedReaderLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +109,6 @@
 			name = FeedReader;
 			packageProductDependencies = (
 				8D7986E926196A0D0009C8DF /* FeedReaderLib */,
-				8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */,
 			);
 			productName = FeedReader;
 			productReference = 8D7986BC261963D90009C8DF /* FeedReader.app */;
@@ -364,10 +361,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8D064C212619E7BE00D9DE0E /* MockFeedReaderLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MockFeedReaderLib;
-		};
 		8D7986E926196A0D0009C8DF /* FeedReaderLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FeedReaderLib;
