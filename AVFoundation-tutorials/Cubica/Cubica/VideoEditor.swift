@@ -69,6 +69,11 @@ class VideoEditor {
     backgroundLayer.contents = UIImage(named: "background")?.cgImage
     backgroundLayer.contentsGravity = .resizeAspectFill
     self.addImage(to: overlayLayer, videoSize: videoSize)
+    self.add(
+      text: "Happy Birthday, \n\(name)",
+      to: overlayLayer,
+      videoSize: videoSize
+    )
     videoLayer.frame = CGRect(
       x: 20,
       y: 20,
@@ -191,5 +196,31 @@ class VideoEditor {
     )
     imageLayer.contents = image.cgImage
     layer.addSublayer(imageLayer)
+  }
+  
+  private func add(text: String, to layer: CALayer, videoSize: CGSize) {
+    let attributedText = NSAttributedString(
+      string: text,
+      attributes: [
+        .font: UIFont(name: "ArialRoundedMTBold", size: 60) as Any,
+        .foregroundColor: UIColor(named: "rw-green")!,
+        .strokeColor: UIColor.white,
+        .strokeWidth: -3
+      ]
+    )
+    let textLayer = CATextLayer()
+    textLayer.string = attributedText
+    textLayer.shouldRasterize = true
+    textLayer.rasterizationScale = UIScreen.main.scale
+    textLayer.backgroundColor = UIColor.clear.cgColor
+    textLayer.alignmentMode = .center
+    textLayer.frame = CGRect(
+      x: 0,
+      y: videoSize.height * 0.66,
+      width: videoSize.width,
+      height: 150
+    )
+    textLayer.displayIfNeeded()
+    layer.addSublayer(textLayer)
   }
 }
