@@ -64,6 +64,17 @@ class VideoEditor {
     videoLayer.frame = CGRect(origin: .zero, size: videoSize)
     let overlayLayer = CALayer()
     overlayLayer.frame = CGRect(origin: .zero, size: videoSize)
+    
+    backgroundLayer.backgroundColor = UIColor(named: "rw-green")?.cgColor
+    backgroundLayer.contents = UIImage(named: "background")?.cgImage
+    backgroundLayer.contentsGravity = .resizeAspectFill
+    videoLayer.frame = CGRect(
+      x: 20,
+      y: 20,
+      width: videoSize.width - 40,
+      height: videoSize.height - 40
+    )
+    
     let outputLayer = CALayer()
     outputLayer.frame = CGRect(origin: .zero, size: videoSize)
     outputLayer.addSublayer(backgroundLayer)
