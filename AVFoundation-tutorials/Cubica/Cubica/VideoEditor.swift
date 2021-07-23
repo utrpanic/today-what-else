@@ -69,6 +69,45 @@ class VideoEditor {
     outputLayer.addSublayer(backgroundLayer)
     outputLayer.addSublayer(videoLayer)
     outputLayer.addSublayer(overlayLayer)
+    
+    let videoComposition = AVMutableVideoComposition()
+    videoComposition.renderSize = videoSize
+    videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
+    videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: outputLayer)
+    
+    let instruction = AVMutableVideoCompositionInstruction()
+    instruction.timeRange = CMTimeRange(start: .zero, duration: composition.duration)
+    videoComposition.instructions = [instruction]
+    let layerInstruction = compositionLayerInstruction(for: compositionTrack, assetTrack: assetTrack)
+    instruction.layerInstructions = [layerInstruction]
+    
+    guard let export = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else {
+      print("Cannot create export session.")
+      onComplete(nil)
+      return
+    }
+    
+    let videoName = UUID().uuidString
+    let exportURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent(videoName)
+      .appendingPathExtension("mov")
+    
+    export.videoComposition = videoComposition
+    export.outputFileType = .mov
+    export.outputURL = exportURL
+    
+    export.exportAsynchronously {
+      DispatchQueue.main.async {
+        switch export.status {
+        case .completed:
+          onComplete(exportURL)
+        default:
+          print("Something went wrong during export.")
+          print(export.error ?? "unknown error")
+          onComplete(nil)
+        }
+      }
+    }
   }
   
   private func orientation(from transform: CGAffineTransform) -> (orientation: UIImage.Orientation, isPortrait: Bool) {
