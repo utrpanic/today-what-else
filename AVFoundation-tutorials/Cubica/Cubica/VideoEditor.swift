@@ -68,6 +68,7 @@ class VideoEditor {
     backgroundLayer.backgroundColor = UIColor(named: "rw-green")?.cgColor
     backgroundLayer.contents = UIImage(named: "background")?.cgImage
     backgroundLayer.contentsGravity = .resizeAspectFill
+    self.addImage(to: overlayLayer, videoSize: videoSize)
     videoLayer.frame = CGRect(
       x: 20,
       y: 20,
@@ -174,5 +175,21 @@ class VideoEditor {
     emitter.emitterCells = cells
     
     layer.addSublayer(emitter)
+  }
+  
+  private func addImage(to layer: CALayer, videoSize: CGSize) {
+    let image = UIImage(named: "overlay")!
+    let imageLayer = CALayer()
+    let aspect: CGFloat = image.size.width / image.size.height
+    let width = videoSize.width
+    let height = width / aspect
+    imageLayer.frame = CGRect(
+      x: 0,
+      y: -height * 0.15,
+      width: width,
+      height: height
+    )
+    imageLayer.contents = image.cgImage
+    layer.addSublayer(imageLayer)
   }
 }
