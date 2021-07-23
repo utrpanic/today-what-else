@@ -69,6 +69,7 @@ class VideoEditor {
     backgroundLayer.contents = UIImage(named: "background")?.cgImage
     backgroundLayer.contentsGravity = .resizeAspectFill
     self.addImage(to: overlayLayer, videoSize: videoSize)
+    self.addConfetti(to: overlayLayer)
     self.add(
       text: "Happy Birthday, \n\(name)",
       to: overlayLayer,
