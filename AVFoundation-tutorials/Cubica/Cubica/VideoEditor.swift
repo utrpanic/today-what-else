@@ -31,7 +31,44 @@ import AVFoundation
 
 class VideoEditor {
   func makeBirthdayCard(fromVideoAt videoURL: URL, forName name: String, onComplete: @escaping (URL?) -> Void) {
-    onComplete(videoURL)
+    let asset = AVURLAsset(url: videoURL)
+    let composition = AVMutableComposition()
+    guard let compositionTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid), let assetTrack = asset.tracks(withMediaType: .video).first else {
+      print("Something is wrong with the asset.")
+      onComplete(nil)
+      return
+    }
+    do {
+      let timeRange = CMTimeRange(start: .zero, duration: asset.duration)
+      try compositionTrack.insertTimeRange(timeRange, of: assetTrack, at: .zero)
+      if let audioAssetTrack = asset.tracks(withMediaType: .audio).first, let compositionAudioTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
+        try compositionAudioTrack.insertTimeRange(timeRange, of: audioAssetTrack, at: .zero)
+      }
+    } catch {
+      print(error)
+      onComplete(nil)
+      return
+    }
+    compositionTrack.preferredTransform = assetTrack.preferredTransform
+    let videoInfo = self.orientation(from: assetTrack.preferredTransform)
+    let videoSize: CGSize
+    if videoInfo.isPortrait {
+      videoSize = CGSize(width: assetTrack.naturalSize.height, height: assetTrack.naturalSize.width)
+    } else {
+      videoSize = assetTrack.naturalSize
+    }
+    
+    let backgroundLayer = CALayer()
+    backgroundLayer.frame = CGRect(origin: .zero, size: videoSize)
+    let videoLayer = CALayer()
+    videoLayer.frame = CGRect(origin: .zero, size: videoSize)
+    let overlayLayer = CALayer()
+    overlayLayer.frame = CGRect(origin: .zero, size: videoSize)
+    let outputLayer = CALayer()
+    outputLayer.frame = CGRect(origin: .zero, size: videoSize)
+    outputLayer.addSublayer(backgroundLayer)
+    outputLayer.addSublayer(videoLayer)
+    outputLayer.addSublayer(overlayLayer)
   }
   
   private func orientation(from transform: CGAffineTransform) -> (orientation: UIImage.Orientation, isPortrait: Bool) {
