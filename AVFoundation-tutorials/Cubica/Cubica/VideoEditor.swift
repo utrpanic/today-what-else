@@ -221,6 +221,16 @@ class VideoEditor {
       height: 150
     )
     textLayer.displayIfNeeded()
+    let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+    scaleAnimation.fromValue = 0.8
+    scaleAnimation.toValue = 1.2
+    scaleAnimation.duration = 0.5
+    scaleAnimation.repeatCount = .greatestFiniteMagnitude
+    scaleAnimation.autoreverses = true
+    scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+    scaleAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
+    scaleAnimation.isRemovedOnCompletion = false
+    textLayer.add(scaleAnimation, forKey: "scale")
     layer.addSublayer(textLayer)
   }
 }
