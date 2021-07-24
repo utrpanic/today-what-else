@@ -70,6 +70,11 @@ extension CAGradientLayerViewController {
   }
 
   func setUpGradientLayer() {
+    self.gradientLayer.frame = self.viewForGradientLayer.bounds
+    self.gradientLayer.colors = self.colors
+    self.gradientLayer.locations = self.locations.map { NSNumber(value: $0) }
+    self.gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+    self.gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
   }
 
   func setUpLocationSliders() {
