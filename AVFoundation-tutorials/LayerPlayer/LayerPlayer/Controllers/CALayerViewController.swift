@@ -41,11 +41,31 @@ class CALayerViewController: UIViewController {
   }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "DisplayLayerControls" {
+      (segue.destination as? CALayerControlsViewController)?.layerViewController = self
+    }
   }
 }
 
 // MARK: - Layer
 extension CALayerViewController {
+  
   func setUpLayer() {
+    // 1
+    self.layer.frame = self.viewForLayer.bounds
+    self.layer.contents = UIImage(named: "star")?.cgImage
+    // 2
+    self.layer.contentsGravity = .center
+    self.layer.magnificationFilter = .linear
+    // 3
+    self.layer.cornerRadius = 100.0
+    self.layer.borderWidth = 12.0
+    self.layer.borderColor = UIColor.white.cgColor
+    self.layer.backgroundColor = swiftOrangeColor.cgColor
+    // 4
+    self.layer.shadowOpacity = 0.75
+    self.layer.shadowOffset = CGSize(width: 0, height: 3)
+    self.layer.shadowRadius = 3.0
+    self.layer.isGeometryFlipped = false
   }
 }
