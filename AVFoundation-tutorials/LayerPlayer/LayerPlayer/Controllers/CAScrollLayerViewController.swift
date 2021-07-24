@@ -46,9 +46,31 @@ class CAScrollLayerViewController: UIViewController {
 
 // MARK: - IBActions
 extension CAScrollLayerViewController {
+  
   @IBAction func panRecognized(_ sender: UIPanGestureRecognizer) {
+    var newPoint = self.scrollingView.bounds.origin
+    newPoint.x -= sender.translation(in: self.scrollingView).x
+    newPoint.y -= sender.translation(in: self.scrollingView).y
+    sender.setTranslation(.zero, in: self.scrollingView)
+    self.scrollingViewLayer.scroll(to: newPoint)
+    
+    if sender.state == .ended {
+      UIView.animate(withDuration: 0.3) {
+        self.scrollingViewLayer.scroll(to: CGPoint.zero)
+      }
+    }
   }
 
   @IBAction func scrollingSwitchChanged(_ sender: UISwitch) {
+    switch (self.horizontalScrollingSwitch.isOn, self.verticalScrollingSwitch.isOn) {
+    case (true, true):
+      self.scrollingViewLayer.scrollMode = .both
+    case (true, false):
+      self.scrollingViewLayer.scrollMode = .horizontally
+    case (false, true):
+      self.scrollingViewLayer.scrollMode = .vertically
+    case (false, false):
+      self.scrollingViewLayer.scrollMode = .none
+    }
   }
 }
