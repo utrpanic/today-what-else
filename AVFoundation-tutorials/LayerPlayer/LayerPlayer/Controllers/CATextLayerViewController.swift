@@ -69,8 +69,9 @@ class CATextLayerViewController: UIViewController {
 
 // MARK: - Layer setup
 extension CATextLayerViewController {
+  
   func setUpTextLayer() {
-    textLayer.frame = viewForTextLayer.bounds
+    self.textLayer.frame = self.viewForTextLayer.bounds
 
     let string = (1...20)
       .map { _ in
@@ -78,7 +79,18 @@ extension CATextLayerViewController {
       }
       .joined(separator: " ")
 
-    textLayer.string = string
+    self.textLayer.string = string
+    
+    // 1
+    self.textLayer.font = helveticaFont
+    self.textLayer.fontSize = Constants.baseFontSize
+    // 2
+    self.textLayer.foregroundColor = UIColor.darkGray.cgColor
+    self.textLayer.isWrapped = true
+    self.textLayer.alignmentMode = .left
+    self.textLayer.truncationMode = .end
+    // 3
+    self.textLayer.contentsScale = UIScreen.main.scale
   }
 }
 
