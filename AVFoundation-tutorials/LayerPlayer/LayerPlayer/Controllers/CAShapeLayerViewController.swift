@@ -57,10 +57,43 @@ class CAShapeLayerViewController: UIViewController {
 
 // MARK: - Layer setup
 extension CAShapeLayerViewController {
+  
   func setUpPath() {
+    self.openPath.move(to: CGPoint(x: 30.0, y: 196.0))
+    
+    self.openPath.addCurve(
+      to: CGPoint(x: 112.0, y: 12.5),
+      controlPoint1: CGPoint(x: 110.56, y: 13.79),
+      controlPoint2: CGPoint(x: 112.07, y: 13.01)
+    )
+    
+    self.openPath.addCurve(
+      to: CGPoint(x: 194.0, y: 196.0),
+      controlPoint1: CGPoint(x: 111.9, y: 11.81),
+      controlPoint2: CGPoint(x: 194.0, y: 196.0)
+    )
+    
+    self.openPath.addLine(to: CGPoint(x: 30.0, y: 85.68))
+    self.openPath.addLine(to: CGPoint(x: 194.0, y: 48.91))
+    self.openPath.addLine(to: CGPoint(x: 30.0, y: 196.0))
   }
 
   func setUpShapeLayer() {
+    // 1
+    self.shapeLayer.path = self.openPath.cgPath
+    // 2
+    self.shapeLayer.lineCap = .butt
+    self.shapeLayer.lineJoin = .miter
+    self.shapeLayer.miterLimit = 4.0
+    // 3
+    self.shapeLayer.lineWidth = CGFloat(self.lineWidthSlider.value)
+    self.shapeLayer.strokeColor = swiftOrangeColor.cgColor
+    self.shapeLayer.fillColor = UIColor.white.cgColor
+    // 4
+    self.shapeLayer.lineDashPattern = nil
+    self.shapeLayer.lineDashPhase = 0.0
+    
+    self.viewForShapeLayer.layer.addSublayer(self.shapeLayer)
   }
 }
 
