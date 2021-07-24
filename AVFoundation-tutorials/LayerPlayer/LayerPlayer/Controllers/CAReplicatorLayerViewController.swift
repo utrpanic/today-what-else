@@ -66,13 +66,44 @@ class CAReplicatorLayerViewController: UIViewController {
 
 // MARK: - Layer setup
 extension CAReplicatorLayerViewController {
+  
   func setUpReplicatorLayer() {
+    // 1
+    self.replicatorLayer.frame = self.viewForReplicatorLayer.bounds
+    // 2
+    let count = self.instanceCountSlider.value
+    self.replicatorLayer.instanceCount = Int(count)
+    self.replicatorLayer.instanceDelay = CFTimeInterval(self.instanceCountSlider.value / count)
+    // 3
+    self.replicatorLayer.instanceColor = UIColor.white.cgColor
+    self.replicatorLayer.instanceRedOffset = self.offsetValueForSwitch(self.offsetRedSwitch)
+    self.replicatorLayer.instanceGreenOffset = self.offsetValueForSwitch(self.offsetGreenSwitch)
+    self.replicatorLayer.instanceBlueOffset = self.offsetValueForSwitch(self.offsetBlueSwitch)
+    self.replicatorLayer.instanceAlphaOffset = self.offsetValueForSwitch(self.offsetAlphaSwitch)
+    // 4
+    let angle = Float.pi * 2.0 / count
+    self.replicatorLayer.instanceTransform = CATransform3DMakeRotation(CGFloat(angle), 0.0, 0.0, 1.0)
+    // 5
+    self.viewForReplicatorLayer.layer.addSublayer(self.replicatorLayer)
   }
 
   func setUpInstanceLayer() {
+    let layerWidth = CGFloat(self.layerSizeSlider.value)
+    let midX = self.viewForReplicatorLayer.bounds.midX - layerWidth / 2.0
+    self.instanceLayer.frame = CGRect(
+      x: midX,
+      y: 0.0,
+      width: layerWidth,
+      height: layerWidth * self.lengthMultiplier
+    )
+    self.instanceLayer.backgroundColor = UIColor.white.cgColor
+    self.replicatorLayer.addSublayer(self.instanceLayer)
   }
 
   func setUpLayerFadeAnimation() {
+    self.fadeAnimation.fromValue = 1.0
+    self.fadeAnimation.toValue = 0.0
+    self.fadeAnimation.repeatCount = Float(Int.max)
   }
 }
 
