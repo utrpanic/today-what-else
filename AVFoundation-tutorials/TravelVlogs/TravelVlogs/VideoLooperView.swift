@@ -45,6 +45,7 @@ class VideoLooperView: UIView {
     super.init(frame: .zero)
     
     self.initializePlayer()
+    self.addGestureRecognizers()
   }
   
   // MARK - Unnecessary but necessary Code
@@ -82,5 +83,25 @@ class VideoLooperView: UIView {
   
   func play() {
     self.player.play()
+  }
+  
+  @objc func wasTapped() {
+    self.player.volume = self.player.volume == 1.0 ? 0.0 : 1.0
+  }
+  
+  @objc func wasDoubleTapped() {
+    self.player.rate = self.player.rate == 1.0 ? 2.0 : 1.0
+  }
+  
+  func addGestureRecognizers() {
+    // 1
+    let tap = UITapGestureRecognizer(target: self, action: #selector(VideoLooperView.wasTapped))
+    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(VideoLooperView.wasDoubleTapped))
+    doubleTap.numberOfTapsRequired = 2
+    // 2
+    tap.require(toFail: doubleTap)
+    // 3
+    self.addGestureRecognizer(tap)
+    self.addGestureRecognizer(doubleTap)
   }
 }
