@@ -28,6 +28,7 @@
  * THE SOFTWARE.
  */
 
+import AVKit
 import UIKit
 
 class VideoFeedViewController: UIViewController {
@@ -64,7 +65,18 @@ extension VideoFeedViewController: UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    // 1
+    let video = self.videos[indexPath.row]
+    // 2
+    let videoURL = video.url
+    let player = AVPlayer(url: videoURL)
     
+    let playerViewController = AVPlayerViewController()
+    playerViewController.player = player
+    
+    self.present(playerViewController, animated: true) {
+      player.play()
+    }
   }
 }
 
