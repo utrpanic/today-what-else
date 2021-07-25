@@ -68,7 +68,86 @@ class CATransformLayerViewController: UIViewController {
 
 // MARK: - Layer setup
 extension CATransformLayerViewController {
+  
   func buildCube() {
+    // 1
+    self.transformLayer = CATransformLayer()
+    // 2
+    let redLayer = self.sideLayer(color: self.redColor)
+    redLayer.addSublayer(self.swipeMeTextLayer)
+    self.transformLayer.addSublayer(redLayer)
+    // 3
+    let orangeLayer = self.sideLayer(color: self.orangeColor)
+    var orangeTransform = CATransform3DMakeTranslation(
+      self.sideLength / 2.0,
+      0.0,
+      self.sideLength / -2.0
+    )
+    orangeTransform = CATransform3DRotate(
+      orangeTransform,
+      degreesToRadians(90.0),
+      0.0,
+      1.0,
+      0.0
+    )
+    orangeLayer.transform = orangeTransform
+    self.transformLayer.addSublayer(orangeLayer)
+    
+    let yellowLayer = self.sideLayer(color: self.yellowColor)
+    yellowLayer.transform = CATransform3DMakeTranslation(0.0, 0.0, -self.sideLength)
+    self.transformLayer.addSublayer(yellowLayer)
+    
+    let greenLayer = self.sideLayer(color: self.greenColor)
+    var greenTransform = CATransform3DMakeTranslation(
+      self.sideLength / -2.0,
+      0.0,
+      self.sideLength / -2.0
+    )
+    greenTransform = CATransform3DRotate(
+      greenTransform,
+      degreesToRadians(90.0),
+      0.0,
+      1.0,
+      0.0
+    )
+    greenLayer.transform = greenTransform
+    self.transformLayer.addSublayer(greenLayer)
+    
+    let blueLayer = self.sideLayer(color: self.blueColor)
+    var blueTransform = CATransform3DMakeTranslation(
+      0.0,
+      self.sideLength / -2.0,
+      self.sideLength / -2.0
+    )
+    blueTransform = CATransform3DRotate(
+      blueTransform,
+      degreesToRadians(90.0),
+      1.0,
+      0.0,
+      0.0
+    )
+    blueLayer.transform = blueTransform
+    self.transformLayer.addSublayer(blueLayer)
+      
+      
+    let purpleLayer = self.sideLayer(color: self.purpleColor)
+    var purpleTransform = CATransform3DMakeTranslation(
+      0.0,
+      self.sideLength / 2.0,
+      self.sideLength / -2.0
+    )
+    purpleTransform = CATransform3DRotate(
+      purpleTransform,
+      degreesToRadians(90.0),
+      1.0,
+      0.0,
+      0.0
+    )
+    purpleLayer.transform = purpleTransform
+    self.transformLayer.addSublayer(purpleLayer)
+    
+    self.transformLayer.anchorPointZ = self.sideLength / -2.0
+    self.viewForTransformLayer.layer.addSublayer(self.transformLayer)
   }
 
   func setUpSwipeMeTextLayer() {
