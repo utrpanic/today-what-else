@@ -32,10 +32,13 @@ import UIKit
 import AVFoundation
 
 class VideoLooperView: UIView {
+  
   let clips: [VideoClip]
   let videoPlayerView = VideoPlayerView()
   
   private let player = AVQueuePlayer()
+  private var token: NSKeyValueObservation?
+  
   init(clips: [VideoClip]) {
     self.clips = clips
     
@@ -49,9 +52,35 @@ class VideoLooperView: UIView {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
   private func initializePlayer() {
     self.videoPlayerView.player = self.player
+    self.addAllVideosToPlayer()
     self.player.volume = 0.0
+    self.player.play()
+    
+    self.token = self.player.observe(\.currentItem) { [weak self] player, _ in
+      if player.items().count == 1 {
+        self?.addAllVideosToPlayer()
+      }
+    }
+  }
+  
+  private func addAllVideosToPlayer() {
+    for video in self.clips {
+      // 1
+      let asset = AVURLAsset(url: video.url)
+      let item = AVPlayerItem(asset: asset)
+      // 2
+      self.player.insert(item, after: self.player.items().last)
+    }
+  }
+  
+  func pause() {
+    self.player.pause()
+  }
+  
+  func play() {
     self.player.play()
   }
 }
