@@ -35,15 +35,23 @@ class VideoLooperView: UIView {
   let clips: [VideoClip]
   let videoPlayerView = VideoPlayerView()
   
+  private let player = AVQueuePlayer()
   init(clips: [VideoClip]) {
     self.clips = clips
     
     super.init(frame: .zero)
+    
+    self.initializePlayer()
   }
   
   // MARK - Unnecessary but necessary Code
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  private func initializePlayer() {
+    self.videoPlayerView.player = self.player
+    self.player.volume = 0.0
+    self.player.play()
   }
 }

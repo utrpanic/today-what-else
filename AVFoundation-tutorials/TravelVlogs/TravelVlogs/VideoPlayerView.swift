@@ -28,8 +28,21 @@
  * THE SOFTWARE.
  */
 
+import AVFoundation
 import UIKit
 
 class VideoPlayerView: UIView {
   
+  override class var layerClass: AnyClass {
+    return AVPlayerLayer.self
+  }
+  
+  var playerLayer: AVPlayerLayer {
+    return self.layer as! AVPlayerLayer
+  }
+  
+  var player: AVPlayer? {
+    get { self.playerLayer.player }
+    set { self.playerLayer.player = newValue }
+  }
 }
