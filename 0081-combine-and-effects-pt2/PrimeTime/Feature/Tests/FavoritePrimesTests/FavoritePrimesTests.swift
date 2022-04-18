@@ -1,15 +1,14 @@
 //
-//  PrimeTimeTests.swift
-//  PrimeTimeTests
+//  FavoritePrimesTests.swift
+//  FavoritePrimesTests
 //
-//  Created by Stephen Celis on 8/6/19.
 //  Copyright © 2019 Point-Free. All rights reserved.
 //
 
 import XCTest
-@testable import PrimeTime
+@testable import FavoritePrimes
 
-class PrimeTimeTests: XCTestCase {
+class FavoritePrimesTests: XCTestCase {
   
   override func setUp() {
     // Put setup code here. This method is called before the invocation of each test method in the class.
