@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Feature"
-               BuildableName = "Feature"
-               BlueprintName = "Feature"
+               BlueprintIdentifier = "Counter"
+               BuildableName = "Counter"
+               BlueprintName = "Counter"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,39 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ComposableArchitectureTests"
-               BuildableName = "ComposableArchitectureTests"
-               BlueprintName = "ComposableArchitectureTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CounterTests"
                BuildableName = "CounterTests"
                BlueprintName = "CounterTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FavoritePrimesTests"
-               BuildableName = "FavoritePrimesTests"
-               BlueprintName = "FavoritePrimesTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PrimeModalTests"
-               BuildableName = "PrimeModalTests"
-               BlueprintName = "PrimeModalTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -90,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Feature"
-            BuildableName = "Feature"
-            BlueprintName = "Feature"
+            BlueprintIdentifier = "Counter"
+            BuildableName = "Counter"
+            BlueprintName = "Counter"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

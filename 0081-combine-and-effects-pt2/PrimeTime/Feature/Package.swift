@@ -8,7 +8,9 @@ let package = Package(
   platforms: [.iOS(.v13)],
   products: [
     .library(name: "ComposableArchitecture", targets: ["ComposableArchitecture"]),
-    .library(name: "Feature", targets: ["Counter", "FavoritePrimes", "PrimeModal"]),
+    .library(name: "Counter", targets: ["Counter"]),
+    .library(name: "FavoritePrimes", targets: ["FavoritePrimes"]),
+    .library(name: "PrimeModal", targets: ["PrimeModal"]),
   ],
   dependencies: [
   ],

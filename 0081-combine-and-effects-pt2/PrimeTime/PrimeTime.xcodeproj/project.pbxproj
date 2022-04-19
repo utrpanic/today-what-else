@@ -87,8 +87,8 @@
 		DC90716322FA102900B38B42 = {
 			isa = PBXGroup;
 			children = (
-				38E2A544280DA3E200A315CF /* Feature */,
 				DC39325F230241AF005A0B0A /* PrimeTime.playground */,
+				38E2A544280DA3E200A315CF /* Feature */,
 				DC90716E22FA102900B38B42 /* PrimeTime */,
 				DC90718522FA102B00B38B42 /* PrimeTimeTests */,
 				DC90716D22FA102900B38B42 /* Products */,
