@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
-import 'email_screen.dart';
+import 'username_screen.dart';
 import 'login_screen.dart';
 import 'widgets/auth_button.dart';
 
@@ -85,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => const UsernameScreen(),
       ),
     );
   }
