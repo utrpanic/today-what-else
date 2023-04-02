@@ -1,5 +1,54 @@
 import SwiftUI
 
+// https://developer.wolframalpha.com/portal/myapps/
+let wolframAlphaApiKey = ""
+
+struct WolframAlphaResult: Decodable {
+  
+  let queryresult: QueryResult
+  
+  struct QueryResult: Decodable {
+    let pods: [Pod]
+    struct Pod: Decodable {
+      let primary: Bool?
+      let subpods: [SubPod]
+      struct SubPod: Decodable {
+        let plaintext: String
+      }
+    }
+  }
+}
+
+func wolframAlpha(query: String, callback: @escaping (WolframAlphaResult?) -> Void) -> Void {
+  var components = URLComponents(string: "https://api.wolframalpha.com/v2/query")!
+  components.queryItems = [
+    URLQueryItem(name: "input", value: query),
+    URLQueryItem(name: "format", value: "plaintext"),
+    URLQueryItem(name: "output", value: "JSON"),
+    URLQueryItem(name: "appid", value: wolframAlphaApiKey),
+  ]
+  URLSession.shared.dataTask(with: components.url(relativeTo: nil)!) { data, response, error in
+    callback(data.flatMap { try? JSONDecoder().decode(WolframAlphaResult.self, from: $0) })
+  }
+  .resume()
+}
+
+func requestNthPrime(_ n: Int, callback: @escaping (Int?) -> Void) -> Void {
+  wolframAlpha(query: "prime \(n)") { result in
+    callback(
+      result.flatMap {
+        $0.queryresult
+          .pods
+          .first(where: { $0.primary == .some(true) })?
+          .subpods
+          .first?
+          .plaintext
+      }
+        .flatMap(Int.init)
+    )
+  }
+}
+
 struct ContentView: View {
   
   @ObservedObject var state: AppState
@@ -10,7 +59,7 @@ struct ContentView: View {
         NavigationLink(destination: CounterView(state: self.state)) {
           Text("Counter demo")
         }
-        NavigationLink(destination: EmptyView()) {
+        NavigationLink(destination: FavoritePrimesView(state: self.state)) {
           Text("Favorite primes")
         }
       }
@@ -29,11 +78,15 @@ import Combine
 
 class AppState: ObservableObject {
   @Published var count = 0
+  @Published var favoritePrimes: [Int] = []
 }
 
 struct CounterView: View {
   
   @ObservedObject var state: AppState
+  @State var isPrimeModalShown: Bool = false
+  @State var isNthPrimeAlertShown: Bool = false
+  @State var nthPrime: Int?
   
   var body: some View {
     VStack {
@@ -46,15 +99,84 @@ struct CounterView: View {
           Text("+")
         }
       }
-      Button(action: {}) {
+      Button(action: { self.isPrimeModalShown = true }) {
         Text("Is this prime")
       }
-      Button(action: {}) {
+      Button(action: {
+        requestNthPrime(self.state.count) { prime in
+          self.nthPrime = prime
+          self.isNthPrimeAlertShown = true
+        }
+      }) {
         Text("What is the \(ordinal(self.state.count)) prime")
       }
     }
     .font(.title)
     .navigationTitle("Counter demo")
+    .sheet(isPresented: self.$isPrimeModalShown) {
+      IsPrimeModalView(state: self.state)
+    }
+    .alert(
+      "The \(ordinal(self.state.count)) prime is \(self.nthPrime ?? 0)",
+      isPresented: self.$isNthPrimeAlertShown,
+      actions: { }
+    )
+  }
+}
+
+private func isPrime(_ p: Int) -> Bool {
+  if p <= 1 { return false }
+  if p <= 3 { return true }
+  for i in 2...Int(sqrtf(Float(p))) {
+    if p % i == 0 { return false }
+  }
+  return true
+}
+
+struct IsPrimeModalView: View {
+  
+  @ObservedObject var state: AppState
+  
+  var body: some View {
+    VStack {
+      if isPrime(self.state.count) {
+        Text("\(self.state.count) is prime 🎉")
+        if self.state.favoritePrimes.contains(self.state.count) {
+          Button(action: {
+            self.state.favoritePrimes.removeAll(where: { $0 == self.state.count })}
+          ) {
+            Text("Remove from favorite primes")
+          }
+        } else {
+          Button(action: {
+            self.state.favoritePrimes.append(self.state.count)
+          }) {
+            Text("Save to favorite primes")
+          }
+        }
+      } else {
+        Text("\(self.state.count) is not prime :(")
+      }
+    }
+  }
+}
+
+struct FavoritePrimesView: View {
+  
+  @ObservedObject var state: AppState
+  
+  var body: some View {
+    List {
+      ForEach(self.state.favoritePrimes, id: \.self) { prime in
+        Text("\(prime)")
+      }
+      .onDelete { indexSet in
+        for index in indexSet {
+          self.state.favoritePrimes.remove(at: index)
+        }
+      }
+    }
+    .navigationBarTitle(Text("Favorite Primes"))
   }
 }
 
