@@ -16,16 +16,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       child: Text('Home'),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Search1'),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Search2'),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Search3'),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Search4'),
     ),
   ];
 
@@ -33,40 +33,45 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        // selectedItemColor: Theme.of(context).primaryColor,
-        currentIndex: _selectedIndex,
-        onTap: _onTap,
-        items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTap,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        destinations: const [
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.house,
+              color: Colors.white,
+            ),
             label: 'Home',
-            tooltip: 'What are we doing?',
-            backgroundColor: Colors.amber,
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-            tooltip: 'What are we doing?',
-            backgroundColor: Colors.blue,
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
+            ),
+            label: 'Search1',
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: 'Home',
-            tooltip: 'What are we doing?',
-            backgroundColor: Colors.pink,
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
+            ),
+            label: 'Search2',
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-            tooltip: 'What are we doing?',
-            backgroundColor: Colors.pink,
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
+            ),
+            label: 'Search3',
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: 'Home',
-            tooltip: 'What are we doing?',
-            backgroundColor: Colors.teal,
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
+            ),
+            label: 'Search4',
           ),
         ],
       ),
