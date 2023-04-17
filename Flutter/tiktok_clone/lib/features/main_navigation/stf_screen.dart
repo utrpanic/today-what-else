@@ -18,12 +18,13 @@ class _StfScreenState extends State<StfScreen> {
 
   @override
   void dispose() {
-    print('dispose(): $_clicks');
+    debugPrint('dispose(): $_clicks');
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('I am built');
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
