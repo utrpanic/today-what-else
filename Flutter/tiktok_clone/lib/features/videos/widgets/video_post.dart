@@ -109,12 +109,12 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             bottom: 20,
             left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   '@니꼬',
                   style: TextStyle(
@@ -201,6 +201,7 @@ class _VideoPostState extends State<VideoPost>
     await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
