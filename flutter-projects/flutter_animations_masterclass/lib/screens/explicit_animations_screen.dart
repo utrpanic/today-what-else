@@ -15,6 +15,11 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
     duration: const Duration(seconds: 10),
   );
 
+  late final Animation<Color?> _color = ColorTween(
+    begin: Colors.amber,
+    end: Colors.red,
+  ).animate(_animationController);
+
   @override
   void initState() {
     super.initState();
@@ -31,15 +36,12 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AnimatedBuilder(
-            animation: _animationController,
+            animation: _color,
             builder: (context, child) {
-              return Opacity(
-                opacity: _animationController.value,
-                child: Container(
-                  width: 320,
-                  height: 320,
-                  color: Colors.red,
-                ),
+              return Container(
+                width: 320,
+                height: 320,
+                color: _color.value,
               );
             },
           ),
