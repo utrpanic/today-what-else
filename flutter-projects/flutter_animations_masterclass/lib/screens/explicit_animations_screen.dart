@@ -24,22 +24,28 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
       color: Colors.red,
       borderRadius: BorderRadius.circular(120),
     ),
-  ).animate(_animationController);
+  ).animate(_curve);
 
   late final Animation<double> _rotation = Tween<double>(
     begin: 0,
     end: 1,
-  ).animate(_animationController);
+  ).animate(_curve);
 
   late final Animation<double> _scale = Tween<double>(
     begin: 1.0,
     end: 1.1,
-  ).animate(_animationController);
+  ).animate(_curve);
 
   late final Animation<Offset> _position = Tween<Offset>(
     begin: Offset.zero,
     end: const Offset(0, -0.2),
-  ).animate(_animationController);
+  ).animate(_curve);
+
+  late final CurvedAnimation _curve = CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.elasticOut,
+    reverseCurve: Curves.elasticIn,
+  );
 
   @override
   void dispose() {
