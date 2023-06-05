@@ -12,17 +12,39 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 1),
   );
 
-  late final Animation<Color?> _color = ColorTween(
-    begin: Colors.amber,
-    end: Colors.red,
+  late final Animation<Decoration> _decoration = DecorationTween(
+    begin: BoxDecoration(
+      color: Colors.amber,
+      borderRadius: BorderRadius.circular(20),
+    ),
+    end: BoxDecoration(
+      color: Colors.red,
+      borderRadius: BorderRadius.circular(120),
+    ),
+  ).animate(_animationController);
+
+  late final Animation<double> _rotation = Tween<double>(
+    begin: 0,
+    end: 1,
+  ).animate(_animationController);
+
+  late final Animation<double> _scale = Tween<double>(
+    begin: 1.0,
+    end: 1.1,
+  ).animate(_animationController);
+
+  late final Animation<Offset> _position = Tween<Offset>(
+    begin: Offset.zero,
+    end: const Offset(0, -0.2),
   ).animate(_animationController);
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,17 +57,23 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AnimatedBuilder(
-            animation: _color,
-            builder: (context, child) {
-              return Container(
-                width: 320,
-                height: 320,
-                color: _color.value,
-              );
-            },
+          SlideTransition(
+            position: _position,
+            child: ScaleTransition(
+              scale: _scale,
+              child: RotationTransition(
+                turns: _rotation,
+                child: DecoratedBoxTransition(
+                  decoration: _decoration,
+                  child: const SizedBox(
+                    width: 320,
+                    height: 320,
+                  ),
+                ),
+              ),
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 48),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
