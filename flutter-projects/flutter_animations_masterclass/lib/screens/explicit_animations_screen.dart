@@ -13,7 +13,11 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-  );
+  )..addListener(() {
+      _range.value = _animationController.value;
+    });
+
+  final ValueNotifier<double> _range = ValueNotifier(0);
 
   late final Animation<Decoration> _decoration = DecorationTween(
     begin: BoxDecoration(
@@ -55,6 +59,7 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('build()');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Explicit Animations'),
@@ -98,7 +103,17 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
                 child: const Text('Rewind'),
               ),
             ],
-          )
+          ),
+          const SizedBox(height: 48),
+          ValueListenableBuilder(
+            valueListenable: _range,
+            builder: (context, value, child) {
+              return Slider(
+                value: _range.value,
+                onChanged: _onChanged,
+              );
+            },
+          ),
         ],
       )),
     );
@@ -114,5 +129,9 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
 
   void _rewind() {
     _animationController.reverse();
+  }
+
+  void _onChanged(double value) {
+    _animationController.value = value;
   }
 }
