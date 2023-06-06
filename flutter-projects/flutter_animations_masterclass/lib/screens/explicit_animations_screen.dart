@@ -13,11 +13,17 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-  )..addListener(() {
+  )
+    ..addListener(() {
       _range.value = _animationController.value;
+    })
+    ..addStatusListener((status) {
+      debugPrint('status: $status');
     });
 
   final ValueNotifier<double> _range = ValueNotifier(0);
+
+  bool _looping = false;
 
   late final Animation<Decoration> _decoration = DecorationTween(
     begin: BoxDecoration(
@@ -105,15 +111,27 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
             ],
           ),
           const SizedBox(height: 48),
-          ValueListenableBuilder(
-            valueListenable: _range,
-            builder: (context, value, child) {
-              return Slider(
-                value: _range.value,
-                onChanged: _onChanged,
-              );
-            },
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ValueListenableBuilder(
+                valueListenable: _range,
+                builder: (context, value, child) {
+                  return Slider(
+                    value: _range.value,
+                    onChanged: _onChanged,
+                  );
+                },
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: _toggleLooping,
+                child: Text(
+                  _looping ? 'Stop looping' : 'Start looping',
+                ),
+              ),
+            ],
+          )
         ],
       )),
     );
@@ -133,5 +151,16 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
 
   void _onChanged(double value) {
     _animationController.value = value;
+  }
+
+  void _toggleLooping() {
+    if (_looping) {
+      _animationController.stop();
+    } else {
+      _animationController.repeat(reverse: true);
+    }
+    setState(() {
+      _looping = !_looping;
+    });
   }
 }
