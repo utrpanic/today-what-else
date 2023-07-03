@@ -19,19 +19,32 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
     parent: _animationController,
     curve: Curves.bounceOut,
   );
-  late Animation<double> _progress = Tween(
+  late Animation<double> _redProgress = Tween(
     begin: 0.005,
-    end: 1.5,
+    end: max(0.005, Random().nextDouble() * 2.0),
+  ).animate(_curve);
+  late Animation<double> _greenProgress = Tween(
+    begin: 0.005,
+    end: max(0.005, Random().nextDouble() * 2.0),
+  ).animate(_curve);
+  late Animation<double> _blueProgress = Tween(
+    begin: 0.005,
+    end: max(0.005, Random().nextDouble() * 2.0),
   ).animate(_curve);
 
   void _animateValues() {
-    final newBegin = _progress.value;
-    final random = Random();
-    final newEnd = random.nextDouble() * 2.0;
     setState(() {
-      _progress = Tween(
-        begin: newBegin,
-        end: newEnd,
+      _redProgress = Tween(
+        begin: _redProgress.value,
+        end: Random().nextDouble() * 2.0,
+      ).animate(_curve);
+      _greenProgress = Tween(
+        begin: _greenProgress.value,
+        end: Random().nextDouble() * 2.0,
+      ).animate(_curve);
+      _blueProgress = Tween(
+        begin: _blueProgress.value,
+        end: Random().nextDouble() * 2.0,
       ).animate(_curve);
     });
     _animationController.forward(from: 0);
@@ -54,11 +67,13 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
         ),
         body: Center(
           child: AnimatedBuilder(
-            animation: _progress,
+            animation: _curve,
             builder: (context, child) {
               return CustomPaint(
                 painter: AppleWatchPainter(
-                  progress: _progress.value,
+                  redProgress: _redProgress.value,
+                  greenProgress: _greenProgress.value,
+                  blueProgress: _blueProgress.value,
                 ),
                 size: const Size(320, 320),
               );
@@ -73,9 +88,15 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
 }
 
 class AppleWatchPainter extends CustomPainter {
-  AppleWatchPainter({required this.progress});
+  AppleWatchPainter({
+    required this.redProgress,
+    required this.greenProgress,
+    required this.blueProgress,
+  });
 
-  final double progress;
+  final double redProgress;
+  final double greenProgress;
+  final double blueProgress;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -114,7 +135,7 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       redArcRect,
       startingAngle,
-      progress * pi,
+      redProgress * pi,
       false,
       redArcPaint,
     );
@@ -129,7 +150,7 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       greenArcRect,
       startingAngle,
-      progress * pi,
+      greenProgress * pi,
       false,
       greenArcPaint,
     );
@@ -144,7 +165,7 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       blueArcRect,
       startingAngle,
-      progress * pi,
+      blueProgress * pi,
       false,
       blueArcPaint,
     );
@@ -152,6 +173,6 @@ class AppleWatchPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant AppleWatchPainter oldDelegate) {
-    return oldDelegate.progress != progress;
+    return oldDelegate.redProgress != redProgress;
   }
 }
