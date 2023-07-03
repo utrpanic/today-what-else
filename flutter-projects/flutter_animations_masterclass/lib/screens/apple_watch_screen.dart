@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppleWatchScreen extends StatefulWidget {
@@ -30,23 +32,38 @@ class _AppleWatchScreenState extends State<AppleWatchScreen> {
 class AppleWatchPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      0,
-      0,
-      size.width,
-      size.height,
-    );
-    final paint = Paint()..color = Colors.blue;
-    canvas.drawRect(rect, paint);
-    final circlePaint = Paint()
-      ..color = Colors.red
+    final center = Offset(size.width / 2, size.height / 2);
+    const strokeWidth = 25.0;
+    const strokeSpace = 5.0;
+    // draw red
+    final recCirclePaint = Paint()
+      ..color = Colors.red.shade400.withOpacity(0.3)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 20;
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height / 2),
-      size.width / 2,
-      circlePaint,
-    );
+      ..strokeWidth = strokeWidth;
+    final redCircleRadius = size.width / 2;
+    canvas.drawCircle(center, redCircleRadius, recCirclePaint);
+    // draw green
+    final greenCirclePaint = Paint()
+      ..color = Colors.green.shade400.withOpacity(0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+    final greenCircleRadius = redCircleRadius - strokeWidth - strokeSpace;
+    canvas.drawCircle(center, greenCircleRadius, greenCirclePaint);
+    // draw blue
+    final blueCirclePaint = Paint()
+      ..color = Colors.blue.shade400.withOpacity(0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+    final blueCircleRadius = greenCircleRadius - strokeWidth - strokeSpace;
+    canvas.drawCircle(center, blueCircleRadius, blueCirclePaint);
+    // draw red arc
+    final redArcRect = Rect.fromCircle(center: center, radius: redCircleRadius);
+    final redArcPaint = Paint()
+      ..color = Colors.red.shade400
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 25;
+    canvas.drawArc(redArcRect, -0.5 * pi, 1.5 * pi, false, redArcPaint);
   }
 
   @override
