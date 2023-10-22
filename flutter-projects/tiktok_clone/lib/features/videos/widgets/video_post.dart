@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-import '../../../constants/gaps.dart';
-import '../../../constants/sizes.dart';
-import 'video_comments.dart';
-
 class VideoPost extends StatefulWidget {
-  final int index;
-  final Function onVideoFinished;
-
   const VideoPost({
     super.key,
     required this.index,
     required this.onVideoFinished,
   });
+  final int index;
+  final void Function() onVideoFinished;
 
   @override
   State<VideoPost> createState() => _VideoPostState();
@@ -37,7 +35,7 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
     _animationController = AnimationController(
       vsync: this,
-      lowerBound: 1.0,
+      lowerBound: 1,
       upperBound: 1.5,
       value: 1.5,
       duration: _animationDuration,
@@ -50,7 +48,7 @@ class _VideoPostState extends State<VideoPost>
     super.dispose();
   }
 
-  void _initVideoPlayer() async {
+  Future<void> _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);
@@ -144,7 +142,8 @@ class _VideoPostState extends State<VideoPost>
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                      'https://avatars.githubusercontent.com/u/5267524'),
+                    'https://avatars.githubusercontent.com/u/5267524',
+                  ),
                   child: Text('니꼬'),
                 ),
                 Gaps.v24,
@@ -197,11 +196,11 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
-  void _onCommentsTap(BuildContext context) async {
+  Future<void> _onCommentsTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
       _onTogglePause();
     }
-    await showModalBottomSheet(
+    await showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../constants/sizes.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
   const FormButton({

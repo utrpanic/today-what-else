@@ -1,49 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
-
-import '../../constants/gaps.dart';
-import '../../constants/sizes.dart';
-import 'widgets/interest_button.dart';
+import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 
 const interests = [
-  "Daily Life",
-  "Comedy",
-  "Entertainment",
-  "Animals",
-  "Food",
-  "Beauty & Style",
-  "Drama",
-  "Learning",
-  "Talent",
-  "Sports",
-  "Auto",
-  "Family",
-  "Fitness & Health",
-  "DIY & Life Hacks",
-  "Arts & Crafts",
-  "Dance",
-  "Outdoors",
-  "Oddly Satisfying",
-  "Home & Garden",
-  "Daily Life",
-  "Comedy",
-  "Entertainment",
-  "Animals",
-  "Food",
-  "Beauty & Style",
-  "Drama",
-  "Learning",
-  "Talent",
-  "Sports",
-  "Auto",
-  "Family",
-  "Fitness & Health",
-  "DIY & Life Hacks",
-  "Arts & Crafts",
-  "Dance",
-  "Outdoors",
-  "Oddly Satisfying",
-  "Home & Garden",
+  'Daily Life',
+  'Comedy',
+  'Entertainment',
+  'Animals',
+  'Food',
+  'Beauty & Style',
+  'Drama',
+  'Learning',
+  'Talent',
+  'Sports',
+  'Auto',
+  'Family',
+  'Fitness & Health',
+  'DIY & Life Hacks',
+  'Arts & Crafts',
+  'Dance',
+  'Outdoors',
+  'Oddly Satisfying',
+  'Home & Garden',
+  'Daily Life',
+  'Comedy',
+  'Entertainment',
+  'Animals',
+  'Food',
+  'Beauty & Style',
+  'Drama',
+  'Learning',
+  'Talent',
+  'Sports',
+  'Auto',
+  'Family',
+  'Fitness & Health',
+  'DIY & Life Hacks',
+  'Arts & Crafts',
+  'Dance',
+  'Outdoors',
+  'Oddly Satisfying',
+  'Home & Garden',
 ];
 
 class InterestsScreen extends StatefulWidget {
@@ -112,8 +111,8 @@ class _InterestsScreenState extends State<InterestsScreen> {
                   runSpacing: 15,
                   spacing: 15,
                   children: [
-                    for (var interest in interests)
-                      InterestButton(interest: interest)
+                    for (final interest in interests)
+                      InterestButton(interest: interest),
                   ],
                 ),
               ],
@@ -137,12 +136,14 @@ class _InterestsScreenState extends State<InterestsScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: const Text('Next',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: Sizes.size16,
-                  )),
+              child: const Text(
+                'Next',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.size16,
+                ),
+              ),
             ),
           ),
         ),
@@ -167,7 +168,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   void _onNextTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (_) => const TutorialScreen(),
       ),
     );

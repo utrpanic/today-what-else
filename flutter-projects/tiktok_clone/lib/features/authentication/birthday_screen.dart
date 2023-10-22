@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants/gaps.dart';
-import '../../constants/sizes.dart';
-import '../onboarding/interests_screen.dart';
-import 'widgets/form_button.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});
@@ -46,7 +45,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
           children: [
             Gaps.v40,
             const Text(
-              'When\'s your birthday?',
+              "When's your birthday?",
               style: TextStyle(
                 fontSize: Sizes.size20,
                 fontWeight: FontWeight.w600,
@@ -54,7 +53,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             ),
             Gaps.v8,
             const Text(
-              'Your birthday won\'t be shown publicly.',
+              "Your birthday won't be shown publicly.",
               style: TextStyle(
                 fontSize: Sizes.size16,
                 color: Colors.black54,
@@ -82,7 +81,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             GestureDetector(
               onTap: _onNextTap,
               child: const FormButton(text: 'Next', disabled: false),
-            )
+            ),
           ],
         ),
       ),
@@ -107,7 +106,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
 
   void _onNextTap() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => const InterestsScreen(),
       ),
       (route) => false,

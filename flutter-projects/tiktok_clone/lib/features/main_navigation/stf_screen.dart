@@ -30,13 +30,13 @@ class _StfScreenState extends State<StfScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "$_clicks",
+            '$_clicks',
             style: const TextStyle(fontSize: 48),
           ),
           TextButton(
             onPressed: _increase,
             child: const Text('+'),
-          )
+          ),
         ],
       ),
     );

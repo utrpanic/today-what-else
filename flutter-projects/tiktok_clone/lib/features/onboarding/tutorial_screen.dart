@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
-
-import '../../constants/gaps.dart';
-import '../../constants/sizes.dart';
 
 enum Direction { left, right }
 
@@ -32,9 +31,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
           child: SafeArea(
             child: AnimatedCrossFade(
-              firstChild: Column(
+              firstChild: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Gaps.v80,
                   Text(
                     'Watch cool videos',
@@ -52,9 +51,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ),
                 ],
               ),
-              secondChild: Column(
+              secondChild: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Gaps.v80,
                   Text(
                     'Follow the rules',
@@ -126,7 +125,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
   void _onEnterAppTap() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => const MainNavigationScreen(),
       ),
       (route) => false,

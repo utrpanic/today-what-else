@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/gaps.dart';
-import '../../constants/sizes.dart';
-import 'password_screen.dart';
-import 'widgets/form_button.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/password_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -83,8 +82,9 @@ class _EmailScreenState extends State<EmailScreen> {
               GestureDetector(
                 onTap: _onSubmit,
                 child: FormButton(
-                    text: 'Next',
-                    disabled: _email.isEmpty || _isEmailValid() != null),
+                  text: 'Next',
+                  disabled: _email.isEmpty || _isEmailValid() != null,
+                ),
               ),
             ],
           ),
@@ -102,7 +102,8 @@ class _EmailScreenState extends State<EmailScreen> {
       return null;
     }
     final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
     if (!regExp.hasMatch(_email)) {
       return 'Email not valid';
     }
@@ -115,7 +116,7 @@ class _EmailScreenState extends State<EmailScreen> {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (_) => const PasswordScreen(),
       ),
     );

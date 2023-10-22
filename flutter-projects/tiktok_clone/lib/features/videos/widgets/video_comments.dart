@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../../constants/gaps.dart';
-import '../../../constants/sizes.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -77,23 +76,26 @@ class _VideoCommentsState extends State<VideoComments> {
                               ),
                               Gaps.v3,
                               const Text(
-                                  'This is not it I\'v seen the same thing but also in a cave'),
+                                "This is not it I'v seen the same thing but also in a cave",
+                              ),
                             ],
                           ),
                         ),
                         Gaps.h10,
-                        Column(children: [
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size20,
-                            color: Colors.grey.shade500,
-                          ),
-                          Gaps.v2,
-                          Text(
-                            '1.2k',
-                            style: TextStyle(color: Colors.grey.shade500),
-                          ),
-                        ]),
+                        Column(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size20,
+                              color: Colors.grey.shade500,
+                            ),
+                            Gaps.v2,
+                            Text(
+                              '1.2k',
+                              style: TextStyle(color: Colors.grey.shade500),
+                            ),
+                          ],
+                        ),
                       ],
                     );
                   },
@@ -125,7 +127,6 @@ class _VideoCommentsState extends State<VideoComments> {
                             child: TextField(
                               onTap: _onStartWriting,
                               expands: true,
-                              minLines: null,
                               maxLines: null,
                               textInputAction: TextInputAction.newline,
                               cursorColor: Theme.of(context).primaryColor,
@@ -145,7 +146,8 @@ class _VideoCommentsState extends State<VideoComments> {
                                 ),
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(
-                                      right: Sizes.size14),
+                                    right: Sizes.size14,
+                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -184,7 +186,7 @@ class _VideoCommentsState extends State<VideoComments> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
