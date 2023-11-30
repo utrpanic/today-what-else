@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -41,6 +43,8 @@ class _ActivityScreenState extends State<ActivityScreen>
     },
   ];
 
+  bool _showBarrier = false;
+
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 200),
@@ -54,17 +58,23 @@ class _ActivityScreenState extends State<ActivityScreen>
     end: Offset.zero,
   ).animate(_animationController);
 
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
+  ).animate(_animationController);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('All activity'),
-              Gaps.h2,
+              const Text('All Activities'),
+              Gaps.h4,
               RotationTransition(
                 turns: _arrowAnimation,
                 child: const FaIcon(
@@ -171,6 +181,12 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ),
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true,
+              onDismiss: _toggleAnimations,
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
@@ -212,12 +228,15 @@ class _ActivityScreenState extends State<ActivityScreen>
     );
   }
 
-  void _onTitleTap() {
+  Future<void> _toggleAnimations() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
     } else {
-      _animationController.forward();
+      unawaited(_animationController.forward());
     }
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
 
   void _onDismissed(String notification) {
