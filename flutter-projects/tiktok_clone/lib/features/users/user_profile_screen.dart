@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -14,67 +16,71 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          stretch: true,
-          pinned: true,
-          backgroundColor: Colors.teal,
-          collapsedHeight: 80,
-          expandedHeight: 200,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const [
-              StretchMode.zoomBackground,
-              StretchMode.blurBackground,
-              StretchMode.fadeTitle,
-            ],
-            background: Image.asset(
-              'assets/images/placeholder.jpg',
-              fit: BoxFit.cover,
+          title: const Text('니꼬'),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const FaIcon(
+                FontAwesomeIcons.gear,
+                size: Sizes.size20,
+              ),
             ),
-            title: const Text('User Profile'),
-          ),
+          ],
         ),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.red,
-                radius: Sizes.size24,
+              const CircleAvatar(
+                radius: Sizes.size48,
+                foregroundColor: Colors.teal,
+                foregroundImage: NetworkImage(
+                  'https://avatars.githubusercontent.com/u/3612017',
+                ),
+                child: Text('니꼬'),
+              ),
+              Gaps.v20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    '@니꼬',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: Sizes.size18,
+                    ),
+                  ),
+                  Gaps.h4,
+                  FaIcon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    size: Sizes.size16,
+                    color: Colors.blue.shade500,
+                  ),
+                ],
+              ),
+              Gaps.v24,
+              const SizedBox(
+                height: Sizes.size48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    UserInfoView(
+                      name: 'Following',
+                      value: '97',
+                    ),
+                    UserInfoDivider(),
+                    UserInfoView(
+                      name: 'Followers',
+                      value: '10M',
+                    ),
+                    UserInfoDivider(),
+                    UserInfoView(
+                      name: 'Likes',
+                      value: '194.3M',
+                    ),
+                  ],
+                ),
               ),
             ],
-          ),
-        ),
-        SliverFixedExtentList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 10,
-            (context, index) => Container(
-              color: Colors.amber[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text('Itme $index'),
-              ),
-            ),
-          ),
-          itemExtent: 100,
-        ),
-        SliverPersistentHeader(
-          delegate: CustomDelegate(),
-          pinned: true,
-        ),
-        SliverGrid(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 32,
-            (context, index) => Container(
-              color: Colors.blue[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text('Itme $index'),
-              ),
-            ),
-          ),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 100,
-            mainAxisSpacing: Sizes.size20,
-            crossAxisSpacing: Sizes.size20,
-            childAspectRatio: 1,
           ),
         ),
       ],
@@ -82,37 +88,51 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 }
 
-class CustomDelegate extends SliverPersistentHeaderDelegate {
-  @override
-  double get minExtent => 100;
+class UserInfoView extends StatelessWidget {
+  const UserInfoView({
+    super.key,
+    required this.name,
+    required this.value,
+  });
+  final String name;
+  final String value;
 
   @override
-  double get maxExtent => 100;
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Container(
-      color: Colors.indigo,
-      child: const FractionallySizedBox(
-        heightFactor: 1,
-        child: Center(
-          child: Text(
-            'Title!!!!!',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: Sizes.size18,
           ),
         ),
-      ),
+        Gaps.v4,
+        Text(
+          name,
+          style: TextStyle(
+            color: Colors.grey.shade500,
+          ),
+        ),
+      ],
     );
   }
+}
+
+class UserInfoDivider extends StatelessWidget {
+  const UserInfoDivider({
+    super.key,
+  });
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+  Widget build(BuildContext context) {
+    return VerticalDivider(
+      width: Sizes.size32,
+      thickness: Sizes.size1,
+      color: Colors.grey.shade500,
+      indent: Sizes.size12,
+      endIndent: Sizes.size12,
+    );
   }
 }
