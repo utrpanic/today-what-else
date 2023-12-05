@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
+import 'package:tiktok_clone/features/users/widgets/user_info_divider.dart';
+import 'package:tiktok_clone/features/users/widgets/user_info_view.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -212,55 +214,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class UserInfoView extends StatelessWidget {
-  const UserInfoView({
-    super.key,
-    required this.name,
-    required this.value,
-  });
-  final String name;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: Sizes.size18,
-          ),
-        ),
-        Gaps.v4,
-        Text(
-          name,
-          style: TextStyle(
-            color: Colors.grey.shade500,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UserInfoDivider extends StatelessWidget {
-  const UserInfoDivider({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return VerticalDivider(
-      width: Sizes.size32,
-      thickness: Sizes.size1,
-      color: Colors.grey.shade500,
-      indent: Sizes.size12,
-      endIndent: Sizes.size12,
     );
   }
 }
