@@ -10,24 +10,23 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('설정'),
       ),
-      body: ListWheelScrollView(
-        itemExtent: 44,
+      body: ListView(
         children: [
-          const CloseButton(),
-          FractionallySizedBox(
-            widthFactor: 1,
-            child: Container(
-              color: Colors.teal,
-              alignment: Alignment.center,
-              child: const Text(
-                'Pick me',
-                style: TextStyle(color: Colors.white),
+          ListTile(
+            onTap: () => showAboutDialog(
+              context: context,
+              applicationVersion: '1.0',
+              applicationLegalese: 'All rights reserved',
+            ),
+            title: const Text(
+              'About',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
               ),
             ),
+            subtitle: const Text('About this app...'),
           ),
-          const CupertinoActivityIndicator(),
-          const CircularProgressIndicator(),
-          const CircularProgressIndicator.adaptive(),
+          const AboutListTile(),
         ],
       ),
     );
