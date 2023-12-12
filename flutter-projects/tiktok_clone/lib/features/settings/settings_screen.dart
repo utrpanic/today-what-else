@@ -81,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
                   title: const Text('Are you sure?'),
-                  content: const Text('Plx dont go'),
+                  content: const Text('Plz dont go'),
                   actions: [
                     CupertinoDialogAction(
                       onPressed: Navigator.of(context).pop,
@@ -106,7 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context) => AlertDialog(
                   icon: const FaIcon(FontAwesomeIcons.skull),
                   title: const Text('Are you sure?'),
-                  content: const Text('Plx dont go'),
+                  content: const Text('Plz dont go'),
                   actions: [
                     IconButton(
                       onPressed: Navigator.of(context).pop,
