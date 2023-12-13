@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -28,6 +29,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isMuted = false;
 
   @override
   void initState() {
@@ -51,6 +53,10 @@ class _VideoPostState extends State<VideoPost>
   Future<void> _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+      _isMuted = true;
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -62,6 +68,12 @@ class _VideoPostState extends State<VideoPost>
         widget.onVideoFinished();
       }
     }
+  }
+
+  void _onMuteToggled() {
+    _isMuted = !_isMuted;
+    _videoPlayerController.setVolume(_isMuted ? 0 : 100);
+    setState(() {});
   }
 
   @override
@@ -104,6 +116,19 @@ class _VideoPostState extends State<VideoPost>
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            right: 20,
+            child: GestureDetector(
+              onTap: _onMuteToggled,
+              child: VideoButton(
+                icon: _isMuted
+                    ? FontAwesomeIcons.volumeXmark
+                    : FontAwesomeIcons.volumeHigh,
+                text: '',
               ),
             ),
           ),
