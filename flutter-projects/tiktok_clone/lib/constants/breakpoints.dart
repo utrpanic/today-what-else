@@ -1,7 +1,7 @@
 class Breakpoints {
-  static const sm = 640;
-  static const md = 768;
-  static const lg = 1024;
-  static const xl = 1280;
-  static const xxl = 1536;
+  static const double sm = 640;
+  static const double md = 768;
+  static const double lg = 1024;
+  static const double xl = 1280;
+  static const double xxl = 1536;
 }
