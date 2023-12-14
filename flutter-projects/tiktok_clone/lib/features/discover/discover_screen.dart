@@ -80,67 +80,71 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 mainAxisSpacing: Sizes.size10,
                 childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Sizes.size4),
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: 'assets/images/placeholder.jpg',
-                        image:
-                            'https://images.unsplash.com/photo-1647172084699-02ec43fa44a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NDQwNDgxNA&ixlib=rb-4.0.3&q=80&w=1080',
+              itemBuilder: (context, index) => LayoutBuilder(
+                builder: (context, constraints) => Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Sizes.size4),
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder: 'assets/images/placeholder.jpg',
+                          image:
+                              'https://images.unsplash.com/photo-1647172084699-02ec43fa44a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NDQwNDgxNA&ixlib=rb-4.0.3&q=80&w=1080',
+                        ),
                       ),
                     ),
-                  ),
-                  Gaps.v10,
-                  const Text(
-                    'This is a very long caption for my tictok that I upload just now currently.',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: Sizes.size12,
-                      fontWeight: FontWeight.bold,
+                    Gaps.v10,
+                    const Text(
+                      'This is a very long caption for my tictok that I upload just now currently.',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Gaps.v5,
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 12,
-                          backgroundImage: NetworkImage(
-                            'https://avatars.githubusercontent.com/u/5267524',
-                          ),
-                        ),
-                        Gaps.h4,
-                        const Expanded(
-                          child: Text(
-                            'My avatar is going to be very long.',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Gaps.h4,
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size16,
+                    Gaps.v5,
+                    if (constraints.maxWidth < 200 ||
+                        constraints.maxWidth > 250)
+                      DefaultTextStyle(
+                        style: TextStyle(
                           color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Gaps.h2,
-                        const Text('2.5M'),
-                      ],
-                    ),
-                  ),
-                ],
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              backgroundImage: NetworkImage(
+                                'https://avatars.githubusercontent.com/u/5267524',
+                              ),
+                            ),
+                            Gaps.h4,
+                            const Expanded(
+                              child: Text(
+                                'My avatar is going to be very long.',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Gaps.h4,
+                            FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size16,
+                              color: Colors.grey.shade600,
+                            ),
+                            Gaps.h2,
+                            const Text('2.5M'),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
             for (final tab in tabs.skip(1))
