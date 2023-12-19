@@ -6,9 +6,11 @@ class PostVideoButton extends StatelessWidget {
   const PostVideoButton({
     super.key,
     required this.inverted,
+    required this.isDark,
   });
 
   final bool inverted;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class PostVideoButton extends StatelessWidget {
             horizontal: Sizes.size12,
           ),
           decoration: BoxDecoration(
-            color: !inverted ? Colors.white : Colors.black,
+            color: !inverted || isDark ? Colors.white : Colors.black,
             borderRadius: BorderRadius.circular(
               Sizes.size6,
             ),
@@ -61,7 +63,7 @@ class PostVideoButton extends StatelessWidget {
           child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              color: !inverted ? Colors.black : Colors.white,
+              color: !inverted || isDark ? Colors.black : Colors.white,
               size: 18,
             ),
           ),
