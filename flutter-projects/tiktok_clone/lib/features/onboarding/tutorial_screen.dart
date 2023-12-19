@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 enum Direction { left, right }
 
@@ -36,7 +37,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 children: [
                   Gaps.v80,
                   Text(
-                    'Watch cool videos',
+                    'Watch cool videos!',
                     style: TextStyle(
                       fontSize: Sizes.size40,
                       fontWeight: FontWeight.bold,
@@ -74,22 +75,25 @@ class _TutorialScreenState extends State<TutorialScreen> {
               crossFadeState: _showinPage == Page.first
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 300),
             ),
           ),
         ),
-        bottomNavigationBar: AnimatedOpacity(
-          duration: const Duration(milliseconds: 200),
-          opacity: _showinPage == Page.second ? 1 : 0,
-          child: BottomAppBar(
+        bottomNavigationBar: BottomAppBar(
+          color: isDarkMode(context) ? Colors.black : Colors.white,
+          child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size24,
               horizontal: Sizes.size24,
             ),
-            child: CupertinoButton(
-              onPressed: _onEnterAppTap,
-              color: Theme.of(context).primaryColor,
-              child: const Text('Enter the app!'),
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _showinPage == Page.second ? 1 : 0,
+              child: CupertinoButton(
+                onPressed: _onEnterAppTap,
+                color: Theme.of(context).primaryColor,
+                child: const Text('Enter the app!'),
+              ),
             ),
           ),
         ),

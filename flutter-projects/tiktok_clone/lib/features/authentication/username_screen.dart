@@ -38,7 +38,6 @@ class _UsernameScreenState extends State<UsernameScreen> {
       appBar: AppBar(
         title: const Text('Sign up'),
       ),
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size36,

@@ -42,7 +42,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
         appBar: AppBar(
           title: const Text('Sign up'),
         ),
-        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size36,

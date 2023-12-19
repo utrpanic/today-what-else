@@ -35,7 +35,6 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
       appBar: AppBar(
         title: const Text('Sign up'),
       ),
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size36,
@@ -56,7 +55,6 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               "Your birthday won't be shown publicly.",
               style: TextStyle(
                 fontSize: Sizes.size16,
-                color: Colors.black54,
               ),
             ),
             Gaps.v16,
