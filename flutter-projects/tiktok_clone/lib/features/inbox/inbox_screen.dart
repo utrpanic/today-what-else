@@ -34,10 +34,9 @@ class InboxScreen extends StatelessWidget {
             trailing: const FaIcon(
               FontAwesomeIcons.chevronRight,
               size: Sizes.size14,
-              color: Colors.black,
             ),
           ),
-          Container(height: Sizes.size1, color: Colors.grey.shade200),
+          Container(height: 0.5, color: Colors.grey.shade200),
           ListTile(
             leading: Container(
               width: Sizes.size48,
@@ -66,7 +65,6 @@ class InboxScreen extends StatelessWidget {
             trailing: const FaIcon(
               FontAwesomeIcons.chevronRight,
               size: Sizes.size16,
-              color: Colors.black,
             ),
           ),
         ],

@@ -92,6 +92,7 @@ class _ActivityScreenState extends State<ActivityScreen>
         children: [
           ListView(
             children: [
+              Gaps.v8,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
                 child: Text(
