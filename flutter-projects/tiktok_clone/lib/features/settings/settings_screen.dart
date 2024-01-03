@@ -47,12 +47,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 firstDate: DateTime(1900),
                 lastDate: DateTime(2030),
               );
-              print(date);
+              debugPrint('$date');
+              if (!context.mounted) return;
               final time = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
-              print(time);
+              debugPrint('$time');
+              if (!context.mounted) return;
               final booking = await showDateRangePicker(
                 context: context,
                 firstDate: DateTime(1900),
@@ -69,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 },
               );
-              print(booking);
+              debugPrint('$booking');
             },
             title: const Text('What is your birthday?'),
           ),
