@@ -115,8 +115,53 @@ class S {
     return Intl.message(
       'Log in ${Intl.gender(gender, male: 'sir', female: 'madam', other: 'human')}',
       name: 'logIn',
-      desc: '',
+      desc: 'The text on the log in button.',
       args: [gender],
+    );
+  }
+
+  /// `{value}`
+  String likeCount(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString',
+      name: 'likeCount',
+      desc: 'The number of likes on a video.',
+      args: [valueString],
+    );
+  }
+
+  /// `{value}`
+  String commentCount(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString',
+      name: 'commentCount',
+      desc: 'The number of comments on a video.',
+      args: [valueString],
+    );
+  }
+
+  /// `{value1} {value2, plural, =1{comment} other{comments}}`
+  String commentTitle(int value1, int value2) {
+    final NumberFormat value1NumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String value1String = value1NumberFormat.format(value1);
+
+    return Intl.message(
+      '$value1String ${Intl.plural(value2, one: 'comment', other: 'comments')}',
+      name: 'commentTitle',
+      desc: 'The number of comments on a video.',
+      args: [value1String, value2],
     );
   }
 }
