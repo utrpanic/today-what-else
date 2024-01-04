@@ -92,6 +92,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop('Hello!');
   }
 }

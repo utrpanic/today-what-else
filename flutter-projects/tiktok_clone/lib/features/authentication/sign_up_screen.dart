@@ -120,11 +120,12 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
+  Future<void> _onLoginTap(BuildContext context) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute<String>(
         builder: (context) => const LoginScreen(),
       ),
     );
+    debugPrint(result);
   }
 }
