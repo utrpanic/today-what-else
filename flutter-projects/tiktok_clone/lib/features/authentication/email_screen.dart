@@ -14,7 +14,8 @@ class EmailScreen extends StatefulWidget {
 
   final String username;
 
-  static const routeName = '/email';
+  static const routeURL = 'email';
+  static const routeName = 'email';
 
   @override
   State<EmailScreen> createState() => _EmailScreenState();
