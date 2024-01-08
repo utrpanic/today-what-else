@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -15,7 +14,9 @@ class VideoRecordingScreen extends StatefulWidget {
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
 
-  late final CameraController _cameraController;
+  bool _isSelfieMode = false;
+
+  late CameraController _cameraController;
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
@@ -23,7 +24,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       return;
     }
     _cameraController = CameraController(
-      cameras.first,
+      cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.high,
       enableAudio: true,
     );
@@ -50,6 +51,12 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     super.initState();
   }
 
+  Future<void> toggleSelfieMode() async {
+    _isSelfieMode = !_isSelfieMode;
+    await initCamera();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +81,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
               )
             : Stack(
                 alignment: Alignment.center,
-                children: [CameraPreview(_cameraController)],
+                children: [
+                  CameraPreview(_cameraController),
+                  Positioned(
+                    top: Sizes.size20,
+                    left: Sizes.size20,
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: toggleSelfieMode,
+                      icon: const Icon(Icons.cameraswitch),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
