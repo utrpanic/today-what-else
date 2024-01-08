@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,11 @@ class VideoRecordingScreen extends StatefulWidget {
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
-
   bool _isSelfieMode = false;
+  double _currentZoomLevel = 1;
+  late double _minZoomLevel;
+  late double _maxZoomLevel;
+  late double _zoomLevelDiffUnit;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -56,6 +60,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.initialize();
     await _cameraController.prepareForVideoRecording();
     _flashMode = _cameraController.value.flashMode;
+    _minZoomLevel = await _cameraController.getMinZoomLevel();
+    _maxZoomLevel = await _cameraController.getMaxZoomLevel();
+    _zoomLevelDiffUnit = (_maxZoomLevel - _minZoomLevel) / 1000;
   }
 
   Future<void> initPermissions() async {
@@ -151,6 +158,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         ),
       ),
     );
+  }
+
+  void _updateZoomLevel(DragUpdateDetails details) {
+    final diffZoomLevel = _zoomLevelDiffUnit * (details.delta.dy > 0 ? -1 : 1);
+    final newZoomLevel = _currentZoomLevel + diffZoomLevel;
+    _currentZoomLevel = newZoomLevel.clamp(_minZoomLevel, _maxZoomLevel);
+    _cameraController.setZoomLevel(_currentZoomLevel);
+    setState(() {});
   }
 
   @override
@@ -256,6 +271,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                         GestureDetector(
                           onTapDown: _startRecording,
                           onTapUp: (_) => _stopRecording(),
+                          onPanUpdate: _updateZoomLevel,
                           child: ScaleTransition(
                             scale: _buttonAnimation,
                             child: Stack(
