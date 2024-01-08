@@ -114,14 +114,16 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _progressAnimationController.reset();
     final videoFile = await _cameraController.stopVideoRecording();
 
-    if (context.mounted) {
-      await Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (context) => VideoPreviewScreen(videoFile: videoFile),
-        ),
-      );
+    if (!context.mounted) {
+      return;
     }
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => VideoPreviewScreen(videoFile: videoFile),
+      ),
+    );
   }
 
   @override

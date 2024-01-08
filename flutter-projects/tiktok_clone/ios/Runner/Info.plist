@@ -30,6 +30,8 @@
 	<string>Use Camera for Video Recording</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Use Microphone for Video Recording</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Use Photo Library for Recorded Video</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
