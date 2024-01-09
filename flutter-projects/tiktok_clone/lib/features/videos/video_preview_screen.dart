@@ -36,8 +36,14 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
   @override
   void initState() {
-    initVideo();
     super.initState();
+    initVideo();
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
   }
 
   Future<void> _saveToGallery() async {
@@ -71,7 +77,12 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         ],
       ),
       body: _videoPlayerController.value.isInitialized
-          ? VideoPlayer(_videoPlayerController)
+          ? Center(
+              child: AspectRatio(
+                aspectRatio: _videoPlayerController.value.aspectRatio,
+                child: VideoPlayer(_videoPlayerController),
+              ),
+            )
           : null,
     );
   }
