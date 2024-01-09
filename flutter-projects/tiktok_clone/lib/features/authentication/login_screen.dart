@@ -10,7 +10,8 @@ import 'package:tiktok_clone/utils.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  static const routeName = '/login';
+  static const routeName = 'login';
+  static const routeURL = '/login';
 
   @override
   Widget build(BuildContext context) {
