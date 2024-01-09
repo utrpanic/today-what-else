@@ -77,7 +77,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        context.pushReplacementNamed(InterestsScreen.routeName);
+        context.goNamed(InterestsScreen.routeName);
       }
     }
   }
