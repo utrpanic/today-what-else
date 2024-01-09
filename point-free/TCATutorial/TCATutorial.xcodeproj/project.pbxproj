@@ -47,6 +47,7 @@
 		381FC0FF2B4CB034008986B2 /* TCATutorialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCATutorialUITests.swift; sourceTree = "<group>"; };
 		381FC1012B4CB034008986B2 /* TCATutorialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCATutorialUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		381FC1172B4CE571008986B2 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
+		3849D0E52B4DD529001335C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +100,7 @@
 		381FC0E32B4CB034008986B2 /* TCATutorial */ = {
 			isa = PBXGroup;
 			children = (
+				3849D0E52B4DD529001335C0 /* Info.plist */,
 				381FC1162B4CE558008986B2 /* Feature */,
 				381FC0E42B4CB034008986B2 /* TCATutorialApp.swift */,
 				381FC0E62B4CB034008986B2 /* ContentView.swift */,
@@ -452,6 +454,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TCATutorial/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TCATutorial/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -480,6 +483,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TCATutorial/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TCATutorial/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
