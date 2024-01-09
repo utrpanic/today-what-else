@@ -14,6 +14,9 @@ import 'package:tiktok_clone/features/videos/video_preview_screen.dart';
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
 
+  static const String routeName = 'postVideo';
+  static const String routeURL = '/upload';
+
   @override
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }

@@ -4,7 +4,12 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  const ChatDetailScreen({super.key, required this.chatId});
+
+  static const String routeName = 'chatDetail';
+  static const String routeURL = ':chatId';
+
+  final String chatId;
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -25,6 +30,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 foregroundImage: NetworkImage(
                   'https://avatars.githubusercontent.com/u/3612017',
                 ),
+                child: Text('니꼬'),
               ),
               Positioned(
                 right: 0,
@@ -44,9 +50,13 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
             ],
           ),
-          title:
-              const Text('니꼬', style: TextStyle(fontWeight: FontWeight.w600)),
-          subtitle: const Text('Active on'),
+          title: Text(
+            '니꼬 (${widget.chatId})',
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          subtitle: const Text('Active now'),
           trailing: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
