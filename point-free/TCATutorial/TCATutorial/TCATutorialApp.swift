@@ -10,7 +10,7 @@ struct TCATutorialApp: App {
   
   var body: some Scene {
     WindowGroup {
-      ContentView(store: TCATutorialApp.store)
+      CounterView(store: TCATutorialApp.store)
     }
   }
 }
