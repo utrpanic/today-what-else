@@ -2,9 +2,8 @@ import ComposableArchitecture
 import SwiftUI
 
 struct CounterView: View {
-  
   let store: StoreOf<CounterFeature>
-  
+
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       VStack {
@@ -45,7 +44,7 @@ struct CounterView: View {
         .cornerRadius(10)
       }
       .padding()
-      
+
       if viewStore.isLoading {
         ProgressView()
       } else if let fact = viewStore.fact {
@@ -57,7 +56,3 @@ struct CounterView: View {
     }
   }
 }
-
-//#Preview {
-//  CounterView()
-//}

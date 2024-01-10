@@ -9,7 +9,7 @@ struct CounterFeature {
     var isLoading = false
     var isTimerRunning = false
   }
-  
+
   enum Action {
     case decrementButtonTapped
     case factButtonTapped
@@ -18,14 +18,14 @@ struct CounterFeature {
     case timerTick
     case toggleTimerButtonTapped
   }
-  
+
   enum CancelID {
     case timer
   }
-  
+
   @Dependency(\.continuousClock) var clock
   @Dependency(\.numberFact) var numberFact
-  
+
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -43,7 +43,7 @@ struct CounterFeature {
         return .run { [count = state.count] send in
           try await send(.factResponse(self.numberFact.fetch(count)))
         }
-      case .factResponse(let fact):
+      case let .factResponse(fact):
         state.fact = fact
         state.isLoading = false
         return .none
@@ -60,7 +60,7 @@ struct CounterFeature {
             }
           }
           .cancellable(id: CancelID.timer)
-        }else {
+        } else {
           return .cancel(id: CancelID.timer)
         }
       }
