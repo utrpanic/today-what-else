@@ -21,6 +21,8 @@
 		3898D1512B4DF5ED00376DB7 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898D1502B4DF5ED00376DB7 /* AppFeature.swift */; };
 		3898D1532B4DF72B00376DB7 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898D1522B4DF72B00376DB7 /* AppFeatureTests.swift */; };
 		38E3E6462B4F492E00F24610 /* ContactsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E3E6452B4F492E00F24610 /* ContactsFeatureTests.swift */; };
+		38E3E6482B4F510000F24610 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E3E6472B4F510000F24610 /* ContactDetailView.swift */; };
+		38E3E64A2B4F512600F24610 /* ContactDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E3E6492B4F512600F24610 /* ContactDetailFeature.swift */; };
 		38EFDF0F2B4EF70F00990D3B /* ContactsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFDF0E2B4EF70F00990D3B /* ContactsFeature.swift */; };
 		38EFDF112B4EF81100990D3B /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFDF102B4EF81100990D3B /* ContactsView.swift */; };
 		38EFDF132B4EF99900990D3B /* AddContactFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFDF122B4EF99900990D3B /* AddContactFeature.swift */; };
@@ -63,6 +65,8 @@
 		3898D1502B4DF5ED00376DB7 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		3898D1522B4DF72B00376DB7 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		38E3E6452B4F492E00F24610 /* ContactsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFeatureTests.swift; sourceTree = "<group>"; };
+		38E3E6472B4F510000F24610 /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
+		38E3E6492B4F512600F24610 /* ContactDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailFeature.swift; sourceTree = "<group>"; };
 		38EFDF0E2B4EF70F00990D3B /* ContactsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFeature.swift; sourceTree = "<group>"; };
 		38EFDF102B4EF81100990D3B /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		38EFDF122B4EF99900990D3B /* AddContactFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactFeature.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				381FC0E62B4CB034008986B2 /* CounterView.swift */,
 				38EFDF102B4EF81100990D3B /* ContactsView.swift */,
 				38EFDF142B4EFA4F00990D3B /* AddContactView.swift */,
+				38E3E6472B4F510000F24610 /* ContactDetailView.swift */,
 				381FC0E82B4CB034008986B2 /* Assets.xcassets */,
 				381FC0EA2B4CB034008986B2 /* Preview Content */,
 			);
@@ -168,6 +173,7 @@
 				381FC1172B4CE571008986B2 /* CounterFeature.swift */,
 				38EFDF0E2B4EF70F00990D3B /* ContactsFeature.swift */,
 				38EFDF122B4EF99900990D3B /* AddContactFeature.swift */,
+				38E3E6492B4F512600F24610 /* ContactDetailFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -327,11 +333,13 @@
 				38EFDF152B4EFA4F00990D3B /* AddContactView.swift in Sources */,
 				381FC1182B4CE571008986B2 /* CounterFeature.swift in Sources */,
 				3898D14F2B4DF4A200376DB7 /* AppView.swift in Sources */,
+				38E3E64A2B4F512600F24610 /* ContactDetailFeature.swift in Sources */,
 				381FC0E72B4CB034008986B2 /* CounterView.swift in Sources */,
 				38EFDF0F2B4EF70F00990D3B /* ContactsFeature.swift in Sources */,
 				381FC0E52B4CB034008986B2 /* TCATutorialApp.swift in Sources */,
 				3898D14B2B4DEF8D00376DB7 /* NumberFactClient.swift in Sources */,
 				38EFDF132B4EF99900990D3B /* AddContactFeature.swift in Sources */,
+				38E3E6482B4F510000F24610 /* ContactDetailView.swift in Sources */,
 				38EFDF112B4EF81100990D3B /* ContactsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
