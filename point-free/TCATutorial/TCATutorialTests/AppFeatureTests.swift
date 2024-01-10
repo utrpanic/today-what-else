@@ -1,10 +1,10 @@
 import ComposableArchitecture
 import XCTest
+
 @testable import TCATutorial
 
 @MainActor
 final class AppFeatureTests: XCTestCase {
-  
   func testIncrementInFirstTab() async {
     let store = TestStore(initialState: AppFeature.State()) {
       AppFeature()
@@ -13,5 +13,4 @@ final class AppFeatureTests: XCTestCase {
       $0.tab1.count = 1
     }
   }
-  
 }

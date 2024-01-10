@@ -1,11 +1,10 @@
-import XCTest
 import ComposableArchitecture
+import XCTest
 
 @testable import TCATutorial
 
 @MainActor
 final class CounterFeatureTests: XCTestCase {
-  
   func testCounter() async {
     let store = TestStore(initialState: CounterFeature.State()) {
       CounterFeature()
@@ -17,10 +16,10 @@ final class CounterFeatureTests: XCTestCase {
       $0.count = 0
     }
   }
-  
+
   func testTimer() async {
     let clock = TestClock()
-    
+
     let store = TestStore(initialState: CounterFeature.State()) {
       CounterFeature()
     } withDependencies: {
@@ -37,7 +36,7 @@ final class CounterFeatureTests: XCTestCase {
       $0.isTimerRunning = false
     }
   }
-  
+
   func testNumberFact() async {
     let store = TestStore(initialState: CounterFeature.State()) {
       CounterFeature()
@@ -52,6 +51,5 @@ final class CounterFeatureTests: XCTestCase {
       $0.isLoading = false
       $0.fact = "0 is a good number."
     }
-    
   }
 }
