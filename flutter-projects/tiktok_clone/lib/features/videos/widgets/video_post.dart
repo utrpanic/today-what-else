@@ -31,7 +31,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
-  late bool _isMuted = VideoConfigData.of(context).autoMute;
+  bool _autoMute = videoConfig.autoMute;
 
   @override
   void initState() {
@@ -44,6 +44,12 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -55,9 +61,9 @@ class _VideoPostState extends State<VideoPost>
   Future<void> _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    if (kIsWeb || _isMuted) {
+    if (kIsWeb || _autoMute) {
       await _videoPlayerController.setVolume(0);
-      _isMuted = true;
+      _autoMute = true;
     }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
@@ -70,12 +76,6 @@ class _VideoPostState extends State<VideoPost>
         widget.onVideoFinished();
       }
     }
-  }
-
-  void _onMuteToggled() {
-    _isMuted = !_isMuted;
-    _videoPlayerController.setVolume(_isMuted ? 0 : 100);
-    setState(() {});
   }
 
   @override
@@ -151,12 +151,12 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                _isMuted
+                _autoMute
                     ? FontAwesomeIcons.volumeXmark
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: _onMuteToggled,
+              onPressed: videoConfig.toggleAutoMute,
             ),
           ),
           Positioned(
