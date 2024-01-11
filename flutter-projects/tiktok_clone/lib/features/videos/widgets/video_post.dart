@@ -31,7 +31,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
-  bool _isMuted = false;
+  late bool _isMuted = VideoConfigData.of(context).autoMute;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _VideoPostState extends State<VideoPost>
   Future<void> _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    if (kIsWeb) {
+    if (kIsWeb || _isMuted) {
       await _videoPlayerController.setVolume(0);
       _isMuted = true;
     }
@@ -151,7 +151,7 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                VideoConfig.of(context).autoMute
+                _isMuted
                     ? FontAwesomeIcons.volumeXmark
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
