@@ -32,6 +32,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
+  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
 
   @override
   void initState() {
@@ -44,9 +45,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -59,18 +57,23 @@ class _VideoPostState extends State<VideoPost>
   Future<void> _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    await _onPlaybackConfigChanged();
+    await _updateVideoVolume();
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
 
-  Future<void> _onPlaybackConfigChanged() async {
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (kIsWeb || muted) {
+  Future<void> _updateVideoVolume() async {
+    if (kIsWeb || _isMuted) {
       await _videoPlayerController.setVolume(0);
     } else {
       await _videoPlayerController.setVolume(1);
     }
+  }
+
+  void _onMuteButtonTapped() {
+    _isMuted = !_isMuted;
+    _updateVideoVolume();
+    setState(() {});
   }
 
   void _onVideoChange() {
@@ -155,14 +158,12 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                _isMuted
                     ? FontAwesomeIcons.volumeXmark
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: () => context
-                  .read<PlaybackConfigViewModel>()
-                  .setMuted(!context.read<PlaybackConfigViewModel>().muted),
+              onPressed: _onMuteButtonTapped,
             ),
           ),
           Positioned(
