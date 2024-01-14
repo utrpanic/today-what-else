@@ -32,7 +32,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
-  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
+  late bool _isMuted = false; // context.read<PlaybackConfigViewModel>().muted;
 
   @override
   void initState() {
@@ -163,7 +163,7 @@ class _VideoPostState extends State<VideoPost>
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: _onMuteButtonTapped,
+              onPressed: () {}, // _onMuteButtonTapped,
             ),
           ),
           Positioned(
@@ -211,7 +211,8 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      const autoplay = false;
+      //  context.read<PlaybackConfigViewModel>().autoplay;
       if (autoplay) {
         _videoPlayerController.play();
       }
