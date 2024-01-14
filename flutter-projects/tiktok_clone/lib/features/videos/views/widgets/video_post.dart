@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/models/view_models/playback_config_view_model.dart';
@@ -11,7 +11,7 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   const VideoPost({
     super.key,
     required this.index,
@@ -21,10 +21,10 @@ class VideoPost extends StatefulWidget {
   final void Function() onVideoFinished;
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset('assets/videos/video.mov');
@@ -32,7 +32,7 @@ class _VideoPostState extends State<VideoPost>
   late AnimationController _animationController;
 
   bool _isPaused = false;
-  late bool _isMuted = false; // context.read<PlaybackConfigViewModel>().muted;
+  late bool _isMuted = ref.read(playbackConfigProvider).muted;
 
   @override
   void initState() {
@@ -163,7 +163,7 @@ class _VideoPostState extends State<VideoPost>
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: () {}, // _onMuteButtonTapped,
+              onPressed: _onMuteButtonTapped,
             ),
           ),
           Positioned(
@@ -211,8 +211,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      const autoplay = false;
-      //  context.read<PlaybackConfigViewModel>().autoplay;
+      final autoplay = ref.read(playbackConfigProvider).autoplay;
       if (autoplay) {
         _videoPlayerController.play();
       }
