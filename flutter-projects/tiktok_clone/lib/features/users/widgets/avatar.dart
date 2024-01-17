@@ -51,7 +51,7 @@ class Avatar extends ConsumerWidget {
               foregroundColor: Colors.teal,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      'https://firebasestorage.googleapis.com/v0/b/tiktok-clone-2024.appspot.com/o/avatars%2F$uid?alt=media',
+                      'https://firebasestorage.googleapis.com/v0/b/tiktok-clone-2024.appspot.com/o/avatars%2F$uid?alt=media&haha=${DateTime.now()}',
                     )
                   : null,
               child: Text(name),
