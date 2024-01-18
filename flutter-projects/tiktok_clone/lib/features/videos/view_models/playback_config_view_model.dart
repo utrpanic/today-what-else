@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/videos/models/playback_config_model.dart';
-import 'package:tiktok_clone/features/videos/models/repos/playback_config_repo.dart';
+import 'package:tiktok_clone/features/videos/repos/playback_config_repo.dart';
 
 class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   PlaybackConfigViewModel(this._repository);
