@@ -34,7 +34,7 @@ class VideoModel {
   final String fileUrl;
   final String thumbnailUrl;
   final int createdAt;
-  final int likes;
+  int likes;
   final int comments;
 
   Map<String, dynamic> toJson() {

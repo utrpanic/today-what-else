@@ -37,11 +37,12 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   bool _isPaused = false;
   late bool _isMuted = ref.read(playbackConfigProvider).muted;
+  late bool _isLiked = false;
 
   @override
   void initState() {
     super.initState();
-    _initVideoPlayer();
+    _asyncInit();
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1,
@@ -56,6 +57,14 @@ class VideoPostState extends ConsumerState<VideoPost>
     _videoPlayerController.dispose();
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _asyncInit() async {
+    await _initVideoPlayer();
+    _isLiked = await ref
+        .read(videoPostProvider(widget.videoData.id).notifier)
+        .isLikedVideo();
+    setState(() {});
   }
 
   Future<void> _initVideoPlayer() async {
@@ -191,6 +200,7 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidHeart,
                     text: S.of(context).likeCount(widget.videoData.likes),
+                    iconColor: _isLiked ? Colors.red : Colors.white,
                   ),
                 ),
                 Gaps.v24,
@@ -242,8 +252,18 @@ class VideoPostState extends ConsumerState<VideoPost>
     });
   }
 
-  void _onLikeTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).toggleLikeVideo();
+  Future<void> _onLikeTap() async {
+    await ref
+        .read(videoPostProvider(widget.videoData.id).notifier)
+        .toggleLikeVideo();
+    if (_isLiked) {
+      _isLiked = false;
+      widget.videoData.likes--;
+    } else {
+      _isLiked = true;
+      widget.videoData.likes++;
+    }
+    setState(() {});
   }
 
   Future<void> _onCommentsTap(BuildContext context) async {

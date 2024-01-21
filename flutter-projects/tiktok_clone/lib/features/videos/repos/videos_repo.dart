@@ -50,6 +50,15 @@ class VideosRepository {
       );
     }
   }
+
+  Future<bool> isLikedVideo({
+    required String userId,
+    required String videoId,
+  }) async {
+    final query = _db.collection('likes').doc('${videoId}000$userId');
+    final likes = await query.get();
+    return likes.exists;
+  }
 }
 
 final videosRepo = Provider<VideosRepository>((ref) {
