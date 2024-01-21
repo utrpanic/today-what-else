@@ -38,12 +38,15 @@ class VideosRepository {
     required String userId,
     required String videoId,
   }) async {
-    await _db.collection('likes').add(
-      {
-        'userId': userId,
-        'videoId': videoId,
-      },
-    );
+    final query = _db.collection('likes').doc('${videoId}000$userId');
+    final likes = await query.get();
+    if (!likes.exists) {
+      await query.set(
+        {
+          'createdAt': DateTime.now().millisecondsSinceEpoch,
+        },
+      );
+    }
   }
 }
 
