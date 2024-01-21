@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/view_models/messages_view_model.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   const ChatDetailScreen({super.key, required this.chatId});
 
   static const String routeName = 'chatDetail';
@@ -12,12 +14,22 @@ class ChatDetailScreen extends StatefulWidget {
   final String chatId;
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ChatDetailScreenState createState() => ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
+  final TextEditingController _editingController = TextEditingController();
+
+  void _onSendPressed() {
+    final text = _editingController.text;
+    if (text.isEmpty) return;
+    ref.read(messagesProvider.notifier).sendMessage(text);
+    _editingController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -126,14 +138,15 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               color: Colors.grey.shade100,
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: Sizes.size16,
                         vertical: Sizes.size8,
                       ),
                       child: TextField(
-                        decoration: InputDecoration(
+                        controller: _editingController,
+                        decoration: const InputDecoration(
                           hintText: 'Send a message...',
                           filled: true,
                           fillColor: Colors.white,
@@ -165,16 +178,21 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(Sizes.size8),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const FaIcon(
-                      FontAwesomeIcons.solidPaperPlane,
-                      color: Colors.white,
-                      size: Sizes.size20,
+                  GestureDetector(
+                    onTap: isLoading ? null : _onSendPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(Sizes.size8),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        shape: BoxShape.circle,
+                      ),
+                      child: FaIcon(
+                        isLoading
+                            ? FontAwesomeIcons.hourglass
+                            : FontAwesomeIcons.solidPaperPlane,
+                        color: Colors.white,
+                        size: Sizes.size20,
+                      ),
                     ),
                   ),
                   Gaps.h12,
