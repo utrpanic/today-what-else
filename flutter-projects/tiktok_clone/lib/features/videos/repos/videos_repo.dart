@@ -34,13 +34,15 @@ class VideosRepository {
     }
   }
 
-  Future<void> likeVideo({
+  Future<void> toggleLikeVideo({
     required String userId,
     required String videoId,
   }) async {
     final query = _db.collection('likes').doc('${videoId}000$userId');
     final likes = await query.get();
-    if (!likes.exists) {
+    if (likes.exists) {
+      await query.delete();
+    } else {
       await query.set(
         {
           'createdAt': DateTime.now().millisecondsSinceEpoch,
