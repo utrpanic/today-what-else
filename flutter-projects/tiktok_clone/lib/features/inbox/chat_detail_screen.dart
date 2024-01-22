@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/features/inbox/models/message_model.dart';
+import 'package:tiktok_clone/features/inbox/view_models/chat_detail_view_model.dart';
 import 'package:tiktok_clone/features/inbox/view_models/messages_view_model.dart';
+import 'package:tiktok_clone/features/users/widgets/avatar.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
   const ChatDetailScreen({super.key, required this.chatId});
@@ -21,16 +25,50 @@ class ChatDetailScreen extends ConsumerStatefulWidget {
 class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final TextEditingController _editingController = TextEditingController();
 
+  void _onDeleteMessageLongPress(MessageModel message) {
+    final myId = ref.read(authRepo).user!.uid;
+    if (message.userId != myId) return;
+
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        title: const Text('Do you want to delete this message?'),
+        message: const Text(
+          'If the messages was sent before 2 minutes, it will be replaced [DELETED].',
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: Navigator.of(context).pop,
+            child: const Text('Cancel'),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              ref
+                  .read(messagesProvider(widget.chatId).notifier)
+                  .deleteMessage(message);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Yes, plz'),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _onSendPressed() {
     final text = _editingController.text;
     if (text.isEmpty) return;
-    ref.read(messagesProvider.notifier).sendMessage(text);
+    ref.read(messagesProvider(widget.chatId).notifier).sendMessage(text);
     _editingController.text = '';
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(messagesProvider).isLoading;
+    final messageIsSending =
+        ref.watch(messagesProvider(widget.chatId)).isLoading;
+    final chatRoom = ref.watch(chatDetailProvider(widget.chatId)).valueOrNull;
+    final opponent = chatRoom?.opponent(ref.watch(authRepo).user!.uid);
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -38,12 +76,14 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           horizontalTitleGap: Sizes.size8,
           leading: Stack(
             children: [
-              const CircleAvatar(
-                radius: Sizes.size24,
-                foregroundImage: NetworkImage(
-                  'https://avatars.githubusercontent.com/u/3612017',
+              SizedBox(
+                width: Sizes.size48,
+                height: Sizes.size48,
+                child: Avatar(
+                  uid: opponent?.id ?? '',
+                  name: opponent?.name ?? 'unknown',
+                  hasAvatar: opponent?.hasAvatar ?? false,
                 ),
-                child: Text('니꼬'),
               ),
               Positioned(
                 right: 0,
@@ -64,7 +104,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             ],
           ),
           title: Text(
-            '니꼬 (${widget.chatId})',
+            opponent?.name ?? 'unknown',
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
@@ -90,7 +130,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       ),
       body: Stack(
         children: [
-          ref.watch(chatProvider).when(
+          ref.watch(chatProvider(widget.chatId)).when(
             data: (data) {
               return ListView.separated(
                 reverse: true,
@@ -104,38 +144,41 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   final message = data[index];
                   final isMine =
                       message.userId == ref.watch(authRepo).user!.uid;
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: isMine
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(Sizes.size16),
-                        decoration: BoxDecoration(
-                          color: isMine
-                              ? Colors.blue
-                              : Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: const Radius.circular(Sizes.size20),
-                            topRight: const Radius.circular(Sizes.size20),
-                            bottomLeft: isMine
-                                ? const Radius.circular(Sizes.size20)
-                                : Radius.zero,
-                            bottomRight: !isMine
-                                ? const Radius.circular(Sizes.size20)
-                                : Radius.zero,
+                  return GestureDetector(
+                    onLongPress: () => _onDeleteMessageLongPress(message),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: isMine
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(Sizes.size16),
+                          decoration: BoxDecoration(
+                            color: isMine
+                                ? Colors.blue
+                                : Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: const Radius.circular(Sizes.size20),
+                              topRight: const Radius.circular(Sizes.size20),
+                              bottomLeft: isMine
+                                  ? const Radius.circular(Sizes.size20)
+                                  : Radius.zero,
+                              bottomRight: !isMine
+                                  ? const Radius.circular(Sizes.size20)
+                                  : Radius.zero,
+                            ),
+                          ),
+                          child: Text(
+                            message.text,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: Sizes.size16,
+                            ),
                           ),
                         ),
-                        child: Text(
-                          message.text,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: Sizes.size16,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) => Gaps.v10,
@@ -201,7 +244,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: isLoading ? null : _onSendPressed,
+                    onTap: messageIsSending ? null : _onSendPressed,
                     child: Container(
                       padding: const EdgeInsets.all(Sizes.size8),
                       decoration: const BoxDecoration(
@@ -209,7 +252,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                         shape: BoxShape.circle,
                       ),
                       child: FaIcon(
-                        isLoading
+                        messageIsSending
                             ? FontAwesomeIcons.hourglass
                             : FontAwesomeIcons.solidPaperPlane,
                         color: Colors.white,

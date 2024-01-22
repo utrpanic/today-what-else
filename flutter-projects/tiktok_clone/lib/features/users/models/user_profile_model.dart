@@ -18,9 +18,11 @@ class UserProfileModel {
           hasAvatar: false,
         );
 
-  UserProfileModel.fromJson(Map<String, dynamic> json)
-      : this(
-          uid: json['uid'] as String,
+  UserProfileModel.fromJson({
+    required String id,
+    required Map<String, dynamic> json,
+  }) : this(
+          uid: id,
           email: json['email'] as String,
           name: json['name'] as String,
           bio: json['bio'] as String,
@@ -37,7 +39,6 @@ class UserProfileModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'uid': uid,
       'email': email,
       'name': name,
       'bio': bio,

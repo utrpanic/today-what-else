@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/create_chat_room_screen.dart';
+import 'package:tiktok_clone/features/inbox/models/chat_room_model.dart';
+import 'package:tiktok_clone/features/inbox/view_models/chat_rooms_view_model.dart';
+import 'package:tiktok_clone/features/users/widgets/avatar.dart';
 
-class ChatsScreen extends StatefulWidget {
+class ChatsScreen extends ConsumerStatefulWidget {
   const ChatsScreen({super.key});
 
   static const String routeName = 'chats';
   static const String routeURL = '/chats';
 
   @override
-  State<ChatsScreen> createState() => _ChatsScreenState();
+  ChatsScreenState createState() => ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class ChatsScreenState extends ConsumerState<ChatsScreen> {
   final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
-
-  final List<int> _items = [];
 
   final Duration _duration = const Duration(milliseconds: 300);
 
@@ -29,49 +34,62 @@ class _ChatsScreenState extends State<ChatsScreen> {
         title: const Text('Direct Messages'),
         actions: [
           IconButton(
-            onPressed: _addItem,
+            onPressed: _createChatRoomTap,
             icon: const FaIcon(FontAwesomeIcons.plus),
           ),
         ],
       ),
-      body: AnimatedList(
-        key: _key,
-        padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
-        itemBuilder: (context, index, animation) {
-          return FadeTransition(
-            key: UniqueKey(),
-            opacity: animation,
-            child: SizeTransition(
-              sizeFactor: animation,
-              child: _makeTile(index),
-            ),
+      body: ref.watch(chatRoomsProvider).when(
+        data: (data) {
+          return AnimatedList(
+            key: _key,
+            padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
+            initialItemCount: data.length,
+            itemBuilder: (context, index, animation) {
+              final chatRoom = data[index];
+              return FadeTransition(
+                key: UniqueKey(),
+                opacity: animation,
+                child: SizeTransition(
+                  sizeFactor: animation,
+                  child: _makeTile(index: index, chatRoom: chatRoom),
+                ),
+              );
+            },
           );
+        },
+        loading: () {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        },
+        error: (error, stack) {
+          return Center(child: Text(error.toString()));
         },
       ),
     );
   }
 
-  Widget _makeTile(int index) {
+  Widget _makeTile({required int index, required ChatRoomModel chatRoom}) {
+    final myId = ref.read(authRepo).user!.uid;
+    final opponent = chatRoom.opponent(myId);
+    final date = DateTime.fromMillisecondsSinceEpoch(chatRoom.updatedAt);
     return ListTile(
-      onTap: () => _onChatTap(index),
-      onLongPress: () => _deleteItem(index),
-      leading: const CircleAvatar(
-        radius: 32,
-        foregroundImage: NetworkImage(
-          'https://avatars.githubusercontent.com/u/3612017',
-        ),
-        child: Text('니꼬'),
+      onTap: () => _onChatRoomTap(chatRoom),
+      onLongPress: () => _deleteChatRoom(index: index, chatRoom: chatRoom),
+      leading: Avatar(
+        uid: opponent.id,
+        name: opponent.name,
+        hasAvatar: opponent.hasAvatar,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            'Lynn ($index)',
+            opponent.name,
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           Text(
-            '2:16 PM',
+            DateFormat('yyyy-MM-dd').format(date),
             style: TextStyle(
               color: Colors.grey.shade500,
               fontSize: Sizes.size12,
@@ -79,34 +97,35 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ],
       ),
-      subtitle: const Text("Don't forget to make video"),
+      subtitle: const Text('Should be the last message'),
     );
   }
 
-  void _addItem() {
-    _key.currentState?.insertItem(
-      _items.length,
-      duration: _duration,
+  Future<void> _createChatRoomTap() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => const CreateChatRoomScreen(),
+      ),
     );
-    _items.add(_items.length);
+    await ref.read(chatRoomsProvider.notifier).refreshChatRooms();
   }
 
-  void _onChatTap(int index) {
+  void _onChatRoomTap(ChatRoomModel chatRoom) {
     context.pushNamed(
       ChatDetailScreen.routeName,
-      pathParameters: {'chatId': '$index'},
+      pathParameters: {'chatId': chatRoom.id},
     );
   }
 
-  void _deleteItem(int index) {
+  void _deleteChatRoom({required int index, required ChatRoomModel chatRoom}) {
     _key.currentState?.removeItem(
       index,
       (context, animation) => SizeTransition(
         sizeFactor: animation,
-        child: _makeTile(index),
+        child: _makeTile(index: index, chatRoom: chatRoom),
       ),
       duration: _duration,
     );
-    _items.removeAt(index);
+    ref.read(chatRoomsProvider.notifier).deleteChatRoom(chatRoom.id);
   }
 }
