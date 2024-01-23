@@ -14,8 +14,21 @@ class NotificationsProvider extends AsyncNotifier<void> {
     final token = await _messaging.getToken();
     if (token == null) return;
     await updateToken(token);
+    await initListeners();
     _messaging.onTokenRefresh.listen((newToken) async {
       await updateToken(newToken);
+    });
+  }
+
+  Future<void> initListeners() async {
+    final permission = await _messaging.requestPermission();
+    if (permission.authorizationStatus == AuthorizationStatus.denied) {
+      return;
+    }
+    // Foreground
+    FirebaseMessaging.onMessage.listen((message) {
+      print("✅ I just got a message and I'm in the foreground");
+      print(message.notification?.title);
     });
   }
 
