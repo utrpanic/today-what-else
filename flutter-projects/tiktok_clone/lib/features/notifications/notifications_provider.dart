@@ -2,15 +2,21 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/features/inbox/chats_screen.dart';
+import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
 
-class NotificationsProvider extends AsyncNotifier<void> {
+class NotificationsProvider extends FamilyAsyncNotifier<void, BuildContext> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  late final BuildContext _context;
 
   @override
-  FutureOr<void> build() async {
+  FutureOr<void> build(BuildContext arg) async {
+    _context = arg;
     final token = await _messaging.getToken();
     if (token == null) return;
     await updateToken(token);
@@ -27,17 +33,19 @@ class NotificationsProvider extends AsyncNotifier<void> {
     }
     // Foreground
     FirebaseMessaging.onMessage.listen((message) {
-      print("✅ I just got a message and I'm in the foreground");
-      print(message.notification?.title);
+      debugPrint("✅ I just got a message and I'm in the foreground");
+      debugPrint(message.notification?.title);
     });
     // Background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print(message.data['screen']);
+      if (_context.mounted) {
+        _context.pushNamed(ChatsScreen.routeName);
+      }
     });
     // Terminated
     final notification = await _messaging.getInitialMessage();
-    if (notification != null) {
-      print(notification.data['screen']);
+    if (notification != null && _context.mounted) {
+      await _context.pushNamed(VideoRecordingScreen.routeName);
     }
   }
 
@@ -48,6 +56,6 @@ class NotificationsProvider extends AsyncNotifier<void> {
 }
 
 final notificationsProvider =
-    AsyncNotifierProvider<NotificationsProvider, void>(
+    AsyncNotifierProvider.family<NotificationsProvider, void, BuildContext>(
   NotificationsProvider.new,
 );
