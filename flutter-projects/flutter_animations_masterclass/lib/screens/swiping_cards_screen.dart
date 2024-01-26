@@ -30,6 +30,15 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     end: 1,
   );
 
+  late final Tween<double> _cancelOpacity = Tween(
+    begin: 1,
+    end: 0,
+  );
+  late final Tween<double> _okOpacity = Tween(
+    begin: 1,
+    end: 0,
+  );
+
   int _index = 1;
 
   @override
@@ -44,29 +53,36 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
 
   void _onHorizontalDragEnd(DragEndDetails details) {
     final bound = size.width - 200;
-    final dropZone = size.width + 100;
-    debugPrint('${_position.value.abs()}');
-    debugPrint('$bound');
     if (_position.value.abs() >= bound) {
-      if (_position.value.isNegative) {
-        _position.animateTo(dropZone * -1).whenComplete(
-              _whenAnimationComplete,
-            );
-      } else {
-        _position.animateTo(dropZone).whenComplete(
-              _whenAnimationComplete,
-            );
-      }
+      final factor = _position.value.isNegative ? -1 : 1;
+      _animateMoveOut(factor: factor);
     } else {
-      _position.animateTo(0, curve: Curves.easeOut);
+      _animateReset();
     }
   }
 
-  void _whenAnimationComplete() {
-    _position.value = 0;
-    setState(() {
-      _index += 1;
+  void _animateMoveOut({required int factor}) {
+    late final dropZone = size.width + 100;
+    _position
+        .animateTo(dropZone * factor, curve: Curves.easeOut)
+        .whenComplete(() {
+      _position.value = 0;
+      setState(() {
+        _index += 1;
+      });
     });
+  }
+
+  void _animateReset() {
+    _position.animateTo(0, curve: Curves.easeOut);
+  }
+
+  void _onCancelPressed() {
+    _animateMoveOut(factor: -1);
+  }
+
+  void _onOkPressed() {
+    _animateMoveOut(factor: 1);
   }
 
   @override
@@ -83,33 +99,73 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
               ) *
               pi /
               180;
-          final scale = _scale.transform(
-            (_position.value.abs() + (size.width / 2)) / size.width,
-          );
-          return Stack(
-            alignment: Alignment.topCenter,
+          final scale = _scale
+              .transform(
+                (_position.value.abs() + (size.width / 2)) / size.width,
+              )
+              .clamp(0.0, 1.0);
+          final cancelOpacity = _cancelOpacity
+              .transform(
+                (_position.value * -1) / size.width,
+              )
+              .clamp(0.0, 1.0);
+          final okOpacity = _okOpacity
+              .transform(
+                _position.value / size.width,
+              )
+              .clamp(0.0, 1.0);
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Positioned(
-                top: 100,
-                child: Transform.scale(
-                  scale: scale,
-                  child: Card(index: (_index + 1) % 5),
-                ),
-              ),
-              Positioned(
-                top: 100,
-                child: GestureDetector(
-                  onHorizontalDragUpdate: _onHorizontalDragUpdate,
-                  onHorizontalDragEnd: _onHorizontalDragEnd,
-                  child: Transform.translate(
-                    offset: Offset(_position.value, 0),
-                    child: Transform.rotate(
-                      angle: angle,
-                      child: Card(index: _index % 5),
+              const SizedBox(height: 48),
+              SizedBox(
+                width: size.width * 0.8,
+                height: size.height * 0.5,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Positioned(
+                      child: Transform.scale(
+                        scale: scale,
+                        child: Card(index: (_index + 1) % 5),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      child: GestureDetector(
+                        onHorizontalDragUpdate: _onHorizontalDragUpdate,
+                        onHorizontalDragEnd: _onHorizontalDragEnd,
+                        child: Transform.translate(
+                          offset: Offset(_position.value, 0),
+                          child: Transform.rotate(
+                            angle: angle,
+                            child: Card(index: _index % 5),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircluarButton(
+                    iconData: Icons.close,
+                    iconColor: Colors.red,
+                    iconOpacity: cancelOpacity,
+                    onPressed: _onCancelPressed,
+                  ),
+                  const SizedBox(width: 24),
+                  CircluarButton(
+                    iconData: Icons.check,
+                    iconColor: Colors.green,
+                    iconOpacity: okOpacity,
+                    onPressed: _onOkPressed,
+                  ),
+                ],
+              ),
+              const Spacer(),
             ],
           );
         },
@@ -136,6 +192,48 @@ class Card extends StatelessWidget {
         child: Image.asset(
           'assets/covers/$index.jpg',
           fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class CircluarButton extends StatelessWidget {
+  const CircluarButton({
+    super.key,
+    required this.iconData,
+    required this.iconColor,
+    required this.iconOpacity,
+    required this.onPressed,
+  });
+
+  final IconData iconData;
+  final Color iconColor;
+  final double iconOpacity;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 10,
+      shape: const CircleBorder(
+        side: BorderSide(
+          color: Colors.white,
+          width: 4,
+        ),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Container(
+        width: 64,
+        height: 64,
+        color: iconColor.withOpacity(1 - iconOpacity),
+        child: IconButton(
+          icon: Icon(iconData),
+          color: iconOpacity == 1
+              ? iconColor
+              : Colors.white.withOpacity(1 - iconOpacity),
+          iconSize: 36,
+          onPressed: onPressed,
         ),
       ),
     );
