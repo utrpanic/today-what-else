@@ -30,6 +30,8 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     end: 1,
   );
 
+  int _index = 1;
+
   @override
   void dispose() {
     _position.dispose();
@@ -47,13 +49,24 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     debugPrint('$bound');
     if (_position.value.abs() >= bound) {
       if (_position.value.isNegative) {
-        _position.animateTo(dropZone * -1);
+        _position.animateTo(dropZone * -1).whenComplete(
+              _whenAnimationComplete,
+            );
       } else {
-        _position.animateTo(dropZone);
+        _position.animateTo(dropZone).whenComplete(
+              _whenAnimationComplete,
+            );
       }
     } else {
       _position.animateTo(0, curve: Curves.easeOut);
     }
+  }
+
+  void _whenAnimationComplete() {
+    _position.value = 0;
+    setState(() {
+      _index += 1;
+    });
   }
 
   @override
@@ -80,14 +93,7 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
                 top: 100,
                 child: Transform.scale(
                   scale: scale,
-                  child: Material(
-                    elevation: 10,
-                    color: Colors.blue.shade100,
-                    child: SizedBox(
-                      width: size.width * 0.8,
-                      height: size.height * 0.5,
-                    ),
-                  ),
+                  child: Card(index: (_index + 1) % 5),
                 ),
               ),
               Positioned(
@@ -99,14 +105,7 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
                     offset: Offset(_position.value, 0),
                     child: Transform.rotate(
                       angle: angle,
-                      child: Material(
-                        elevation: 10,
-                        color: Colors.red.shade100,
-                        child: SizedBox(
-                          width: size.width * 0.8,
-                          height: size.height * 0.5,
-                        ),
-                      ),
+                      child: Card(index: _index % 5),
                     ),
                   ),
                 ),
@@ -114,6 +113,30 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class Card extends StatelessWidget {
+  const Card({super.key, required this.index});
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Material(
+      elevation: 10,
+      borderRadius: BorderRadius.circular(10),
+      clipBehavior: Clip.hardEdge,
+      child: SizedBox(
+        width: size.width * 0.8,
+        height: size.height * 0.5,
+        child: Image.asset(
+          'assets/covers/$index.jpg',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
