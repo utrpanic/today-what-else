@@ -42,7 +42,7 @@ class _ImplicitAnimationsScreenState extends State<ImplicitAnimationsScreen> {
             ElevatedButton(
               onPressed: _trigger,
               child: const Text('Go!'),
-            )
+            ),
           ],
         ),
       ),

@@ -42,7 +42,7 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   ).animate(_curve);
 
   late final Animation<double> _scale = Tween<double>(
-    begin: 1.0,
+    begin: 1,
     end: 1.1,
   ).animate(_curve);
 
@@ -71,69 +71,70 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
         title: const Text('Explicit Animations'),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SlideTransition(
-            position: _position,
-            child: ScaleTransition(
-              scale: _scale,
-              child: RotationTransition(
-                turns: _rotation,
-                child: DecoratedBoxTransition(
-                  decoration: _decoration,
-                  child: const SizedBox(
-                    width: 320,
-                    height: 320,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SlideTransition(
+              position: _position,
+              child: ScaleTransition(
+                scale: _scale,
+                child: RotationTransition(
+                  turns: _rotation,
+                  child: DecoratedBoxTransition(
+                    decoration: _decoration,
+                    child: const SizedBox(
+                      width: 320,
+                      height: 320,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 48),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: _play,
-                child: const Text('Play'),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: _pause,
-                child: const Text('Pause'),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: _rewind,
-                child: const Text('Rewind'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 48),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ValueListenableBuilder(
-                valueListenable: _range,
-                builder: (context, value, child) {
-                  return Slider(
-                    value: _range.value,
-                    onChanged: _onChanged,
-                  );
-                },
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: _toggleLooping,
-                child: Text(
-                  _looping ? 'Stop looping' : 'Start looping',
+            const SizedBox(height: 48),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _play,
+                  child: const Text('Play'),
                 ),
-              ),
-            ],
-          )
-        ],
-      )),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _pause,
+                  child: const Text('Pause'),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _rewind,
+                  child: const Text('Rewind'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 48),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ValueListenableBuilder(
+                  valueListenable: _range,
+                  builder: (context, value, child) {
+                    return Slider(
+                      value: _range.value,
+                      onChanged: _onSliderValueChange,
+                    );
+                  },
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _toggleLooping,
+                  child: Text(
+                    _looping ? 'Stop looping' : 'Start looping',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -149,7 +150,7 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
     _animationController.reverse();
   }
 
-  void _onChanged(double value) {
+  void _onSliderValueChange(double value) {
     _animationController.value = value;
   }
 

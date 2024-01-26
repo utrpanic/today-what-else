@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'apple_watch_screen.dart';
-import 'explicit_animations_screen.dart';
-import 'implicit_animations_screen.dart';
+import 'package:flutter_animations_masterclass/screens/apple_watch_screen.dart';
+import 'package:flutter_animations_masterclass/screens/explicit_animations_screen.dart';
+import 'package:flutter_animations_masterclass/screens/implicit_animations_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -52,7 +51,7 @@ class MenuScreen extends StatelessWidget {
   void _goToPage(BuildContext context, Widget page) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => page,
       ),
     );

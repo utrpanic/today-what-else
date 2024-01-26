@@ -59,31 +59,32 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.black,
-          title: const Text('Apple Watch'),
+        title: const Text('Apple Watch'),
+      ),
+      body: Center(
+        child: AnimatedBuilder(
+          animation: _curve,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: AppleWatchPainter(
+                redProgress: _redProgress.value,
+                greenProgress: _greenProgress.value,
+                blueProgress: _blueProgress.value,
+              ),
+              size: const Size(320, 320),
+            );
+          },
         ),
-        body: Center(
-          child: AnimatedBuilder(
-            animation: _curve,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: AppleWatchPainter(
-                  redProgress: _redProgress.value,
-                  greenProgress: _greenProgress.value,
-                  blueProgress: _blueProgress.value,
-                ),
-                size: const Size(320, 320),
-              );
-            },
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _animateValues,
-          child: const Icon(Icons.refresh),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _animateValues,
+        child: const Icon(Icons.refresh),
+      ),
+    );
   }
 }
 

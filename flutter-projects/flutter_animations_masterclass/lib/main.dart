@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/menu_screen.dart';
+import 'package:flutter_animations_masterclass/screens/menu_screen.dart';
 
 void main() {
   runApp(const MyApp());
