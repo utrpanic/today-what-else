@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animations_masterclass/screens/music_player_detail_screen.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
   const MusicPlayerScreen({super.key});
@@ -37,6 +38,16 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     setState(() {
       _currentPage = newPage;
     });
+  }
+
+  void _onCardTap(int cardIndex) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => MusicPlayerDetailScreen(
+          index: cardIndex,
+        ),
+      ),
+    );
   }
 
   @override
@@ -82,23 +93,29 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                       final scale = 1 - (difference * 0.1);
                       // debugPrint('We are $difference pages away from $index');
                       // debugPrint('The card $index has a scale of $scale');
-                      return Transform.scale(
-                        scale: scale,
-                        child: Container(
-                          height: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 5),
+                      return GestureDetector(
+                        onTap: () => _onCardTap(index),
+                        child: Hero(
+                          tag: index,
+                          child: Transform.scale(
+                            scale: scale,
+                            child: Container(
+                              height: 350,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                  image: AssetImage('assets/covers/$index.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage('assets/covers/$index.jpg'),
-                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
