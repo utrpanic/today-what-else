@@ -13,6 +13,7 @@ class MusicPlayerDetailScreen extends StatefulWidget {
 class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Intersteller'),
@@ -45,8 +46,62 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 48),
+          CustomPaint(
+            size: Size(size.width - 96, 8),
+            painter: ProgressBar(
+              progressValue: 0.3,
+            ),
+          ),
         ],
       ),
     );
+  }
+}
+
+class ProgressBar extends CustomPainter {
+  ProgressBar({required this.progressValue});
+
+  final double progressValue;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // background bar
+    final trackPaint = Paint()
+      ..color = Colors.grey.shade300
+      ..style = PaintingStyle.fill;
+    final trackRRect = RRect.fromLTRBR(
+      0,
+      0,
+      size.width,
+      size.height,
+      const Radius.circular(8),
+    );
+    canvas.drawRRect(trackRRect, trackPaint);
+
+    // progress bar
+    final progressPaint = Paint()
+      ..color = Colors.grey.shade500
+      ..style = PaintingStyle.fill;
+    final progressRRect = RRect.fromLTRBR(
+      0,
+      0,
+      size.width * progressValue,
+      size.height,
+      const Radius.circular(8),
+    );
+    canvas.drawRRect(progressRRect, progressPaint);
+
+    // thumb
+    canvas.drawCircle(
+      Offset(size.width * progressValue, size.height / 2),
+      8,
+      progressPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
