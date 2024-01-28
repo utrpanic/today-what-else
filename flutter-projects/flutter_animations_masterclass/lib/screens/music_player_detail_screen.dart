@@ -12,9 +12,10 @@ class MusicPlayerDetailScreen extends StatefulWidget {
 
 class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     with SingleTickerProviderStateMixin {
+  final musicDuration = const Duration(minutes: 1);
   late final _progressController = AnimationController(
     vsync: this,
-    duration: const Duration(minutes: 1),
+    duration: musicDuration,
   )..repeat(reverse: true);
 
   @override
@@ -28,7 +29,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Intersteller'),
+        title: const Text('Interstellar'),
       ),
       body: Column(
         children: [
@@ -61,16 +62,71 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           const SizedBox(height: 48),
           AnimatedBuilder(
             animation: _progressController,
-            builder: (context, child) => CustomPaint(
-              size: Size(size.width - 96, 8),
-              painter: ProgressBar(
-                progressValue: _progressController.value,
-              ),
+            builder: (context, child) {
+              final elapsed =
+                  (musicDuration.inSeconds * _progressController.value).toInt();
+              final left = musicDuration.inSeconds - elapsed;
+              return Column(
+                children: [
+                  CustomPaint(
+                    size: Size(size.width - 96, 8),
+                    painter: ProgressBar(
+                      progressValue: _progressController.value,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    child: Row(
+                      children: [
+                        Text(
+                          _formatedTime(elapsed),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          _formatedTime(left),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Interstellar',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              'A film by Christopher Nolan - Original Motion Picture Soundtrack',
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              style: TextStyle(fontSize: 16),
             ),
           ),
         ],
       ),
     );
+  }
+
+  String _formatedTime(int secondsValue) {
+    final minutes = secondsValue ~/ 60;
+    final seconds = secondsValue % 60;
+    final minutesString = minutes.toString().padLeft(2, '0');
+    final secondsString = seconds.toString().padLeft(2, '0');
+    return '$minutesString:$secondsString';
   }
 }
 
