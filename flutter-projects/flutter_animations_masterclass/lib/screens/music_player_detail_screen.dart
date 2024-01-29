@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:lottie/lottie.dart';
 
 class MusicPlayerDetailScreen extends StatefulWidget {
   const MusicPlayerDetailScreen({super.key, required this.index});
@@ -28,11 +29,24 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     end: const Offset(-0.6, 0),
   ).animate(_marqueeController);
 
+  late final _playPauseController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 300),
+  );
+
   @override
   void dispose() {
     _progressController.dispose();
     _marqueeController.dispose();
     super.dispose();
+  }
+
+  void _onPlayPauseTap() {
+    if (_playPauseController.isCompleted) {
+      _playPauseController.reverse();
+    } else {
+      _playPauseController.forward();
+    }
   }
 
   @override
@@ -128,6 +142,29 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
                 maxLines: 1,
                 style: TextStyle(fontSize: 16),
               ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: _onPlayPauseTap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedIcon(
+                  icon: AnimatedIcons.pause_play,
+                  progress: _playPauseController,
+                  size: 64,
+                ),
+                // Lottie.asset(
+                //   width: 128,
+                //   height: 128,
+                //   'assets/animations/lottie-play-pause.json',
+                //   controller: _playPauseController,
+                //   onLoaded: (composition) {
+                //     _playPauseController.duration = composition.duration;
+                //   },
+                // ),
+              ],
             ),
           ),
         ],

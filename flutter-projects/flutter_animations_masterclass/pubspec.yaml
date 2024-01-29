@@ -11,6 +11,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  lottie: ^2.7.0
   
 
 dev_dependencies:
@@ -33,6 +34,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/animations/
     - assets/covers/
 
   # An image asset can refer to one or more resolution-specific "variants", see
