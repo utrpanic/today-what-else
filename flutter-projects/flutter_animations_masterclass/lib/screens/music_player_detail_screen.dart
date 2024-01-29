@@ -34,20 +34,47 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     duration: const Duration(milliseconds: 300),
   );
 
+  late final _menuController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+  );
+
   bool _dragging = false;
 
   final ValueNotifier<double> _volume = ValueNotifier<double>(0);
 
   late final size = MediaQuery.of(context).size;
 
+  final List<Map<String, dynamic>> _menus = [
+    {
+      'icon': Icons.person,
+      'title': 'Profile',
+    },
+    {
+      'icon': Icons.notifications,
+      'title': 'Notifications',
+    },
+    {
+      'icon': Icons.settings,
+      'title': 'Settings',
+    },
+  ];
+
   @override
   void dispose() {
     _progressController.dispose();
     _marqueeController.dispose();
+    _menuController.dispose();
     super.dispose();
   }
 
-  void _openMenu() {}
+  void _openMenu() {
+    _menuController.forward();
+  }
+
+  void _closeMenu() {
+    _menuController.reverse();
+  }
 
   void _onPlayPauseTap() {
     if (_playPauseController.isCompleted) {
@@ -70,153 +97,216 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Interstellar'),
-        actions: [
-          IconButton(
-            onPressed: _openMenu,
-            icon: const Icon(Icons.menu),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 32),
-          Align(
-            alignment: Alignment.center,
-            child: Hero(
-              tag: widget.index,
-              child: Container(
-                width: 350,
-                height: 350,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                  image: DecorationImage(
-                    image: AssetImage('assets/covers/${widget.index}.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black,
+            leading: IconButton(
+              onPressed: _closeMenu,
+              icon: const Icon(Icons.close),
             ),
           ),
-          const SizedBox(height: 48),
-          AnimatedBuilder(
-            animation: _progressController,
-            builder: (context, child) {
-              final elapsed =
-                  (musicDuration.inSeconds * _progressController.value).toInt();
-              final left = musicDuration.inSeconds - elapsed;
-              return Column(
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
                 children: [
-                  CustomPaint(
-                    size: Size(size.width - 96, 8),
-                    painter: ProgressBar(
-                      progressValue: _progressController.value,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
-                    child: Row(
+                  const SizedBox(height: 16),
+                  for (final menu in _menus) ...[
+                    Row(
                       children: [
-                        Text(
-                          _formatedTime(elapsed),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
+                        Icon(
+                          menu['icon'] as IconData,
+                          color: Colors.grey.shade200,
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 16),
                         Text(
-                          _formatedTime(left),
+                          menu['title'] as String,
                           style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
+                            fontSize: 18,
+                            color: Colors.grey.shade200,
                           ),
                         ),
                       ],
                     ),
+                    const SizedBox(height: 16),
+                  ],
+                  const Spacer(),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.red,
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        'Log out',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 16),
                 ],
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Interstellar',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: SlideTransition(
-              position: _marqueeAnimation,
-              child: const Text(
-                'A film by Christopher Nolan - Original Motion Picture Soundtrack',
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                style: TextStyle(fontSize: 16),
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          GestureDetector(
-            onTap: _onPlayPauseTap,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedIcon(
-                  icon: AnimatedIcons.pause_play,
-                  progress: _playPauseController,
-                  size: 64,
-                ),
-                // Lottie.asset(
-                //   width: 128,
-                //   height: 128,
-                //   'assets/animations/lottie-play-pause.json',
-                //   controller: _playPauseController,
-                //   onLoaded: (composition) {
-                //     _playPauseController.duration = composition.duration;
-                //   },
-                // ),
-              ],
-            ),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('Interstellar'),
+            actions: [
+              IconButton(
+                onPressed: _openMenu,
+                icon: const Icon(Icons.menu),
+              ),
+            ],
           ),
-          const SizedBox(height: 32),
-          GestureDetector(
-            onHorizontalDragStart: (details) => _toggleDragging(),
-            onHorizontalDragUpdate: _onVolumeDragUpdate,
-            onHorizontalDragEnd: (details) => _toggleDragging(),
-            child: AnimatedScale(
-              scale: _dragging ? 1.2 : 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.bounceOut,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                clipBehavior: Clip.hardEdge,
-                child: ValueListenableBuilder(
-                  valueListenable: _volume,
-                  builder: (context, value, child) => CustomPaint(
-                    size: Size(size.width - 96, 48),
-                    painter: VolumePainter(volume: value),
+          body: Column(
+            children: [
+              const SizedBox(height: 32),
+              Align(
+                alignment: Alignment.center,
+                child: Hero(
+                  tag: widget.index,
+                  child: Container(
+                    width: 350,
+                    height: 350,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                      image: DecorationImage(
+                        image: AssetImage('assets/covers/${widget.index}.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(height: 48),
+              AnimatedBuilder(
+                animation: _progressController,
+                builder: (context, child) {
+                  final elapsed =
+                      (musicDuration.inSeconds * _progressController.value)
+                          .toInt();
+                  final left = musicDuration.inSeconds - elapsed;
+                  return Column(
+                    children: [
+                      CustomPaint(
+                        size: Size(size.width - 96, 8),
+                        painter: ProgressBar(
+                          progressValue: _progressController.value,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48),
+                        child: Row(
+                          children: [
+                            Text(
+                              _formatedTime(elapsed),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              _formatedTime(left),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Interstellar',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SlideTransition(
+                  position: _marqueeAnimation,
+                  child: const Text(
+                    'A film by Christopher Nolan - Original Motion Picture Soundtrack',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                onTap: _onPlayPauseTap,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedIcon(
+                      icon: AnimatedIcons.pause_play,
+                      progress: _playPauseController,
+                      size: 64,
+                    ),
+                    // Lottie.asset(
+                    //   width: 128,
+                    //   height: 128,
+                    //   'assets/animations/lottie-play-pause.json',
+                    //   controller: _playPauseController,
+                    //   onLoaded: (composition) {
+                    //     _playPauseController.duration = composition.duration;
+                    //   },
+                    // ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 32),
+              GestureDetector(
+                onHorizontalDragStart: (details) => _toggleDragging(),
+                onHorizontalDragUpdate: _onVolumeDragUpdate,
+                onHorizontalDragEnd: (details) => _toggleDragging(),
+                child: AnimatedScale(
+                  scale: _dragging ? 1.2 : 1,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.bounceOut,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: ValueListenableBuilder(
+                      valueListenable: _volume,
+                      builder: (context, value, child) => CustomPaint(
+                        size: Size(size.width - 96, 48),
+                        painter: VolumePainter(volume: value),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
