@@ -11,16 +11,27 @@ class MusicPlayerDetailScreen extends StatefulWidget {
 }
 
 class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final musicDuration = const Duration(minutes: 1);
   late final _progressController = AnimationController(
     vsync: this,
     duration: musicDuration,
   )..repeat(reverse: true);
 
+  late final _marqueeController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 5),
+  )..repeat(reverse: true);
+
+  late final Animation<Offset> _marqueeAnimation = Tween<Offset>(
+    begin: const Offset(0.1, 0),
+    end: const Offset(-0.6, 0),
+  ).animate(_marqueeController);
+
   @override
   void dispose() {
     _progressController.dispose();
+    _marqueeController.dispose();
     super.dispose();
   }
 
@@ -107,13 +118,16 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'A film by Christopher Nolan - Original Motion Picture Soundtrack',
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              style: TextStyle(fontSize: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: SlideTransition(
+              position: _marqueeAnimation,
+              child: const Text(
+                'A film by Christopher Nolan - Original Motion Picture Soundtrack',
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ],
