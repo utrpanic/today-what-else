@@ -34,12 +34,20 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     duration: const Duration(milliseconds: 300),
   );
 
+  bool _dragging = false;
+
+  final ValueNotifier<double> _volume = ValueNotifier<double>(0);
+
+  late final size = MediaQuery.of(context).size;
+
   @override
   void dispose() {
     _progressController.dispose();
     _marqueeController.dispose();
     super.dispose();
   }
+
+  void _openMenu() {}
 
   void _onPlayPauseTap() {
     if (_playPauseController.isCompleted) {
@@ -49,12 +57,28 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     }
   }
 
+  void _toggleDragging() {
+    _dragging = !_dragging;
+    setState(() {});
+  }
+
+  void _onVolumeDragUpdate(DragUpdateDetails details) {
+    _volume
+      ..value += details.delta.dx
+      ..value = _volume.value.clamp(0.0, size.width - 96);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interstellar'),
+        actions: [
+          IconButton(
+            onPressed: _openMenu,
+            icon: const Icon(Icons.menu),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -167,6 +191,30 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
               ],
             ),
           ),
+          const SizedBox(height: 32),
+          GestureDetector(
+            onHorizontalDragStart: (details) => _toggleDragging(),
+            onHorizontalDragUpdate: _onVolumeDragUpdate,
+            onHorizontalDragEnd: (details) => _toggleDragging(),
+            child: AnimatedScale(
+              scale: _dragging ? 1.2 : 1,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.bounceOut,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: ValueListenableBuilder(
+                  valueListenable: _volume,
+                  builder: (context, value, child) => CustomPaint(
+                    size: Size(size.width - 96, 48),
+                    painter: VolumePainter(volume: value),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -223,5 +271,39 @@ class ProgressBar extends CustomPainter {
   @override
   bool shouldRepaint(covariant ProgressBar oldDelegate) {
     return oldDelegate.progressValue != progressValue;
+  }
+}
+
+class VolumePainter extends CustomPainter {
+  VolumePainter({required this.volume});
+
+  final double volume;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final progress = volume;
+
+    final bgPaint = Paint()..color = Colors.grey.shade300;
+    final bgRect = Rect.fromLTRB(
+      0,
+      0,
+      size.width,
+      size.height,
+    );
+    canvas.drawRect(bgRect, bgPaint);
+
+    final volumePaint = Paint()..color = Colors.grey.shade500;
+    final volumeRect = Rect.fromLTRB(
+      0,
+      0,
+      progress,
+      size.height,
+    );
+    canvas.drawRect(volumeRect, volumePaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant VolumePainter oldDelegate) {
+    return oldDelegate.volume != volume;
   }
 }
