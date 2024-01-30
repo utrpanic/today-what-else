@@ -48,7 +48,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
       parent: _menuController,
       curve: Interval(
         0,
-        0.5,
+        0.3,
         curve: _menuCurve,
       ),
     ),
@@ -63,6 +63,32 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
       curve: Interval(
         0.5,
         1,
+        curve: _menuCurve,
+      ),
+    ),
+  );
+
+  late final Animation<double> _closeButtonOpacity =
+      Tween<double>(begin: 0, end: 1).animate(
+    CurvedAnimation(
+      parent: _menuController,
+      curve: Interval(
+        0.3,
+        0.5,
+        curve: _menuCurve,
+      ),
+    ),
+  );
+
+  late final Animation<Offset> _profileSlide = Tween(
+    begin: const Offset(-1, 0),
+    end: Offset.zero,
+  ).animate(
+    CurvedAnimation(
+      parent: _menuController,
+      curve: Interval(
+        0.4,
+        0.7,
         curve: _menuCurve,
       ),
     ),
@@ -133,9 +159,12 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           appBar: AppBar(
             foregroundColor: Colors.white,
             backgroundColor: Colors.black,
-            leading: IconButton(
-              onPressed: _closeMenu,
-              icon: const Icon(Icons.close),
+            leading: FadeTransition(
+              opacity: _closeButtonOpacity,
+              child: IconButton(
+                onPressed: _closeMenu,
+                icon: const Icon(Icons.close),
+              ),
             ),
           ),
           body: SafeArea(
@@ -145,21 +174,24 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
                 children: [
                   const SizedBox(height: 16),
                   for (final menu in _menus) ...[
-                    Row(
-                      children: [
-                        Icon(
-                          menu['icon'] as IconData,
-                          color: Colors.grey.shade200,
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          menu['title'] as String,
-                          style: TextStyle(
-                            fontSize: 18,
+                    SlideTransition(
+                      position: _profileSlide,
+                      child: Row(
+                        children: [
+                          Icon(
+                            menu['icon'] as IconData,
                             color: Colors.grey.shade200,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 16),
+                          Text(
+                            menu['title'] as String,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey.shade200,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 16),
                   ],
