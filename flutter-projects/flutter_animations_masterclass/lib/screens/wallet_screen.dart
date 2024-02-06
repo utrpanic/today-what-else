@@ -9,6 +9,18 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  bool _isExpanded = false;
+
+  void _onExpanded() {
+    _isExpanded = true;
+    setState(() {});
+  }
+
+  void _onShrinked() {
+    _isExpanded = false;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,31 +28,52 @@ class _WalletScreenState extends State<WalletScreen> {
         title: const Text('Wallet'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          // children: AnimateList(
-          //   interval: 500.ms,
-          //   effects: [
-          //     const SlideEffect(
-          //       begin: Offset(-1, 0),
-          //       end: Offset.zero,
-          //     ),
-          //     const FadeEffect(begin: 0, end: 1),
-          //   ],
-          //   children: [
-          //     const CreditCard(bgColor: Colors.purple),
-          //     const CreditCard(bgColor: Colors.black),
-          //     const CreditCard(bgColor: Colors.blue),
-          //   ],
-          // ),
-          children: [
-            const CreditCard(bgColor: Colors.purple),
-            const CreditCard(bgColor: Colors.black),
-            const CreditCard(bgColor: Colors.blue),
-          ]
-              .animate(interval: 500.ms)
-              .fadeIn(begin: 0)
-              .slideX(begin: -1, end: 0),
+        padding: const EdgeInsets.all(16),
+        child: GestureDetector(
+          onTap: _onExpanded,
+          onVerticalDragEnd: (_) => _onShrinked(),
+          child: Column(
+            // children: AnimateList(
+            //   interval: 500.ms,
+            //   effects: [
+            //     const SlideEffect(
+            //       begin: Offset(-1, 0),
+            //       end: Offset.zero,
+            //     ),
+            //     const FadeEffect(begin: 0, end: 1),
+            //   ],
+            //   children: [
+            //     const CreditCard(bgColor: Colors.purple),
+            //     const CreditCard(bgColor: Colors.black),
+            //     const CreditCard(bgColor: Colors.blue),
+            //   ],
+            // ),
+            children: [
+              const CreditCard(bgColor: Colors.purple)
+                  .animate(
+                    delay: 1.5.seconds,
+                    target: _isExpanded ? 0 : 1,
+                  )
+                  .flipV(end: 0.1),
+              const CreditCard(bgColor: Colors.black)
+                  .animate(
+                    delay: 1.5.seconds,
+                    target: _isExpanded ? 0 : 1,
+                  )
+                  .flipV(end: 0.1)
+                  .slideY(end: -0.8),
+              const CreditCard(bgColor: Colors.blue)
+                  .animate(
+                    delay: 1.5.seconds,
+                    target: _isExpanded ? 0 : 1,
+                  )
+                  .flipV(end: 0.1)
+                  .slideY(end: -0.8 * 2),
+            ]
+                .animate(interval: 500.ms)
+                .fadeIn(begin: 0)
+                .slideX(begin: -1, end: 0),
+          ),
         ),
       ),
     );
@@ -64,7 +97,7 @@ class CreditCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 32,
-          vertical: 40,
+          vertical: 32,
         ),
         child: Column(
           children: [
