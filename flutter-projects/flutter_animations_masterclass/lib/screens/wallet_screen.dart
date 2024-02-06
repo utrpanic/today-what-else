@@ -49,20 +49,29 @@ class _WalletScreenState extends State<WalletScreen> {
             //   ],
             // ),
             children: [
-              const CreditCard(bgColor: Colors.purple)
+              CreditCard(
+                bgColor: Colors.purple,
+                isExpanded: _isExpanded,
+              )
                   .animate(
                     delay: 1.5.seconds,
                     target: _isExpanded ? 0 : 1,
                   )
                   .flipV(end: 0.1),
-              const CreditCard(bgColor: Colors.black)
+              CreditCard(
+                bgColor: Colors.black,
+                isExpanded: _isExpanded,
+              )
                   .animate(
                     delay: 1.5.seconds,
                     target: _isExpanded ? 0 : 1,
                   )
                   .flipV(end: 0.1)
                   .slideY(end: -0.8),
-              const CreditCard(bgColor: Colors.blue)
+              CreditCard(
+                bgColor: Colors.blue,
+                isExpanded: _isExpanded,
+              )
                   .animate(
                     delay: 1.5.seconds,
                     target: _isExpanded ? 0 : 1,
@@ -81,78 +90,93 @@ class _WalletScreenState extends State<WalletScreen> {
 }
 
 class CreditCard extends StatelessWidget {
-  const CreditCard({super.key, required this.bgColor});
+  const CreditCard({
+    super.key,
+    required this.bgColor,
+    required this.isExpanded,
+  });
 
   final Color bgColor;
+  final bool isExpanded;
+
+  void _onTap() {
+    print('Card Tapped');
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 32),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: bgColor,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 32,
-          vertical: 32,
-        ),
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return AbsorbPointer(
+      absorbing: !isExpanded,
+      child: GestureDetector(
+        onTap: _onTap,
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 32),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: bgColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32,
+              vertical: 32,
+            ),
+            child: Column(
               children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(height: 100),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Nomad Coders',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '**** **** **** **75',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Nomad Coders',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 20,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          shape: BoxShape.circle,
+                        Text(
+                          '**** **** **** **75',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 20,
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.amber,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
