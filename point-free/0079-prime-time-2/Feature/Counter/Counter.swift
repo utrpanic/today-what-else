@@ -62,6 +62,7 @@ public func counterReducer(state: inout CounterState, action: CounterAction) -> 
   }
 }
 
+nonisolated(unsafe)
 public let counterViewReducer = combine(
   pullback(counterReducer, value: \CounterViewState.counter, action: \CounterViewAction.counter),
   pullback(primeModalReducer, value: \.primeModal, action: \.primeModal)

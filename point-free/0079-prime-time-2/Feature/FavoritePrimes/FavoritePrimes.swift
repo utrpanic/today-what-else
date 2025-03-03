@@ -39,6 +39,7 @@ private func saveEffect(favoritePrimes: [Int]) -> Effect<FavoritePrimesAction> {
   }
 }
 
+nonisolated(unsafe)
 private let loadEffect = Effect<FavoritePrimesAction> { callback in
   let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
   let documentsUrl = URL(fileURLWithPath: documentsPath)
