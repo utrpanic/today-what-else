@@ -1,0 +1,45 @@
+{
+  "configurations" : [
+    {
+      "id" : "E4D15148-677B-441C-A3AC-E3498B134AE6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PrimeModalTests",
+        "name" : "PrimeModalTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CounterTests",
+        "name" : "CounterTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "FavoritePrimesTests",
+        "name" : "FavoritePrimesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "FeatureTests",
+        "name" : "FeatureTests"
+      }
+    }
+  ],
+  "version" : 1
+}

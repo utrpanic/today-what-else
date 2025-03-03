@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1CD0FD402D75FC28002B651F /* Feature in Frameworks */ = {isa = PBXBuildFile; productRef = 1CD0FD3F2D75FC28002B651F /* Feature */; };
+		1CD0FD422D75FC28002B651F /* Platform in Frameworks */ = {isa = PBXBuildFile; productRef = 1CD0FD412D75FC28002B651F /* Platform */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1CD0FCF52D7596C7002B651F /* PrimeTime2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrimeTime2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CD0FD242D759AB2002B651F /* Platform */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Platform; sourceTree = "<group>"; };
+		1CD0FD302D75DAF6002B651F /* Feature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Feature; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +30,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CD0FD402D75FC28002B651F /* Feature in Frameworks */,
+				1CD0FD422D75FC28002B651F /* Platform in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +41,10 @@
 		1CD0FCEC2D7596C7002B651F = {
 			isa = PBXGroup;
 			children = (
+				1CD0FD302D75DAF6002B651F /* Feature */,
+				1CD0FD242D759AB2002B651F /* Platform */,
 				1CD0FCF72D7596C7002B651F /* PrimeTime2 */,
+				1CD0FD3E2D75FC28002B651F /* Frameworks */,
 				1CD0FCF62D7596C7002B651F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +55,13 @@
 				1CD0FCF52D7596C7002B651F /* PrimeTime2.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1CD0FD3E2D75FC28002B651F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +84,8 @@
 			);
 			name = PrimeTime2;
 			packageProductDependencies = (
+				1CD0FD3F2D75FC28002B651F /* Feature */,
+				1CD0FD412D75FC28002B651F /* Platform */,
 			);
 			productName = PrimeTime2;
 			productReference = 1CD0FCF52D7596C7002B651F /* PrimeTime2.app */;
@@ -322,6 +343,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1CD0FD3F2D75FC28002B651F /* Feature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Feature;
+		};
+		1CD0FD412D75FC28002B651F /* Platform */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Platform;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CD0FCED2D7596C7002B651F /* Project object */;
 }

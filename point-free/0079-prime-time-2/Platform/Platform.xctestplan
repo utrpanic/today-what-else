@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "944B24B8-54D4-4361-A65B-B181F0DF40D3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PlatformTests",
+        "name" : "PlatformTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ComposableArchitectureTests",
+        "name" : "ComposableArchitectureTests"
+      }
+    }
+  ],
+  "version" : 1
+}
