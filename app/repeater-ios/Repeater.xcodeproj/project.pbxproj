@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1C5F8EAB2DBE3F6A00405478 /* RepeaterLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5F8EAA2DBE3F6A00405478 /* RepeaterLibrary */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		1C5F8EA92DBE3F5800405478 /* RepeaterLibrary */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RepeaterLibrary; sourceTree = "<group>"; };
 		1CA206D32DBDC8CE00E812B1 /* Repeater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repeater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -23,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5F8EAB2DBE3F6A00405478 /* RepeaterLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +38,9 @@
 		1CA206CA2DBDC8CE00E812B1 = {
 			isa = PBXGroup;
 			children = (
+				1C5F8EA92DBE3F5800405478 /* RepeaterLibrary */,
 				1CA206D52DBDC8CE00E812B1 /* Repeater */,
+				1CA207312DBDD3C600E812B1 /* Frameworks */,
 				1CA206D42DBDC8CE00E812B1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +51,13 @@
 				1CA206D32DBDC8CE00E812B1 /* Repeater.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1CA207312DBDD3C600E812B1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +80,7 @@
 			);
 			name = Repeater;
 			packageProductDependencies = (
+				1C5F8EAA2DBE3F6A00405478 /* RepeaterLibrary */,
 			);
 			productName = Repeater;
 			productReference = 1CA206D32DBDC8CE00E812B1 /* Repeater.app */;
@@ -320,6 +336,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C5F8EAA2DBE3F6A00405478 /* RepeaterLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RepeaterLibrary;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CA206CB2DBDC8CE00E812B1 /* Project object */;
 }
