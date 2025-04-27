@@ -2,9 +2,16 @@ import SwiftUI
 import RepeaterModel
 import RepeaterView
 import RepeaterViewModel
+import SwiftData
 
 struct ContentView: View {
-  @StateObject private var viewModel = MessageViewModel()
+  @Environment(\.modelContext) private var modelContext
+  @StateObject private var viewModel: MessageViewModel
+  
+  init() {
+    // We'll update this in onAppear to use the environment's modelContext
+    self._viewModel = StateObject(wrappedValue: MessageViewModel(modelContext: ModelContext(try! ModelContainer(for: SavedMessage.self))))
+  }
   
   var body: some View {
     NavigationStack {
@@ -34,6 +41,10 @@ struct ContentView: View {
             }
           }
         }
+    }
+    .onAppear {
+      // Update the viewModel to use the environment's modelContext
+      viewModel.modelContext = modelContext
     }
   }
 }

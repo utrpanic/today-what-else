@@ -1,24 +1,24 @@
 import Foundation
 import SwiftUI
 import RepeaterModel
+import SwiftData
 
 @MainActor
 public class MessageViewModel: ObservableObject {
-  @Published public var savedMessages: [SavedMessage] = []
   @Published public var isAddingMessage = false
   @Published public var newMessage = ""
   @Published public var showCopiedAlert = false
   
-  private let saveKey = "SavedMessages"
+  public var modelContext: ModelContext
   
-  public init() {
-    loadMessages()
+  public init(modelContext: ModelContext) {
+    self.modelContext = modelContext
   }
   
   public func saveMessage() {
     let message = SavedMessage(content: newMessage)
-    savedMessages.append(message)
-    persistMessages()
+    modelContext.insert(message)
+    try? modelContext.save()
     newMessage = ""
     isAddingMessage = false
   }
@@ -34,26 +34,8 @@ public class MessageViewModel: ObservableObject {
     }
   }
   
-  public func deleteMessage(at offsets: IndexSet) {
-    savedMessages.remove(atOffsets: offsets)
-    persistMessages()
-  }
-  
-  public func moveMessage(from source: IndexSet, to destination: Int) {
-    savedMessages.move(fromOffsets: source, toOffset: destination)
-    persistMessages()
-  }
-  
-  private func persistMessages() {
-    if let encoded = try? JSONEncoder().encode(savedMessages) {
-      UserDefaults.standard.set(encoded, forKey: saveKey)
-    }
-  }
-  
-  private func loadMessages() {
-    if let savedData = UserDefaults.standard.data(forKey: saveKey),
-       let decoded = try? JSONDecoder().decode([SavedMessage].self, from: savedData) {
-      savedMessages = decoded
-    }
+  public func deleteMessage(_ message: SavedMessage) {
+    modelContext.delete(message)
+    try? modelContext.save()
   }
 }

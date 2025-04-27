@@ -1,21 +1,24 @@
 import SwiftUI
 import RepeaterModel
 import RepeaterViewModel
+import SwiftData
 
 public struct MessageGridView: View {
   @ObservedObject var viewModel: MessageViewModel
+  @Query private var messages: [SavedMessage]
   
   let columns = [
     GridItem(.adaptive(minimum: 150), spacing: 16)
   ]
   
-  public init(viewModel: MessageViewModel) {
+  public init(viewModel: MessageViewModel, sortOrder: [SortDescriptor<SavedMessage>] = [SortDescriptor(\.createdAt, order: .reverse)]) {
     self.viewModel = viewModel
+    self._messages = Query(sort: sortOrder)
   }
   
   public var body: some View {
     ScrollView {
-      if viewModel.savedMessages.isEmpty {
+      if messages.isEmpty {
         ContentUnavailableView(
           "No Saved Messages",
           systemImage: "clipboard",
@@ -24,10 +27,17 @@ public struct MessageGridView: View {
         .padding()
       } else {
         LazyVGrid(columns: columns, spacing: 16) {
-          ForEach(viewModel.savedMessages) { message in
+          ForEach(messages) { message in
             MessageCell(message: message, onTap: {
               viewModel.copyToClipboard(message.content)
             })
+            .contextMenu {
+              Button(role: .destructive) {
+                viewModel.deleteMessage(message)
+              } label: {
+                Label("Delete", systemImage: "trash")
+              }
+            }
           }
         }
         .padding()

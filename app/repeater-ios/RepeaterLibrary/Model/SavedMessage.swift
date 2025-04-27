@@ -1,15 +1,15 @@
 import Foundation
+import SwiftData
 
-public struct SavedMessage: Identifiable, Codable, Equatable {
-  public var id = UUID()
+@Model
+public final class SavedMessage {
+  public var id: UUID
   public var content: String
-  public var createdAt = Date()
+  public var createdAt: Date
   
   public init(content: String) {
+    self.id = UUID()
     self.content = content
-  }
-  
-  public static func == (lhs: SavedMessage, rhs: SavedMessage) -> Bool {
-    lhs.id == rhs.id
+    self.createdAt = Date()
   }
 }
