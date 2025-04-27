@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1C5F8EAB2DBE3F6A00405478 /* RepeaterLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5F8EAA2DBE3F6A00405478 /* RepeaterLibrary */; };
+		1CAC989A2DBE4056002E7C27 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC98982DBE4056002E7C27 /* README.md */; };
+		1CAC989B2DBE4056002E7C27 /* requirement.md in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC98992DBE4056002E7C27 /* requirement.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C5F8EA92DBE3F5800405478 /* RepeaterLibrary */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RepeaterLibrary; sourceTree = "<group>"; };
 		1CA206D32DBDC8CE00E812B1 /* Repeater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repeater.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CAC98982DBE4056002E7C27 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1CAC98992DBE4056002E7C27 /* requirement.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = requirement.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,6 +44,8 @@
 			children = (
 				1C5F8EA92DBE3F5800405478 /* RepeaterLibrary */,
 				1CA206D52DBDC8CE00E812B1 /* Repeater */,
+				1CAC98982DBE4056002E7C27 /* README.md */,
+				1CAC98992DBE4056002E7C27 /* requirement.md */,
 				1CA207312DBDD3C600E812B1 /* Frameworks */,
 				1CA206D42DBDC8CE00E812B1 /* Products */,
 			);
@@ -125,6 +131,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CAC989A2DBE4056002E7C27 /* README.md in Resources */,
+				1CAC989B2DBE4056002E7C27 /* requirement.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

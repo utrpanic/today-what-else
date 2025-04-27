@@ -7,7 +7,7 @@ struct RepeaterApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .modelContainer(for: SavedMessage.self)
+        .modelContainer(for: [SavedMessage.self, Credential.self])
     }
   }
 }
