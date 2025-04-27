@@ -8,16 +8,16 @@ public struct CredentialGridView: View {
   @Query private var credentials: [Credential]
   
   let columns = [
-    GridItem(.adaptive(minimum: 200), spacing: 16)
+    GridItem(.adaptive(minimum: 280), spacing: 16)
   ]
   
-  public init(viewModel: CredentialViewModel, sortOrder: [SortDescriptor<Credential>] = [SortDescriptor(\.createdAt, order: .reverse)]) {
+  public init(viewModel: CredentialViewModel, sortOrder: [SortDescriptor<Credential>] = [SortDescriptor(\.sortOrder)]) {
     self.viewModel = viewModel
     self._credentials = Query(sort: sortOrder)
   }
   
   public var body: some View {
-    ScrollView {
+    VStack {
       if credentials.isEmpty {
         ContentUnavailableView(
           "No Saved Credentials",
@@ -26,21 +26,61 @@ public struct CredentialGridView: View {
         )
         .padding()
       } else {
-        LazyVGrid(columns: columns, spacing: 16) {
-          ForEach(credentials) { credential in
-            CredentialCell(credential: credential, viewModel: viewModel)
-              .contextMenu {
-                Button(role: .destructive) {
-                  viewModel.deleteCredential(credential)
-                } label: {
-                  Label("Delete", systemImage: "trash")
+        if viewModel.isEditMode {
+          // List view for reordering in edit mode
+          List {
+            ForEach(credentials) { credential in
+              HStack {
+                Image(systemName: "line.3.horizontal")
+                  .foregroundColor(.gray)
+                
+                VStack(alignment: .leading) {
+                  Text(credential.label ?? "Login Credential")
+                    .fontWeight(.medium)
+                  Text(credential.email)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 }
               }
+              .padding(.vertical, 8)
+            }
+            .onMove { source, destination in
+              viewModel.moveCredentials(from: source, to: destination, credentials: credentials)
+            }
+            .onDelete { indexSet in
+              for index in indexSet {
+                viewModel.deleteCredential(credentials[index])
+              }
+            }
+          }
+          .listStyle(.plain)
+        } else {
+          // Grid view for normal mode
+          ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+              ForEach(credentials) { credential in
+                CredentialCell(credential: credential, viewModel: viewModel)
+                  .contextMenu {
+                    Button {
+                      viewModel.startEditing(credential)
+                    } label: {
+                      Label("Edit", systemImage: "pencil")
+                    }
+                    
+                    Button(role: .destructive) {
+                      viewModel.deleteCredential(credential)
+                    } label: {
+                      Label("Delete", systemImage: "trash")
+                    }
+                  }
+              }
+            }
+            .padding()
           }
         }
-        .padding()
       }
     }
+    // Removed toolbar edit button
   }
 }
 
